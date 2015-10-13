@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+	h1.
+		Board List
+	ul
+		each board, i in boards
+			li
+				a(href='/w/boards/#{board._id}') #{board.name}
