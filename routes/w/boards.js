@@ -11,6 +11,29 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+// Get new form
+// - order is important! (before /:board)
+router.get('/new', function(req, res, next) {
+  res.render('boards/new', { title: 'Express' });
+});
+
+// Post new board
+router.post('/addboard', function(req, res) {
+	console.log('we get here');
+	var db = req.db;
+	var boardName = req.body.boardName;
+	var boards = db.get('boards');
+	boards.insert({ "name" : boardName }, function(err, doc) {
+		if (err) {
+			res.send("There was a problem adding that board to the database.");
+		}
+		else {
+			res.redirect('/w/boards/');
+		}
+	})
+});
+
+// Board details
 router.get('/:boardId', function(req, res, next) {
 	var db = req.db;
 	var boards = db.get('boards');

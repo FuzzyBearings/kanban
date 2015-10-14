@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+	h1 New Board
+
+	form(method="post", action="/w/boards/addboard")
+		table
+			tr
+				td
+					input(type="text", name="boardName", placeholder="Board Name")
+			tr
+				td
+					button(type="submit") submit

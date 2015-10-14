@@ -1,8 +1,11 @@
 extends ../layout
 
 block content
-	h1.
-		Board List
+	h1 Boards
+	ul
+		li
+			a(href='/w/boards/new') New Board
+	h2 Board List
 	ul
 		each board, i in boards
 			li
