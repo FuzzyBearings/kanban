@@ -19,7 +19,6 @@ router.get('/new', function(req, res, next) {
 
 // Post new board
 router.post('/addboard', function(req, res) {
-	console.log('we get here');
 	var db = req.db;
 	var boardName = req.body.boardName;
 	var boards = db.get('boards');
