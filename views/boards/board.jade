@@ -1,6 +1,12 @@
 extends ../layout
 
 block content
-	h1 The Board
+	p
+		a(href="/w/boards") All Boards
+		|&nbsp;|&nbsp;
+		a(href="/w/boards/new") New Board
+
+	h1 Board Details
+
 	ul
 		li #{board.name}
