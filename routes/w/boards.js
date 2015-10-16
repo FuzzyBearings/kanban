@@ -13,8 +13,8 @@ router.get('/', function(req, res, next) {
 
 // Get new form
 // - order is important! (before /:board)
-router.get('/new', function(req, res, next) {
-  res.render('boards/new', { title: 'Express' });
+router.get('/edit', function(req, res, next) {
+  res.render('boards/edit', { title: 'Express' });
 });
 
 // Post new board
@@ -39,7 +39,11 @@ router.get('/:boardId', function(req, res, next) {
 	var boardId = req.params.boardId;
 	boards.findById(boardId, {}, function(e, board) {
 		if (board) {
-			res.render('boards/board', {
+			var page = 'boards/board';
+			if (req.query.action === "edit") {
+				page = 'boards/edit';
+			}
+			res.render(page, {
 				"board" : board
 			});
 		}
