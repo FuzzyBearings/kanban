@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+	p
+		a(href="/w/boards") All Boards
+		|&nbsp;|&nbsp;New Board
+	
+	-
+		var boardName = "";
+		var boardId = "0";
+		if (board && board.name && board._id) {
+			boardName = board.name;
+			boardId = board._id
+		}
+	
+	if boardName
+		h1 Edit Board
+	else
+		h1 New Board
+
+	form(method="post", action="/w/boards/update")
+		table
+			tr
+				td
+					input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
+			tr
+				td
+					button(type="submit") submit
+		input(type="hidden", name="boardId", value="#{boardId}")
