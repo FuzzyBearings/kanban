@@ -18,7 +18,7 @@ router.post('/update', function(req, res, next) {
 		if (req.body.columnId && req.body.columnId.length > 1 && req.body.columnName && req.body.columnName.length > 0) {
 			
 			var columnId = req.body.columnId;
-			var sortOrder = req.body.sortOrder;
+			var sortOrder = parseInt(req.body.sortOrder);
 			
 			columnsTable.findAndModify({
 				"query" : { "_id" : columnId },
@@ -36,7 +36,8 @@ router.post('/update', function(req, res, next) {
 			});
 		}
 		else {
-			columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : columns.length }, function(err, column) {
+			var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length;
+			columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder }, function(err, column) {
 				if (err) {
 					res.send("*** ERROR: there was a problem adding that column to the database.");
 					res.redirect('/w/boards');
@@ -58,7 +59,7 @@ function refresh(db, boardId, res) {
 		}
 		else if (board) {
 			columnsTable = db.get('columns');
-			columnsTable.find({ "boardId" : boardId }, { "sort" : "sortOrder" }, function(e, columns) {
+			columnsTable.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
 				res.render('boards/edit', { "board" : board, "columns" : columns });
 			});
 		}

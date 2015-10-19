@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 	var db = req.db;
 	var boards = db.get('boards');
-	boards.find({}, { sort: { "name" : 1 }}, function(e, docs) {
+	boards.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, docs) {
 		res.render('boards/list', {
 			"boards" : docs
 		});
@@ -13,22 +13,15 @@ router.get('/', function(req, res, next) {
 
 router.post('/update', function(req, res) {
 	var db = req.db;
-	console.log('db ' + db);
-	console.log('req ' + req);
-	console.log('req.body ' + req.body);
-	
-	var keys = [];
-	for (var key in req) {
-		console.log('key ' + key);
-	}
 	
 	var boardName = req.body.boardName;
 	var boardId = req.body.boardId;
 	var boards = db.get('boards');
+	var sortOrder = boards.length;
 	if (boardId.length > 1 && boardName.length > 0) {
 		boards.findAndModify({
 			"query" : { "_id" : boardId },
-			"update" : { "name" : boardName },
+			"update" : { "name" : boardName, "sortOrder" : sortOrder },
 			"new" : true,		// no workie?
 			"upsert" : false	// no workie?
 		}, function(err, oldBoard) {
@@ -80,9 +73,8 @@ router.get('/:boardId', function(req, res, next) {
 	boards.findById(boardId, {}, function(e, board) {
 		var columns = db.get('columns');
 		if (board) {
-			columns.find({ "boardId" : boardId }, {}, function(e, columns) {
-				res.render(page, { "board" : board,
-				 				   "columns" : columns });
+			columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
+				res.render(page, { "board" : board, "columns" : columns });
 			});
 		}
 	});	
