@@ -18,10 +18,11 @@ router.post('/update', function(req, res, next) {
 		if (req.body.columnId && req.body.columnId.length > 1 && req.body.columnName && req.body.columnName.length > 0) {
 			
 			var columnId = req.body.columnId;
+			var sortOrder = req.body.sortOrder;
 			
 			columnsTable.findAndModify({
 				"query" : { "_id" : columnId },
-				"update" : { "name" : columnName },
+				"update" : { "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder },
 				"new" : true,		// no workie?
 				"upsert" : false	// no workie?
 			}, function(err, oldColumn) {
@@ -30,7 +31,7 @@ router.post('/update', function(req, res, next) {
 					res.redirect('/w/boards');					
 				}
 				else {
-					refresh(boardId);
+					refresh(db, boardId, res);
 				}
 			});
 		}
@@ -41,14 +42,14 @@ router.post('/update', function(req, res, next) {
 					res.redirect('/w/boards');
 				}
 				else {
-					refresh(boardId);
+					refresh(db, boardId, res);
 				}
 			});
 		}
 	});
 });
 
-function refresh(boardId) {
+function refresh(db, boardId, res) {
 	var boards = db.get('boards');
 	boards.findById(boardId, {}, function(err, board) {
 		if (err) {
