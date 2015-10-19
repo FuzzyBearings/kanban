@@ -3,7 +3,8 @@ extends ../layout
 block content
 	p
 		a(href="/w/boards") All Boards
-		|&nbsp;|&nbsp;New Board
+		|&nbsp;|&nbsp;
+		a(href='/w/boards/0') New Board
 	
 	-
 		var boardName = "";
@@ -17,13 +18,28 @@ block content
 		h1 Edit Board
 	else
 		h1 New Board
+		
+	h2 Board
 
 	form(method="post", action="/w/boards/update")
 		table
 			tr
+				td Board Name:
 				td
 					input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
-			tr
-				td
 					button(type="submit") submit
+		input(type="hidden", name="boardId", value="#{boardId}")
+
+	h2 Columns
+	
+	if columns
+		ul
+			each column, i in columns
+				li
+					a(href='/w/columns/#{column._id}') #{column.name}
+
+	form(method="post", action="/w/columns/update")
+		p New Column Name:&nbsp;
+			input(type='text', name='columnName')
+			button(type="submit") submit
 		input(type="hidden", name="boardId", value="#{boardId}")

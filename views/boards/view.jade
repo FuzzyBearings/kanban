@@ -10,7 +10,15 @@ block content
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/#{board._id}?action=delete") Delete Board
 
-	h1 View Board
+	h1 Board View
 
 	ul
 		li #{board.name}
+
+	h1 Columns
+
+	if columns
+		ul
+			each column, i in columns
+				li
+					a(href='/w/columns/#{column._id}') #{column.name}

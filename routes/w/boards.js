@@ -13,6 +13,15 @@ router.get('/', function(req, res, next) {
 
 router.post('/update', function(req, res) {
 	var db = req.db;
+	console.log('db ' + db);
+	console.log('req ' + req);
+	console.log('req.body ' + req.body);
+	
+	var keys = [];
+	for (var key in req) {
+		console.log('key ' + key);
+	}
+	
 	var boardName = req.body.boardName;
 	var boardId = req.body.boardId;
 	var boards = db.get('boards');
@@ -69,8 +78,12 @@ router.get('/:boardId', function(req, res, next) {
 	}
 	
 	boards.findById(boardId, {}, function(e, board) {
+		var columns = db.get('columns');
 		if (board) {
-			res.render(page, { "board" : board });
+			columns.find({ "boardId" : boardId }, {}, function(e, columns) {
+				res.render(page, { "board" : board,
+				 				   "columns" : columns });
+			});
 		}
 	});	
 });
