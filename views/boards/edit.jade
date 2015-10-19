@@ -21,25 +21,27 @@ block content
 		
 	h2 Board
 
-	form(method="post", action="/w/boards/update")
-		table
-			tr
-				td Board Name:
-				td
-					input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
-					button(type="submit") submit
-		input(type="hidden", name="boardId", value="#{boardId}")
+	p
+		form(method="post", action="/w/boards/update")
+			input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
+			button(type="submit") submit
+			input(type="hidden", name="boardId", value="#{boardId}")
 
 	h2 Columns
 	
 	if columns
-		ul
-			each column, i in columns
-				li
-					a(href='/w/columns/#{column._id}') #{column.name}
+		each column, i in columns
+			p
+				form(method="post", action="/w/columns/update")
+					input(type="text", name="sortOrder", value="#{column.sortOrder}", size="3")
+					input(type="text", name="columnName", value="#{column.name}")
+					input(type="hidden", name="boardId", value="#{boardId}")
+					input(type="hidden", name="columnId", value="#{column._id}")
+					button(type="submit") submit
 
-	form(method="post", action="/w/columns/update")
-		p New Column Name:&nbsp;
+	p
+		form(method="post", action="/w/columns/update")
+			input(type="text", name="sortOrder", size="3")
 			input(type='text', name='columnName')
+			input(type="hidden", name="boardId", value="#{boardId}")
 			button(type="submit") submit
-		input(type="hidden", name="boardId", value="#{boardId}")
