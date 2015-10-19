@@ -15,7 +15,7 @@ router.post('/update', function(req, res, next) {
 	
 		var columnName = req.body.columnName;
 	
-		if (req.body.columnId) {
+		if (req.body.columnId && req.body.columnId.length > 1 && req.body.columnName && req.body.columnName.length > 0) {
 			var columnId = req.body.columnId;
 			res.redirect('/w/boards');
 		}
