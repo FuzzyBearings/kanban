@@ -16,8 +16,23 @@ router.post('/update', function(req, res, next) {
 		var columnName = req.body.columnName;
 	
 		if (req.body.columnId && req.body.columnId.length > 1 && req.body.columnName && req.body.columnName.length > 0) {
+			
 			var columnId = req.body.columnId;
-			res.redirect('/w/boards');
+			
+			columnsTable.findAndModify({
+				"query" : { "_id" : columnId },
+				"update" : { "name" : columnName },
+				"new" : true,		// no workie?
+				"upsert" : false	// no workie?
+			}, function(err, oldColumn) {
+				if (err) {
+					res.send("*** ERROR: there was a problem modifying that column in the database.");
+					res.redirect('/w/boards');					
+				}
+				else {
+					refresh(boardId);
+				}
+			});
 		}
 		else {
 			columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : columns.length }, function(err, column) {
@@ -26,23 +41,27 @@ router.post('/update', function(req, res, next) {
 					res.redirect('/w/boards');
 				}
 				else {
-					var boards = db.get('boards');
-					boards.findById(boardId, {}, function(err, board) {
-						if (err) {
-							console.log("*** ERROR: could not find board (id=" + boardId + ") for new column.");
-							res.redirect('/w/boards');
-						}
-						else if (board) {
-							columnsTable = db.get('columns');
-							columnsTable.find({ "boardId" : boardId }, { "sort" : "sortOrder" }, function(e, columns) {
-								res.render('boards/edit', { "board" : board, "columns" : columns });
-							});
-						}
-					});
+					refresh(boardId);
 				}
 			});
 		}
 	});
 });
+
+function refresh(boardId) {
+	var boards = db.get('boards');
+	boards.findById(boardId, {}, function(err, board) {
+		if (err) {
+			console.log("*** ERROR: could not find board (id=" + boardId + ") for new column.");
+			res.redirect('/w/boards');
+		}
+		else if (board) {
+			columnsTable = db.get('columns');
+			columnsTable.find({ "boardId" : boardId }, { "sort" : "sortOrder" }, function(e, columns) {
+				res.render('boards/edit', { "board" : board, "columns" : columns });
+			});
+		}
+	});	
+}
 
 module.exports = router;
