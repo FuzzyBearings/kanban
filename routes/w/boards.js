@@ -50,7 +50,7 @@ router.post('/update', function(req, res) {
 			else {
 				res.render('boards/view', { "board": board });
 			}
-		});		
+		});
 	}
 });
 
