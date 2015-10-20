@@ -59,7 +59,7 @@ router.get('/:boardId', function(req, res, next) {
 	}
 	
 	if (action === "delete") {
-		boards.remove({ "_id": boardId }, function(err) {
+		boards.remove({ "_id" : boardId }, function(err) {
 			res.redirect('/w/boards');
 		});
 		return;

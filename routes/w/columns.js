@@ -15,25 +15,33 @@ router.post('/update', function(req, res, next) {
 	
 		var columnName = req.body.columnName;
 	
-		if (req.body.columnId && req.body.columnId.length > 1 && req.body.columnName && req.body.columnName.length > 0) {
-			
+		if (req.body.columnId && req.body.columnId.length > 1) {
 			var columnId = req.body.columnId;
-			var sortOrder = parseInt(req.body.sortOrder);
+			if (req.body.columnName && req.body.columnName.length > 0) {
 			
-			columnsTable.findAndModify({
-				"query" : { "_id" : columnId },
-				"update" : { "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder },
-				"new" : true,		// no workie?
-				"upsert" : false	// no workie?
-			}, function(err, oldColumn) {
-				if (err) {
-					res.send("*** ERROR: there was a problem modifying that column in the database.");
-					res.redirect('/w/boards');					
-				}
-				else {
+				var columnId = req.body.columnId;
+				var sortOrder = parseInt(req.body.sortOrder);
+			
+				columnsTable.findAndModify({
+					"query" : { "_id" : columnId },
+					"update" : { "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder },
+					"new" : true,		// no workie?
+					"upsert" : false	// no workie?
+				}, function(err, oldColumn) {
+					if (err) {
+						res.send("*** ERROR: there was a problem modifying that column in the database.");
+						res.redirect('/w/boards');					
+					}
+					else {
+						refresh(db, boardId, res);
+					}
+				});
+			}
+			else {
+				columnsTable.remove({ "_id" : columnId }, function(err) {
 					refresh(db, boardId, res);
-				}
-			});
+				});
+			}
 		}
 		else {
 			var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length;
