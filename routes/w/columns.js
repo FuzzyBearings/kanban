@@ -44,16 +44,21 @@ router.post('/update', function(req, res, next) {
 			}
 		}
 		else {
-			var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length;
-			columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder }, function(err, column) {
-				if (err) {
-					res.send("*** ERROR: there was a problem adding that column to the database.");
-					res.redirect('/w/boards');
-				}
-				else {
-					refresh(db, boardId, res);
-				}
-			});
+			if (req.body.columnName && req.body.columnName.length > 0) {
+				var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length;
+				columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder }, function(err, column) {
+					if (err) {
+						res.send("*** ERROR: there was a problem adding that column to the database.");
+						res.redirect('/w/boards');
+					}
+					else {
+						refresh(db, boardId, res);
+					}
+				});
+			}
+			else {
+				refresh(db, boardId, res);
+			}
 		}
 	});
 });
