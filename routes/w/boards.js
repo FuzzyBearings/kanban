@@ -30,7 +30,7 @@ router.post('/update', function(req, res) {
 					res.render('boards/view', { "board" : board });
 				}
 				else {
-					res.render(page, {});
+					res.redirect('/w/boards');
 				}
 			});
 		});

@@ -1,6 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/:columnId', function(req, res) {
+	var db = req.db;
+	var columns = db.get('columns');
+	var columnId = req.params.columnId;
+	columns.findById(columnId, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, column) {
+		if (column) {
+			res.render('columns/view', { "column" : column });			
+		}
+		else {
+			res.redirect('/w/boards');
+		}
+	});
+});
+
 router.post('/update', function(req, res, next) {
 	
 	var db = req.db;
