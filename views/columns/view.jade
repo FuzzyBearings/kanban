@@ -5,6 +5,9 @@ block content
 		a(href="/w/boards") All Boards
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/0") New Board
+		if board._id
+			|&nbsp;|&nbsp;
+			a(href='/w/boards/#{board._id}') View Board
 
 	h1 Column View
 

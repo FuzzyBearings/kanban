@@ -7,7 +7,17 @@ router.get('/:columnId', function(req, res) {
 	var columnId = req.params.columnId;
 	columns.findById(columnId, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, column) {
 		if (column) {
-			res.render('columns/view', { "column" : column });			
+			var boards = db.get('boards');
+			boards.findById(column.boardId, {}, function(err, board) {
+				if (err) {
+					console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
+					res.redirect('/w/boards');
+				}
+				else if (board) {
+					res.render('columns/view', { "board" : board, "column" : column });
+				}
+			});
+			// res.render('columns/view', { "column" : column });
 		}
 		else {
 			res.redirect('/w/boards');
@@ -47,13 +57,13 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');					
 					}
 					else {
-						refresh(db, boardId, res);
+						refreshBoardsEdit(db, boardId, res);
 					}
 				});
 			}
 			else {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					refresh(db, boardId, res);
+					refreshBoardsEdit(db, boardId, res);
 				});
 			}
 		}
@@ -66,18 +76,18 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');
 					}
 					else {
-						refresh(db, boardId, res);
+						refreshBoardsEdit(db, boardId, res);
 					}
 				});
 			}
 			else {
-				refresh(db, boardId, res);
+				refreshBoardsEdit(db, boardId, res);
 			}
 		}
 	});
 });
 
-function refresh(db, boardId, res) {
+function refreshBoardsEdit(db, boardId, res) {
 	var boards = db.get('boards');
 	boards.findById(boardId, {}, function(err, board) {
 		if (err) {
@@ -90,7 +100,7 @@ function refresh(db, boardId, res) {
 				res.render('boards/edit', { "board" : board, "columns" : columns });
 			});
 		}
-	});	
+	});
 }
 
 module.exports = router;
