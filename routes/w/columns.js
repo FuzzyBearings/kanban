@@ -58,15 +58,6 @@ router.get('/:columnId', function(req, res) {
 		}
 	});
 	
-	// boards.findById(boardId, {}, function(e, board) {
-	// 	var columns = db.get('columns');
-	// 	if (board) {
-	// 		columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
-	// 			res.render(page, { "board" : board, "columns" : columns });
-	// 		});
-	// 	}
-	// });
-	
 });
 
 router.post('/update', function(req, res, next) {
@@ -97,30 +88,13 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');					
 					}
 					else {
-						columnsTable.findById(columnId, {}, function(e, column) {
-							if (column) {
-								var boards = db.get('boards');
-								boards.findById(column.boardId, {}, function(err, board) {
-									if (err) {
-										console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
-										res.redirect('/w/boards');
-									}
-									else if (board) {
-										res.render('columns/view', { "board" : board, "column" : column });
-									}
-								});
-							}
-							else {
-								res.redirect('/w/boards');
-							}
-						});
-						// refreshBoardsEdit(db, boardId, res);
+						refreshColumnsView(db, columndId, res);
 					}
 				});
 			}
 			else {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					refreshBoardsEdit(db, boardId, res);
+					refreshColumnsView(db, columndId, res);
 				});
 			}
 		}
@@ -156,6 +130,28 @@ function refreshBoardsEdit(db, boardId, res) {
 			columnsTable.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
 				res.render('boards/edit', { "board" : board, "columns" : columns });
 			});
+		}
+	});
+}
+
+function refreshColumnsView(db, columnId, res) {
+	var columnsTable = db.get('columns');
+	columnsTable.findById(columnId, {}, function(err, column) {
+		if (column) {
+			var boards = db.get('boards');
+			boards.findById(column.boardId, {}, function(err, board) {
+				if (err) {
+					console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
+					res.redirect('/w/boards');
+				}
+				else if (board) {
+					res.render('columns/view', { "board" : board, "column" : column });
+				}
+			});
+		}
+		else {
+			console.log("*** ERROR: could not find board (id=" + boardId + ") for new column.");
+			res.redirect('/w/boards');
 		}
 	});
 }

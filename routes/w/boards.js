@@ -27,7 +27,10 @@ router.post('/update', function(req, res) {
 		}, function(err, oldBoard) {
 			boards.findById(boardId, {}, function(e, board) {
 				if (board) {
-					res.render('boards/view', { "board" : board });
+					var columns = db.get('columns');
+					columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
+						res.render('boards/view', { "board" : board, "columns" : columns });
+					});
 				}
 				else {
 					res.redirect('/w/boards');

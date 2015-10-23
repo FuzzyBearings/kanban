@@ -3,11 +3,13 @@ extends ../layout
 block content
 	p
 		a(href="/w/boards") All Boards
-		|&nbsp;|&nbsp;
-		a(href='/w/boards/0') New Board
 		if board
 			|&nbsp;|&nbsp;
+			a(href='/w/boards/0') New Board
+			|&nbsp;|&nbsp;
 			a(href='/w/boards/#{board._id}') View Board
+			|&nbsp;|&nbsp;
+			a(href="/w/boards/#{board._id}?action=delete") Delete Board
 	
 	-
 		var boardName = "";
