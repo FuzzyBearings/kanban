@@ -8,6 +8,10 @@ block content
 		if board._id
 			|&nbsp;|&nbsp;
 			a(href='/w/boards/#{board._id}') View Board
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{column._id}?action=edit") Edit Column
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{column._id}?action=delete") Delete Column
 
 	h1 Column View
 

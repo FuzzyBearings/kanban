@@ -1,3 +1,6 @@
 #!/bin/sh
 
-npm start
+// npm start
+
+npm run-script debug
+

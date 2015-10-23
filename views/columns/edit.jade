@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+	p
+		a(href="/w/boards") All Boards
+		|&nbsp;|&nbsp;
+		a(href="/w/boards/0") New Board
+		if board._id
+			|&nbsp;|&nbsp;
+			a(href='/w/boards/#{board._id}') View Board
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{column._id}") View Column
+
+	-
+		var columnName = "";
+		var columnId = 0;
+		var sortOrder = 0;
+		if (column && column.name && column._id) {
+			columnName = column.name;
+			columnId = column._id;
+			sortOrder = column.sortOrder;
+		}
+
+	if columnName
+		h1 Edit Column
+	else
+		h1 View Column
+
+	h2 Column
+	
+	p
+		form(method="post", action="/w/columns/update")
+			input(type="text", name="columnName", placeholder="Column Name" value="#{columnName}")
+			button(type="submit") submit
+			input(type="hidden", name="columnId", value="#{columnId}")
+			input(type="hidden", name="boardId", value="#{board._id}")
+			input(type="hidden", name="sortOrder", value="#{sortOrder}")
+
+	h1 Stories
