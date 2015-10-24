@@ -88,13 +88,13 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');					
 					}
 					else {
-						refreshColumnsView(db, columndId, res);
+						refreshColumnsView(db, columnId, res);
 					}
 				});
 			}
 			else {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					refreshColumnsView(db, columndId, res);
+					refreshColumnsView(db, columnId, res);
 				});
 			}
 		}
