@@ -42,6 +42,9 @@ app.use('/w/boards', webBoardRoutes);
 var webColumnRoutes = require('./routes/w/columns');
 app.use('/w/columns', webColumnRoutes);
 
+var webStoriesRoutes = require('./routes/w/stories');
+app.use('/w/stories', webStoriesRoutes);
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 

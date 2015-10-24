@@ -19,3 +19,9 @@ block content
 		li #{column.name}
 
 	h1 Stories
+
+	if stories
+		ul
+			each story in stories
+				li
+					a(href='/w/stories/#{story._id}') #{story.name}

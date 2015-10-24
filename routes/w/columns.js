@@ -1,16 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/:columnId', function(req, res) {	
+router.get('/:columnId', function(req, res) {
+	
 	var db = req.db;
 	var columnsTable = db.get('columns');
 	var columnId = req.params.columnId;
 	var action = req.query.action;
-	
-	if (columnId === "0") {
-		res.render('columns/edit', {});
-		return;
-	}
 	
 	var boardsTable = db.get('boards');
 	columnsTable.findById(columnId, {}, function(e, column) {

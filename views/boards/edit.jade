@@ -21,20 +21,19 @@ block content
 	
 	if boardName
 		h1 Edit Board
+		h2 Board
 	else
 		h1 New Board
 		
-	h2 Board
-
 	p
 		form(method="post", action="/w/boards/update")
 			input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
 			button(type="submit") submit
 			input(type="hidden", name="boardId", value="#{boardId}")
 
-	h2 Columns
-	
 	if columns
+		h2 Columns
+	
 		each column in columns
 			p
 				form(method="post", action="/w/columns/update")
@@ -45,9 +44,9 @@ block content
 					input(type="hidden", name="source" value="boards/edit")
 					button(type="submit") submit
 
-	p
-		form(method="post", action="/w/columns/update")
-			input(type="text", name="sortOrder", size="3")
-			input(type='text', name='columnName')
-			input(type="hidden", name="boardId", value="#{boardId}")
-			button(type="submit") submit
+		p
+			form(method="post", action="/w/columns/update")
+				input(type="text", name="sortOrder", size="3")
+				input(type='text', name='columnName')
+				input(type="hidden", name="boardId", value="#{boardId}")
+				button(type="submit") submit
