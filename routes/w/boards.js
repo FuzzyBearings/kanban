@@ -1,14 +1,37 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/:boardId', function(req, res, next) {
 	var db = req.db;
 	var boards = db.get('boards');
-	boards.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, docs) {
-		res.render('boards/list', {
-			"boards" : docs
+	var boardId = req.params.boardId;
+	var action = req.query.action;
+
+	if (boardId === "0") {
+		res.render('boards/edit', {});
+		return;
+	}
+	
+	if (action === "delete") {
+		boards.remove({ "_id" : boardId }, function(err) {
+			res.redirect('/w/boards');
 		});
-	});
+		return;
+	}
+
+	var page = 'boards/view';
+	if (action == "edit") {
+		page = 'boards/edit';
+	}
+	
+	boards.findById(boardId, {}, function(e, board) {
+		var columns = db.get('columns');
+		if (board) {
+			columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
+				res.render(page, { "board" : board, "columns" : columns });
+			});
+		}
+	});	
 });
 
 router.post('/update', function(req, res) {
@@ -50,37 +73,14 @@ router.post('/update', function(req, res) {
 	}
 });
 
-router.get('/:boardId', function(req, res, next) {
+router.get('/', function(req, res, next) {
 	var db = req.db;
 	var boards = db.get('boards');
-	var boardId = req.params.boardId;
-	var action = req.query.action;
-
-	if (boardId === "0") {
-		res.render('boards/edit', {});
-		return;
-	}
-	
-	if (action === "delete") {
-		boards.remove({ "_id" : boardId }, function(err) {
-			res.redirect('/w/boards');
+	boards.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, docs) {
+		res.render('boards/list', {
+			"boards" : docs
 		});
-		return;
-	}
-
-	var page = 'boards/view';
-	if (action == "edit") {
-		page = 'boards/edit';
-	}
-	
-	boards.findById(boardId, {}, function(e, board) {
-		var columns = db.get('columns');
-		if (board) {
-			columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
-				res.render(page, { "board" : board, "columns" : columns });
-			});
-		}
-	});	
+	});
 });
 
 module.exports = router;

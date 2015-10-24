@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/:columnId', function(req, res) {	
 	var db = req.db;
-	var columns = db.get('columns');
+	var columnsTable = db.get('columns');
 	var columnId = req.params.columnId;
 	var action = req.query.action;
 	
@@ -12,52 +12,49 @@ router.get('/:columnId', function(req, res) {
 		return;
 	}
 	
-	if (action === "delete") {
-		columns.remove({ "_id" : columnId }, function(err) {
-			columns.findById(columnId, {}, function(e, column) {
-				if (column) {
-					var boards = db.get('boards');
-					boards.findById(column.boardId, {}, function(err, board) {
+	var boardsTable = db.get('boards');
+	columnsTable.findById(columnId, {}, function(e, column) {
+		if (column) {
+			var boardId = column.boardId;
+			var page = 'boards/view';
+			if (action === "delete") {
+				columnsTable.remove({ "_id" : columnId }, function(err) {
+					boardsTable.findById(boardId, {}, function(err, board) {
 						if (err) {
-							console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
+							console.log("*** ERROR: could not find board (id=" + boardId + ") for column.");
 							res.redirect('/w/boards');
+							return;
 						}
 						else if (board) {
-							res.render('columns/view', { "board" : board, "column" : column });
+							columnsTable = db.get('columns');
+							columnsTable.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
+								res.render(page, { "board" : board, "columns" : columns });
+							});
+							return;
 						}
 					});
+				});
+			}
+			else {
+				page = 'columns/view';
+				if (action == "edit") {
+					page = 'columns/edit';
 				}
-				else {
-					res.redirect('/w/boards');
-				}
-			});
-		});
-		return;
-	}
-
-	var page = 'columns/view';
-	if (action == "edit") {
-		page = 'columns/edit';
-	}
-
-	columns.findById(columnId, {}, function(e, column) {
-		if (column) {
-			var boards = db.get('boards');
-			boards.findById(column.boardId, {}, function(err, board) {
-				if (err) {
-					console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
-					res.redirect('/w/boards');
-				}
-				else if (board) {
-					res.render(page, { "board" : board, "column" : column });
-				}
-			});
+				boardsTable.findById(column.boardId, {}, function(err, board) {
+					if (err) {
+						console.log("*** ERROR: could not find board (id=" + boardId + ") for column.");
+						res.redirect('/w/boards');
+					}
+					else if (board) {
+						res.render(page, { "board" : board, "column" : column });
+					}
+				});				
+			}
 		}
 		else {
 			res.redirect('/w/boards');
 		}
-	});
-	
+	});	
 });
 
 router.post('/update', function(req, res, next) {

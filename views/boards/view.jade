@@ -19,6 +19,7 @@ block content
 
 	if columns
 		ul
-			each column, i in columns
+			each column in columns
 				li
 					a(href='/w/columns/#{column._id}') #{column.name}
+

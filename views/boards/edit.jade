@@ -35,7 +35,7 @@ block content
 	h2 Columns
 	
 	if columns
-		each column, i in columns
+		each column in columns
 			p
 				form(method="post", action="/w/columns/update")
 					input(type="text", name="sortOrder", value="#{column.sortOrder}", size="3")

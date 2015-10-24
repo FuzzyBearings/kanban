@@ -9,6 +9,6 @@ block content
 	
 	ul
 		if boards
-			each board, i in boards
+			each board in boards
 				li
 					a(href='/w/boards/#{board._id}') #{board.name}
