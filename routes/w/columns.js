@@ -19,7 +19,7 @@ router.get('/:columnId', function(req, res) {
 			var page = 'boards/view';
 			if (action === "delete") {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					refreshBoards(db, boardId, res, 'boards/view');
+					renderBoard(db, boardId, res, 'boards/view');
 				});
 			}
 			else {
@@ -72,13 +72,18 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');					
 					}
 					else {
-						refreshColumns(db, columnId, res, 'columns/view');
+						if (req.body.source === 'boards/edit') {
+							renderBoard(db, boardId, res, 'boards/edit');
+						}
+						else {
+							renderColumn(db, columnId, res, 'columns/view');							
+						}
 					}
 				});
 			}
 			else {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					refreshColumns(db, columnId, res, 'columns/view');
+					renderColumn(db, columnId, res, 'columns/view');
 				});
 			}
 		}
@@ -91,18 +96,18 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');
 					}
 					else {
-						refreshBoards(db, boardId, res, 'boards/edit');
+						renderBoard(db, boardId, res, 'boards/edit');
 					}
 				});
 			}
 			else {
-				refreshBoards(db, boardId, res, 'boards/edit');
+				renderBoard(db, boardId, res, 'boards/edit');
 			}
 		}
 	});
 });
 
-function refreshBoards(db, boardId, res, page) {
+function renderBoard(db, boardId, res, page) {
 	var boardsTable = db.get('boards');
 	boardsTable.findById(boardId, {}, function(err, board) {
 		if (err) {
@@ -120,7 +125,7 @@ function refreshBoards(db, boardId, res, page) {
 	});	
 }
 
-function refreshColumns(db, columnId, res, page) {
+function renderColumn(db, columnId, res, page) {
 	var columnsTable = db.get('columns');
 	columnsTable.findById(columnId, {}, function(err, column) {
 		if (column) {
