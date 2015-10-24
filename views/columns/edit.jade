@@ -37,9 +37,8 @@ block content
 			input(type="hidden", name="boardId", value="#{board._id}")
 			input(type="hidden", name="sortOrder", value="#{sortOrder}")
 
-	h1 Stories
-
 	if stories
+		h1 Stories
 		each story in stories
 			p
 				form(method="post", action="/w/stories/update")
@@ -50,9 +49,9 @@ block content
 					input(type="hidden", name="source" value="columns/edit")
 					button(type="submit") submit
 
-	p
-		form(method="post", action="/w/stories/update")
-			input(type="text", name="sortOrder", size="3")
-			input(type='text', name='storyName')
-			input(type="hidden", name="columnId", value="#{columnId}")
-			button(type="submit") submit
+		p
+			form(method="post", action="/w/stories/update")
+				input(type="text", name="sortOrder", size="3")
+				input(type='text', name='storyName')
+				input(type="hidden", name="columnId", value="#{columnId}")
+				button(type="submit") submit
