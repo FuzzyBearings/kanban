@@ -79,7 +79,7 @@ router.post('/update', function(req, res, next) {
 			}
 			else {
 				storiesTable.remove({ "_id" : storyId }, function(err) {
-					renderStory(db, columnId, res, 'stories/view');
+					renderColumn(db, columnId, res, 'columns/edit');
 				});
 			}
 		}
@@ -92,12 +92,12 @@ router.post('/update', function(req, res, next) {
 						res.redirect('/w/boards');
 					}
 					else {
-						renderColumn(db, boardId, res, 'columns/edit');
+						renderColumn(db, columnId, res, 'columns/edit');
 					}
 				});
 			}
 			else {
-				renderColumn(db, boardId, res, 'columns/edit');
+				renderColumn(db, columnId, res, 'columns/edit');
 			}
 		}
 	});

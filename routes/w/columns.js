@@ -79,7 +79,7 @@ router.post('/update', function(req, res, next) {
 			}
 			else {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					renderColumn(db, columnId, res, 'columns/view');
+					renderBoard(db, boardId, res, 'boards/edit');
 				});
 			}
 		}
