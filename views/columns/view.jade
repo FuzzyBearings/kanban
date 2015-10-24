@@ -18,13 +18,15 @@ block content
 	ul
 		li #{column.name}
 
-	if stories
-		h1 Stories
+	h1 Stories
+
+	if stories && stories.length > 0
 		ul
 			each story in stories
 				li
 					a(href='/w/stories/#{story._id}') #{story.name}
 	else
-		p
-			a(href="/w/columns/#{column._id}?action=edit") Edit Column
+		ul
+			li
+				a(href="/w/columns/#{column._id}?action=edit") Edit Column
 			
