@@ -41,7 +41,7 @@ block content
 				input(type="hidden", name="columnId", value="#{columnId}")
 				button(type="submit") submit
 
-	if stories
+	if stories && stories.length > 0
 		h2 Existing Stories
 		each story in stories
 			p

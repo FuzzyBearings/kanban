@@ -38,7 +38,7 @@ router.get('/:storyId', function(req, res) {
 						});
 					}
 					else {
-						console.log("*** ERROR: could not find column (id=" + columnId + ") for story.");
+						console.log("*** ERROR: could not find column (id=" + story.columnId + ") for story.");
 						res.redirect('/w/boards');
 					}
 				});				
@@ -54,11 +54,11 @@ router.post('/update', function(req, res, next) {
 	
 	var db = req.db;
 	
-	// boards
-	var columnId = req.body.columnId;
-	var storiesTable = db.get('stories');
-	
 	// column
+	var columnId = req.body.columnId;
+	
+	// storie
+	var storiesTable = db.get('stories');
 	storiesTable.find({ "columnId" : columnId }, { sort : { "sortOrder" : 1 }}, function(err, stories) {
 	
 		var storyName = req.body.storyName;
@@ -68,7 +68,7 @@ router.post('/update', function(req, res, next) {
 			if (req.body.storyName && req.body.storyName.length > 0) {			
 				var sortOrder = parseInt(req.body.sortOrder);
 				storiesTable.findAndModify({
-					"query" : { "_id" : columnId },
+					"query" : { "_id" : storyId },
 					"update" : { "columnId" : columnId, "name" : storyName, "sortOrder" : sortOrder },
 					"new" : true,		// no workie?
 					"upsert" : false	// no workie?
@@ -79,10 +79,10 @@ router.post('/update', function(req, res, next) {
 					}
 					else {
 						if (req.body.source === 'columns/edit') {
-							renderColumn(db, boardId, res, 'columns/edit');
+							renderColumn(db, columnId, res, 'columns/edit');
 						}
 						else {
-							renderStory(db, columnId, res, 'story/view');
+							renderStory(db, storyId, res, 'stories/view');
 						}
 					}
 				});
@@ -114,6 +114,7 @@ router.post('/update', function(req, res, next) {
 });
 
 function renderColumn(db, columnId, res, page) {
+	
 	var columnsTable = db.get('columns');
 	columnsTable.findById(columnId, {}, function(err, column) {
 		if (err) {
@@ -136,11 +137,12 @@ function renderColumn(db, columnId, res, page) {
 			});
 		}
 	});
+	
 }
 
 function renderStory(db, storyId, res, page) {
 	
-	var storiesTable = db.get('columns');
+	var storiesTable = db.get('stories');
 	var columnsTable = db.get('columns');
 	var boardsTable = db.get('boards');
 
@@ -165,7 +167,7 @@ function renderStory(db, storyId, res, page) {
 			});
 		}
 		else {
-			console.log("*** ERROR: could not find story (id=" + storyId + ") for story.");
+			console.log("*** ERROR: could not find story (id=" + storyId + ").");
 			res.redirect('/w/boards');			
 		}
 	});

@@ -48,11 +48,11 @@ router.post('/update', function(req, res, next) {
 	
 	var db = req.db;
 	
-	// boards
+	// board
 	var boardId = req.body.boardId;
-	var columnsTable = db.get('columns');
 	
 	// column
+	var columnsTable = db.get('columns');
 	columnsTable.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(err, columns) {
 	
 		var columnName = req.body.columnName;

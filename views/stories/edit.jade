@@ -12,15 +12,15 @@ block content
 		|&nbsp;|&nbsp;
 		a(href="/w/stories/#{story._id}") View Story
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{story._id}?action=delete") Delete Story
+		a(href="/w/stories/#{story._id}?action=delete") Delete Story
 
 	h1 Edit Story
 
 	h2 Story
 	
 	p
-		form(method="post", action="/w/columns/update")
-			input(type="text", name="columnName", placeholder="Column Name" value="#{columnName}")
+		form(method="post", action="/w/stories/update")
+			input(type="text", name="storyName", placeholder="Story Name" value="#{story.name}")
 			button(type="submit") submit
 			input(type="hidden", name="storyId", value="#{story._id}")
 			input(type="hidden", name="columnId", value="#{column._id}")
