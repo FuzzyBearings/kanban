@@ -4,32 +4,36 @@ var router = express.Router();
 router.get('/:columnId', function(req, res) {
 	
 	var db = req.db;
-	var columnsTable = db.get('columns');
 	var columnId = req.params.columnId;
 	var action = req.query.action;
 	
-	var boardsTable = db.get('boards');
+	var columnsTable = db.get('columns');
 	columnsTable.findById(columnId, {}, function(e, column) {
 		if (column) {
-			var boardId = column.boardId;
+			
 			var page = 'boards/view';
 			if (action === "delete") {
 				columnsTable.remove({ "_id" : columnId }, function(err) {
-					renderBoard(db, boardId, res, 'boards/view');
+					renderBoard(db, column.boardId, res, 'boards/view');
 				});
-			}
+			}			
 			else {
 				page = 'columns/view';
 				if (action == "edit") {
 					page = 'columns/edit';
 				}
+
+				var boardsTable = db.get('boards');
 				boardsTable.findById(column.boardId, {}, function(err, board) {
 					if (err) {
 						console.log("*** ERROR: could not find board (id=" + boardId + ") for column.");
 						res.redirect('/w/boards');
 					}
 					else if (board) {
-						res.render(page, { "board" : board, "column" : column });
+						var storiesTable = db.get('stories');
+						storiesTable.find({ "columnId" : columnId }, { sort : { "sortOrder" : 1 }}, function(e, stories) {
+							res.render(page, { "board" : board, "column" : column, "stories" : stories });
+						});
 					}
 				});				
 			}
@@ -125,14 +129,17 @@ function renderColumn(db, columnId, res, page) {
 	var columnsTable = db.get('columns');
 	columnsTable.findById(columnId, {}, function(err, column) {
 		if (column) {
-			var boards = db.get('boards');
-			boards.findById(column.boardId, {}, function(err, board) {
+			var boardsTable = db.get('boards');
+			boardsTable.findById(column.boardId, {}, function(err, board) {
 				if (err) {
 					console.log("*** ERROR: could not find board (id=" + column.boardId + ") for column.");
 					res.redirect('/w/boards');
 				}
 				else if (board) {
-					res.render(page, { "board" : board, "column" : column });
+					var storiesTable = db.get('stories');
+					storiesTable.find({ "columnId" : columnId }, { sort : { "sortOrder" : 1 }}, function(e, stories) {
+						res.render(page, { "board" : board, "column" : column, "stories" : stories });
+					});
 				}
 			});
 		}
