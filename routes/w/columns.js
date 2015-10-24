@@ -137,7 +137,7 @@ function renderColumn(db, columnId, res, page) {
 			});
 		}
 		else {
-			console.log("*** ERROR: could not find board (id=" + boardId + ") for new column.");
+			console.log("*** ERROR: could not find column (id=" + columnId + ") for column.");
 			res.redirect('/w/boards');
 		}
 	});

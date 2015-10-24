@@ -15,9 +15,16 @@ block content
 	ul
 		li #{board.name}
 
-	if columns
-		h1 Columns
+	
+	h1 Columns
+
+	if columns && columns.length > 0
 		ul
 			each column in columns
 				li
 					a(href='/w/columns/#{column._id}') #{column.name}
+	else
+		ul
+			li
+				a(href="/w/boards/#{board._id}?action=edit") Edit Board
+			

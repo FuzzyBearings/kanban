@@ -30,10 +30,18 @@ block content
 			input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
 			button(type="submit") submit
 			input(type="hidden", name="boardId", value="#{boardId}")
-
-	if columns
-		h2 Columns
 	
+	if boardName
+		h2 New Column
+		p
+			form(method="post", action="/w/columns/update")
+				input(type="text", name="sortOrder", size="3")
+				input(type='text', name='columnName')
+				input(type="hidden", name="boardId", value="#{boardId}")
+				button(type="submit") submit
+
+	if columns && columns.length > 0
+		h2 Existing Columns
 		each column in columns
 			p
 				form(method="post", action="/w/columns/update")
@@ -43,10 +51,3 @@ block content
 					input(type="hidden", name="columnId", value="#{column._id}")
 					input(type="hidden", name="source" value="boards/edit")
 					button(type="submit") submit
-
-		p
-			form(method="post", action="/w/columns/update")
-				input(type="text", name="sortOrder", size="3")
-				input(type='text', name='columnName')
-				input(type="hidden", name="boardId", value="#{boardId}")
-				button(type="submit") submit
