@@ -5,55 +5,23 @@ block content
 		a(href="/w/boards") All Boards
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/0") New Board
-		if board._id
-			|&nbsp;|&nbsp;
-			a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}") View Column
+		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=delete") Delete Column
-	-
-		var columnName = "";
-		var columnId = 0;
-		var sortOrder = 0;
-		if (column && column.name && column._id) {
-			columnName = column.name;
-			columnId = column._id;
-			sortOrder = column.sortOrder;
-		}
+		a(href="/w/columns/#{column._id}?") View Column
+		|&nbsp;|&nbsp;
+		a(href="/w/stories/#{story._id}") View Story
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{story._id}?action=delete") Delete Story
 
-	if columnName
-		h1 Edit Column
-	else
-		h1 View Column
+	h1 Edit Story
 
-	h2 Column
+	h2 Story
 	
 	p
 		form(method="post", action="/w/columns/update")
 			input(type="text", name="columnName", placeholder="Column Name" value="#{columnName}")
 			button(type="submit") submit
-			input(type="hidden", name="columnId", value="#{columnId}")
-			input(type="hidden", name="boardId", value="#{board._id}")
-			input(type="hidden", name="sortOrder", value="#{sortOrder}")
-
-	if columnName
-		h2 New Story
-		p
-			form(method="post", action="/w/stories/update")
-				input(type="text", name="sortOrder", size="3")
-				input(type='text', name='storyName')
-				input(type="hidden", name="columnId", value="#{columnId}")
-				button(type="submit") submit
-
-	if stories
-		h2 Existing Stories
-		each story in stories
-			p
-				form(method="post", action="/w/stories/update")
-					input(type="text", name="sortOrder", value="#{story.sortOrder}", size="3")
-					input(type="text", name="storyName", value="#{story.name}")
-					input(type="hidden", name="storyId", value="#{story._id}")
-					input(type="hidden", name="columnId", value="#{columnId}")
-					input(type="hidden", name="source" value="columns/edit")
-					button(type="submit") submit
+			input(type="hidden", name="storyId", value="#{story._id}")
+			input(type="hidden", name="columnId", value="#{column._id}")
+			input(type="hidden", name="sortOrder", value="#{story.sortOrder}")

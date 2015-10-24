@@ -11,20 +11,16 @@ block content
 		a(href="/w/columns/#{column._id}") View Column
 		|&nbsp;|&nbsp;
 		a(href="/w/columns/#{column._id}?action=delete") Delete Column
+		
 	-
 		var columnName = "";
 		var columnId = 0;
 		var sortOrder = 0;
-		if (column && column.name && column._id) {
-			columnName = column.name;
-			columnId = column._id;
-			sortOrder = column.sortOrder;
-		}
+		columnName = column.name;
+		columnId = column._id;
+		sortOrder = column.sortOrder;
 
-	if columnName
-		h1 Edit Column
-	else
-		h1 View Column
+	h1 Edit Column
 
 	h2 Column
 	

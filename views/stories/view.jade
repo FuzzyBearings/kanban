@@ -5,28 +5,16 @@ block content
 		a(href="/w/boards") All Boards
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/0") New Board
-		if board._id
-			|&nbsp;|&nbsp;
-			a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=edit") Edit Column
+		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=delete") Delete Column
+		a(href="/w/columns/#{column._id}?") View Column
+		|&nbsp;|&nbsp;
+		a(href="/w/stories/#{story._id}?action=edit") Edit Story
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{story._id}?action=delete") Delete Story
 
-	h1 Column View
+	h1 Story View
 
 	ul
-		li #{column.name}
-
-	h1 Stories
-
-	if stories && stories.length > 0
-		ul
-			each story in stories
-				li
-					a(href='/w/stories/#{story._id}') #{story.name}
-	else
-		ul
-			li
-				a(href="/w/columns/#{column._id}?action=edit") Edit Column
-			
+		li #{story.name}
