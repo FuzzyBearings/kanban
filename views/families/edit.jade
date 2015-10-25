@@ -8,12 +8,13 @@ block content
 		var docName = 'Family';
 		
 		var childDocsNameURL = 'groups';
-		var childDocName = 'Groups';
+		var childDocsName = 'Groups';
 		
-		var localDoc = { name : "", id : "0" };
+		var localDoc = { name : "", id : "0", sortOrder : "1" };
 		if (remoteDoc && remoteDoc.name && remoteDoc._id) {
 			localDoc.name = remoteDoc.name;
 			localDoc.id = remoteDoc._id;
+			localDoc.sortOrder = remoteDoc.sortOrder;
 		}
 
 	nav(class="navbar navbar-default")
@@ -48,24 +49,25 @@ block content
 					else
 						li.disabled
 							a Delete #{docName}
-						
+
 	h1= docName
 	
 	p
-		form(method="post", action="/w/${docsNameURL}/update")
+		form(method="post", action="/w/#{docsNameURL}/update")
 			div.input-group
-				input(type="text", class="form-control", placeholder="#{docName} Name", value="#{localDoc.name}", aria-describedby="basic-addon1", size="60")
+				input(type="text", class="form-control", placeholder="Sort Order", name="sortOrder", value="#{localDoc.sortOrder}", size="2")
+				input(type="text", class="form-control", placeholder="#{docName} Name", name="name" value="#{localDoc.name}", size="60")
 				div.input-group-btn
 					button(type="submit", class="btn btn-default") submit
-			input(type="hidden", name="id", value="#{localDoc.id}")
+			input(type="hidden", name="docId", value="#{localDoc.id}")
 		
 	if localDoc.name && localDoc.name.length > 0
-		h1= childDocName
+		h1= childDocsName
 		p
 			form(method="post", action="/w/#{childDocsNameURL}/update")
 				input(type="text", name="sortOrder", size="2")
 				input(type='text', name='name', size="60")
-				input(type="hidden", name="id", value="0")
+				input(type="hidden", name="docId", value="0")
 				input(type="hidden", name="parentId", value="#{localDoc.id}")
 				button(type="submit") submit
 
@@ -75,7 +77,7 @@ block content
 					form(method="post", action="/w/#{childDocsNameURL}/update")
 						input(type="text", name="sortOrder", value="#{child.sortOrder}", size="2")
 						input(type="text", name="name", value="#{child.name}", size="60")
-						input(type="hidden", name="parentId", value="#{localDoc.id}")
-						input(type="hidden", name="id", value="#{child._id}")
+						input(type="hidden", name="parentDocId", value="#{localDoc.id}")
+						input(type="hidden", name="docId", value="#{child._id}")
 						input(type="hidden", name="sourcePage" value="parent/editor")
 						button(type="submit") submit

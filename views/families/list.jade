@@ -2,6 +2,11 @@ extends ../layout
 
 block content
 
+	-
+		var docsNameURL = 'families';
+		var docsName = 'Families';
+		var docName = 'Family';				
+
 	nav(class="navbar navbar-default")
 		ul(class="nav navbar-nav")
 			li.dropdown
@@ -11,18 +16,18 @@ block content
 				  role="button",
 				  aria-haspopup="true"
 				  aria-expanded="false")
-					| Families
-					span(class="caret")
+					| #{docsName}
+					span.caret
 				ul(class="dropdown-menu")
 					li.disabled
-						a(href="/w/families") All Families
+						a(href="/w/#{docsNameURL}") All #{docsName}
 					li
-						a(href="/w/families/0") New Family
+						a(href="/w/#{docsNameURL}/0") New #{docName}
 
-	h1 Families
+	h1 #{docsName}
 	
 	ul
-		if families
-			each family in families
+		if remoteDocs
+			each remoteDoc in remoteDocs
 				li
-					a(href='/w/families/#{family._id}') #{family.name}
+					a(href='/w/#{docsNameURL}/#{remoteDoc._id}') - #{remoteDoc.sortOrder}.#{remoteDoc.name}
