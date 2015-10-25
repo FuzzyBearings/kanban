@@ -95,7 +95,7 @@ router.post('/update', function(req, res, next) {
 		}
 		else {
 			if (req.body.storyName && req.body.storyName.length > 0) {
-				var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : stories.length;
+				var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : stories.length + 1;
 				storiesTable.insert({ "columnId" : columnId, "name" : storyName, "sortOrder" : sortOrder }, function(err, story) {
 					if (err) {
 						res.send("*** ERROR: there was a problem adding that story to the database.");

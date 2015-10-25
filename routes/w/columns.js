@@ -89,7 +89,7 @@ router.post('/update', function(req, res, next) {
 		}
 		else {
 			if (req.body.columnName && req.body.columnName.length > 0) {
-				var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length;
+				var sortOrder = req.body.sortOrder ? parseInt(req.body.sortOrder) : columns.length + 1;
 				columnsTable.insert({ "boardId" : boardId, "name" : columnName, "sortOrder" : sortOrder }, function(err, column) {
 					if (err) {
 						res.send("*** ERROR: there was a problem adding that column to the database.");

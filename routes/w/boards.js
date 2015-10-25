@@ -40,7 +40,7 @@ router.post('/update', function(req, res) {
 	var boardName = req.body.boardName;
 	var boardId = req.body.boardId;
 	var boards = db.get('boards');
-	var sortOrder = boards.length;
+	var sortOrder = boards.length + 1;
 	if (boardId.length > 1 && boardName.length > 0) {
 		boards.findAndModify({
 			"query" : { "_id" : boardId },

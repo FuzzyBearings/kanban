@@ -1,31 +1,64 @@
 extends ../layout
 
 block content
-	p
-		a(href="/w/boards") All Boards
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/0") New Board
-		|&nbsp;|&nbsp;
-		a(href='/w/boards/#{board._id}') View Board
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/#{board._id}?action=edit") Edit Board
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/#{board._id}?action=delete") Delete Board
-		
-	p
-		a(href="/w/columns/#{column._id}") View Column
-		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=edit") Edit Column
-		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=delete") Delete Column
 
-	if story
-		p
-			a(href="/w/stories/#{story._id}") View Story
-			|&nbsp;|&nbsp;
-			|Edit Story
-			|&nbsp;|&nbsp;
-			a(href="/w/stories/#{story._id}?action=delete") Delete Story
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Boards
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li 
+						a(href="/w/boards") All Boards
+					li
+						a(href="/w/boards/0") New Board
+					li
+						a(href="/w/boards/#{board._id}") View Board
+					li
+						a(href="/w/boards/#{board._id}?action=edit") Edit Board
+					li
+						a(href="/w/boards/#{board._id}?action=delete") Delete Board
+
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Columns
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li
+						a(href="/w/columns/#{column._id}") View Column
+					li 
+						a(href="/w/columns/#{column._id}?action=edit") Edit Column
+					li
+						a(href="/w/columns/#{column._id}?action=delete") Delete Column
+						
+			if story
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false")
+						| Stories
+						span(class="caret")
+					ul(class="dropdown-menu")
+						li
+							a(href="/w/stories/#{story._id}") View Story
+						li.disabled
+							a(href="/w/stories/#{story._id}?action=edit") Edit Story
+						li
+							a(href="/w/stories/#{story._id}?action=delete") Delete Story
 
 	h1 Board
 	
