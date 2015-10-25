@@ -19,7 +19,7 @@ router.get('/:storyId', function(req, res) {
 			}
 			else {
 				page = 'stories/view';
-				if (action == "edit") {
+				if (action === "edit") {
 					page = 'stories/edit';
 				}
 				

@@ -19,7 +19,7 @@ router.get('/:columnId', function(req, res) {
 			}			
 			else {
 				page = 'columns/view';
-				if (action == "edit") {
+				if (action === "edit") {
 					page = 'columns/edit';
 				}
 

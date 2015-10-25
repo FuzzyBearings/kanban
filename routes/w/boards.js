@@ -20,7 +20,7 @@ router.get('/:boardId', function(req, res, next) {
 	}
 
 	var page = 'boards/view';
-	if (action == "edit") {
+	if (action === "edit") {
 		page = 'boards/edit';
 	}
 	
@@ -84,51 +84,3 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
-
-// router.get('/:boardId', function(req, res, next) {
-// 	var db = req.db;
-// 	var boardId = req.params.boardId;
-// 	var collection = db.get('boards');
-// 	collection.find({ "_id" : boardId }, {}, function(e, docs) {
-// 		if (docs.length == 1) {
-// 			res.render('boards/board', {
-// 				"board" : docs[0]
-// 			});
-// 		}
-// 		else {
-// 			// TODO: no board found!
-// 			res.render('boards/board', { });
-// 		}
-// 	});
-// });
-
-// else {
-// 	res.redirect('/w/boards/');
-	
-// 	boards.update({ "_id" : boardId }, { "name", boardName });
-// 	boards.findById(boardId, {}, function(e, board) {
-// 		if (board) {
-// 			var page = 'boards/board';
-// 			if (req.query.action === "edit") {
-// 				page = 'boards/edit';
-// 			}
-// 			res.render(page, {
-// 				"board" : board
-// 			});
-// 		}
-// 		else {
-// 			// TODO: no board found! Render a different page!
-// 			res.render('boards/board', {});
-// 		}
-// 	});
-// }
-// else {
-// 	console.log("inserting new!")
-// 	boards.insert({ "name" : boardName }, function(err, doc) {
-// 		if (err) {
-// 			res.send("There was a problem adding that board to the database.");
-// 		}
-// 		else {
-// 			res.redirect('/w/boards/');
-// 		}
-// 	});	

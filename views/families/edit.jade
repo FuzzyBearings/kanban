@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+
+	-
+		var docsNameURL = 'families';
+		var docsName = 'Families';
+		var docName = 'Family';
+		
+		var childDocsNameURL = 'groups';
+		var childDocName = 'Groups';
+		
+		var localDoc = { name : "", id : "0" };
+		if (remoteDoc && remoteDoc.name && remoteDoc._id) {
+			localDoc.name = remoteDoc.name;
+			localDoc.id = remoteDoc._id;
+		}
+
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")= docsName
+					span.caret
+				ul(class="dropdown-menu")
+					li 
+						a(href="/w/#{docsNameURL}") All #{docsName}
+					li
+						a(href="/w/#{docsNameURL}/0") New #{docName}
+					if remoteDoc
+						li
+							a(href="/w/#{docsNameURL}/#{doc._id}") View #{docName}
+					else
+						li.disabled
+							a View #{docName}
+					li.disabled
+						if remoteDoc
+							a(href="/w/#{docsNameURL}/#{doc._id}?action=edit") Edit #{docName}
+						else
+							a Edit #{docName}
+					if remoteDoc
+						li
+							a(href="/w/#{docsNameURL}/#{doc._id}?action=delete") Delete #{docName}
+					else
+						li.disabled
+							a Delete #{docName}
+						
+	h1= docName
+	
+	p
+		form(method="post", action="/w/${docsNameURL}/update")
+			input(type="text", name="name", placeholder="#{docName} Name" value="#{localDoc.name}", size="70")
+			button(type="submit") submit
+			input(type="hidden", name="id", value="#{localDoc.id}")
+		
+	if localDoc.name && localDoc.name.length > 0
+		h1= childDocName
+		p
+			form(method="post", action="/w/#{childDocsNameURL}/update")
+				input(type="text", name="sortOrder", size="3")
+				input(type='text', name='name', size="60")
+				input(type="hidden", name="parentId", value="#{localDoc.id}")
+				button(type="submit") submit
+
+		if children && children.length > 0
+			each child in children
+				p
+					form(method="post", action="/w/#{childDocsNameURL}/update")
+						input(type="text", name="sortOrder", value="#{child.sortOrder}", size="2")
+						input(type="text", name="name", value="#{child.name}", size="60")
+						input(type="hidden", name="parentId", value="#{localDoc.id}")
+						input(type="hidden", name="id", value="#{child._id}")
+						input(type="hidden", name="sourcePage" value="parent/editor")
+						button(type="submit") submit

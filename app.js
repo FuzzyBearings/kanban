@@ -36,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 ////
 // ROUTES
 ////
+var webFamilyRoutes = require('./routes/w/families');
+app.use('/w/families', webFamilyRoutes);
+
 var webBoardRoutes = require('./routes/w/boards');
 app.use('/w/boards', webBoardRoutes);
 
