@@ -1,13 +1,23 @@
 extends ../layout
 
 block content
-	div.dropdown
-		button(class="btn btn-default dropdown-toggle", type="button", id="nav-boards", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
-			| Boards
-			span(class="caret")
-		ul(class="dropdown-menu", aria-labelledby="nav-boards")
-			li 
-				a(href='/w/boards/0') New Board
+
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Boards
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li.disabled
+						a(href="/w/boards") All Boards
+					li
+						a(href="/w/boards/0") New Board
 
 	h1 Board List
 	

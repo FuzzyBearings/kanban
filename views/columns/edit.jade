@@ -1,23 +1,46 @@
 extends ../layout
 
 block content
-	p
-		a(href="/w/boards") All Boards
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/0") New Board
-		|&nbsp;|&nbsp;
-		a(href='/w/boards/#{board._id}') View Board
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/#{board._id}?action=edit") Edit Board
-		|&nbsp;|&nbsp;
-		a(href="/w/boards/#{board._id}?action=delete") Delete Board
-			
-	p
-		a(href="/w/columns/#{column._id}") View Column
-		|&nbsp;|&nbsp;
-		|Edit Column
-		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?action=delete") Delete Column
+
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Boards
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li 
+						a(href="/w/boards") All Boards
+					li
+						a(href="/w/boards/0") New Board
+					li
+						a(href="/w/boards/#{board._id}") View Board
+					li
+						a(href="/w/boards/#{board._id}?action=edit") Edit Board
+					li
+						a(href="/w/boards/#{board._id}?action=delete") Delete Board
+
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Columns
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li 
+						a(href="/w/columns/#{column._id}") View Column
+					li.disabled 
+						a(href="/w/columns/#{column._id}?action=edit") Edit Column
+					li
+						a(href="/w/columns/#{column._id}?action=delete") Delete Column
 		
 	-
 		var columnName = "";
@@ -29,7 +52,8 @@ block content
 
 	h1 Board
 	
-	p #{board.name}
+	ul
+		li= board.name
 	
 	h1 Column
 	

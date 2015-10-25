@@ -1,21 +1,41 @@
 extends ../layout
 
 block content
-	div.dropdown
-		button(class="btn btn-default dropdown-toggle", type="button", id="nav-boards", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
-			| Boards
-			span(class="caret")
-		ul(class="dropdown-menu", aria-labelledby="nav-boards")
-			li 
-				a(href="/w/boards") All Boards
-			if board
-				li
-					a(href='/w/boards/0') New Board
-				li
-					a(href='/w/boards/#{board._id}') View Board
-				li
-					a(href="/w/boards/#{board._id}?action=delete") Delete Board
-	
+
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| Boards
+					span(class="caret")
+				ul(class="dropdown-menu")
+					li 
+						a(href="/w/boards") All Boards
+					li
+						a(href="/w/boards/0") New Board
+					if board
+						li
+							a(href="/w/boards/#{board._id}") View Board
+					else
+						li.disabled
+							a View Board
+					li.disabled
+						if board
+							a(href="/w/boards/#{board._id}?action=edit") Edit Board
+						else
+							a Edit Board
+					if board
+						li
+							a(href="/w/boards/#{board._id}?action=delete") Delete Board
+					else
+						li.disabled
+							a Delete Board
+						
 	-
 		var boardName = "";
 		var boardId = "0";
