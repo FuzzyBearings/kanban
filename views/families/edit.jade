@@ -53,16 +53,19 @@ block content
 	
 	p
 		form(method="post", action="/w/${docsNameURL}/update")
-			input(type="text", name="name", placeholder="#{docName} Name" value="#{localDoc.name}", size="70")
-			button(type="submit") submit
+			div.input-group
+				input(type="text", class="form-control", placeholder="#{docName} Name", value="#{localDoc.name}", aria-describedby="basic-addon1", size="60")
+				div.input-group-btn
+					button(type="submit", class="btn btn-default") submit
 			input(type="hidden", name="id", value="#{localDoc.id}")
 		
 	if localDoc.name && localDoc.name.length > 0
 		h1= childDocName
 		p
 			form(method="post", action="/w/#{childDocsNameURL}/update")
-				input(type="text", name="sortOrder", size="3")
+				input(type="text", name="sortOrder", size="2")
 				input(type='text', name='name', size="60")
+				input(type="hidden", name="id", value="0")
 				input(type="hidden", name="parentId", value="#{localDoc.id}")
 				button(type="submit") submit
 
