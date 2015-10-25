@@ -1,17 +1,20 @@
 extends ../layout
 
 block content
-	p
-		a(href="/w/boards") All Boards
-		if board
-			|&nbsp;|&nbsp;
-			a(href='/w/boards/0') New Board
-			|&nbsp;|&nbsp;
-			a(href='/w/boards/#{board._id}') View Board
-			|&nbsp;|&nbsp;
-			|Edit Board
-			|&nbsp;|&nbsp;		
-			a(href="/w/boards/#{board._id}?action=delete") Delete Board
+	div.dropdown
+		button(class="btn btn-default dropdown-toggle", type="button", id="nav-boards", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+			| Boards
+			span(class="caret")
+		ul(class="dropdown-menu", aria-labelledby="nav-boards")
+			li 
+				a(href="/w/boards") All Boards
+			if board
+				li
+					a(href='/w/boards/0') New Board
+				li
+					a(href='/w/boards/#{board._id}') View Board
+				li
+					a(href="/w/boards/#{board._id}?action=delete") Delete Board
 	
 	-
 		var boardName = "";
