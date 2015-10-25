@@ -6,11 +6,13 @@ block content
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/0") New Board
 		|&nbsp;|&nbsp;
+		|View Board
+		|&nbsp;|&nbsp;		
 		a(href="/w/boards/#{board._id}?action=edit") Edit Board
 		|&nbsp;|&nbsp;
 		a(href="/w/boards/#{board._id}?action=delete") Delete Board
 
-	h1 Board View
+	h1 Board
 
 	ul
 		li #{board.name}
@@ -25,5 +27,5 @@ block content
 	else
 		ul
 			li
-				a(href="/w/boards/#{board._id}?action=edit") Edit Board
+				a(href="/w/boards/#{board._id}?action=edit") Edit Columns
 			

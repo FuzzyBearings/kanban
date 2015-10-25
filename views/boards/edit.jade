@@ -9,6 +9,8 @@ block content
 			|&nbsp;|&nbsp;
 			a(href='/w/boards/#{board._id}') View Board
 			|&nbsp;|&nbsp;
+			|Edit Board
+			|&nbsp;|&nbsp;		
 			a(href="/w/boards/#{board._id}?action=delete") Delete Board
 	
 	-
@@ -18,35 +20,29 @@ block content
 			boardName = board.name;
 			boardId = board._id
 		}
-	
-	if boardName
-		h1 Edit Board
-		h2 Board
-	else
-		h1 New Board
-		
+
+	h1 Board
 	p
 		form(method="post", action="/w/boards/update")
-			input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}")
+			input(type="text", name="boardName", placeholder="Board Name" value="#{boardName}", size="70")
 			button(type="submit") submit
 			input(type="hidden", name="boardId", value="#{boardId}")
 	
+	h1 Columns
 	if boardName
-		h2 New Column
 		p
 			form(method="post", action="/w/columns/update")
 				input(type="text", name="sortOrder", size="3")
-				input(type='text', name='columnName')
+				input(type='text', name='columnName', size="60")
 				input(type="hidden", name="boardId", value="#{boardId}")
 				button(type="submit") submit
 
 	if columns && columns.length > 0
-		h2 Existing Columns
 		each column in columns
 			p
 				form(method="post", action="/w/columns/update")
 					input(type="text", name="sortOrder", value="#{column.sortOrder}", size="3")
-					input(type="text", name="columnName", value="#{column.name}")
+					input(type="text", name="columnName", value="#{column.name}", size="60")
 					input(type="hidden", name="boardId", value="#{boardId}")
 					input(type="hidden", name="columnId", value="#{column._id}")
 					input(type="hidden", name="source" value="boards/edit")

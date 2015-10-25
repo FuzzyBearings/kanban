@@ -8,13 +8,36 @@ block content
 		|&nbsp;|&nbsp;
 		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?") View Column
+		a(href="/w/boards/#{board._id}?action=edit") Edit Board
 		|&nbsp;|&nbsp;
-		a(href="/w/stories/#{story._id}?action=edit") Edit Story
+		a(href="/w/boards/#{board._id}?action=delete") Delete Board
+		
+	p
+		a(href="/w/columns/#{column._id}") View Column
 		|&nbsp;|&nbsp;
-		a(href="/w/stories/#{story._id}?action=delete") Delete Story
+		a(href="/w/columns/#{column._id}?action=edit") Edit Column
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{column._id}?action=delete") Delete Column
+		
+	if story
+		p
+			|View Story
+			|&nbsp;|&nbsp;
+			a(href="/w/stories/#{story._id}?action=edit") Edit Story
+			|&nbsp;|&nbsp;
+			a(href="/w/stories/#{story._id}?action=delete") Delete Story
 
-	h1 Story View
+	h1 Board
+	
+	ul
+		li #{board.name}
+	
+	h1 Column
+	
+	ul
+		li #{column.name}
 
+	h1 Story
+	
 	ul
 		li #{story.name}

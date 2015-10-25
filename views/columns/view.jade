@@ -8,11 +8,24 @@ block content
 		|&nbsp;|&nbsp;
 		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
+		a(href="/w/boards/#{board._id}?action=edit") Edit Board
+		|&nbsp;|&nbsp;
+		a(href="/w/boards/#{board._id}?action=delete") Delete Board
+		
+	p
+		|View Column
+		|&nbsp;|&nbsp;
 		a(href="/w/columns/#{column._id}?action=edit") Edit Column
 		|&nbsp;|&nbsp;
 		a(href="/w/columns/#{column._id}?action=delete") Delete Column
 
-	h1 Column View
+	h1 Board
+	
+	ul
+		li #{board.name}
+			
+		
+	h1 Column
 
 	ul
 		li #{column.name}
@@ -27,5 +40,5 @@ block content
 	else
 		ul
 			li
-				a(href="/w/columns/#{column._id}?action=edit") Edit Column
+				a(href="/w/columns/#{column._id}?action=edit") Edit Stories
 			

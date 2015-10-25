@@ -8,7 +8,14 @@ block content
 		|&nbsp;|&nbsp;
 		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
+		a(href="/w/boards/#{board._id}?action=edit") Edit Board
+		|&nbsp;|&nbsp;
+		a(href="/w/boards/#{board._id}?action=delete") Delete Board
+			
+	p
 		a(href="/w/columns/#{column._id}") View Column
+		|&nbsp;|&nbsp;
+		|Edit Column
 		|&nbsp;|&nbsp;
 		a(href="/w/columns/#{column._id}?action=delete") Delete Column
 		
@@ -20,20 +27,23 @@ block content
 		columnId = column._id;
 		sortOrder = column.sortOrder;
 
-	h1 Edit Column
-
-	h2 Column
+	h1 Board
+	
+	p #{board.name}
+	
+	h1 Column
 	
 	p
 		form(method="post", action="/w/columns/update")
-			input(type="text", name="columnName", placeholder="Column Name" value="#{columnName}")
+			input(type="text", name="columnName", placeholder="Column Name" value="#{columnName}", size="70")
 			button(type="submit") submit
 			input(type="hidden", name="columnId", value="#{columnId}")
 			input(type="hidden", name="boardId", value="#{board._id}")
 			input(type="hidden", name="sortOrder", value="#{sortOrder}")
 
+	h1 Stories
+	
 	if columnName
-		h2 New Story
 		p
 			form(method="post", action="/w/stories/update")
 				input(type="text", name="sortOrder", size="3")
@@ -42,12 +52,11 @@ block content
 				button(type="submit") submit
 
 	if stories && stories.length > 0
-		h2 Existing Stories
 		each story in stories
 			p
 				form(method="post", action="/w/stories/update")
 					input(type="text", name="sortOrder", value="#{story.sortOrder}", size="3")
-					input(type="text", name="storyName", value="#{story.name}")
+					input(type="text", name="storyName", value="#{story.name}", size="60")
 					input(type="hidden", name="storyId", value="#{story._id}")
 					input(type="hidden", name="columnId", value="#{columnId}")
 					input(type="hidden", name="source" value="columns/edit")

@@ -8,19 +8,40 @@ block content
 		|&nbsp;|&nbsp;
 		a(href='/w/boards/#{board._id}') View Board
 		|&nbsp;|&nbsp;
-		a(href="/w/columns/#{column._id}?") View Column
+		a(href="/w/boards/#{board._id}?action=edit") Edit Board
 		|&nbsp;|&nbsp;
-		a(href="/w/stories/#{story._id}") View Story
+		a(href="/w/boards/#{board._id}?action=delete") Delete Board
+		
+	p
+		a(href="/w/columns/#{column._id}") View Column
 		|&nbsp;|&nbsp;
-		a(href="/w/stories/#{story._id}?action=delete") Delete Story
+		a(href="/w/columns/#{column._id}?action=edit") Edit Column
+		|&nbsp;|&nbsp;
+		a(href="/w/columns/#{column._id}?action=delete") Delete Column
 
-	h1 Edit Story
+	if story
+		p
+			a(href="/w/stories/#{story._id}") View Story
+			|&nbsp;|&nbsp;
+			|Edit Story
+			|&nbsp;|&nbsp;
+			a(href="/w/stories/#{story._id}?action=delete") Delete Story
 
-	h2 Story
+	h1 Board
+	
+	ul
+		li #{board.name}
+	
+	h1 Column
+
+	ul
+		li #{column.name}
+	
+	h1 Story
 	
 	p
 		form(method="post", action="/w/stories/update")
-			input(type="text", name="storyName", placeholder="Story Name" value="#{story.name}")
+			input(type="text", name="storyName", placeholder="Story Name" value="#{story.name}", size="70")
 			button(type="submit") submit
 			input(type="hidden", name="storyId", value="#{story._id}")
 			input(type="hidden", name="columnId", value="#{column._id}")
