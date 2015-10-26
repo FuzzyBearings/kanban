@@ -14,8 +14,6 @@ block content
 					| Boards
 					span(class="caret")
 				ul(class="dropdown-menu")
-					li 
-						a(href="/w/boards") All Boards
 					li
 						a(href="/w/boards/0") New Board
 					li
@@ -24,6 +22,8 @@ block content
 						a(href="/w/boards/#{board._id}?action=edit") Edit Board
 					li
 						a(href="/w/boards/#{board._id}?action=delete") Delete Board
+					li 
+						a(href="/w/boards") All Boards
 
 			li.dropdown
 				a(href="#", 

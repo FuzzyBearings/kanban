@@ -11,11 +11,13 @@ block content
 		var childDocsName = 'Groups';
 		
 		var localDoc = { name : "", id : "0", sortOrder : "1" };
+		var family = remoteDoc;
 		if (remoteDoc && remoteDoc.name && remoteDoc._id) {
 			localDoc.name = remoteDoc.name;
 			localDoc.id = remoteDoc._id;
 			localDoc.sortOrder = remoteDoc.sortOrder;
 		}
+		
 
 	nav(class="navbar navbar-default")
 		ul(class="nav navbar-nav")
@@ -25,41 +27,42 @@ block content
 				  data-toggle="dropdown",
 				  role="button",
 				  aria-haspopup="true"
-				  aria-expanded="false")= docsName
+				  aria-expanded="false") Family
 					span.caret
 				ul(class="dropdown-menu")
-					li 
-						a(href="/w/#{docsNameURL}") All #{docsName}
 					li
-						a(href="/w/#{docsNameURL}/0") New #{docName}
-					if remoteDoc
+						a(href="/w/families") All Families
+					li.divider(role="separator")
+					li
+						a(href="/w/#families/0") New Family
+					if family
 						li
-							a(href="/w/#{docsNameURL}/#{doc._id}") View #{docName}
+							a(href="/w/families/#{family._id}") View #{family.name}
 					else
 						li.disabled
-							a View #{docName}
+							a View Family
 					li.disabled
 						if remoteDoc
-							a(href="/w/#{docsNameURL}/#{doc._id}?action=edit") Edit #{docName}
+							a(href="/w/families/#{family._id}?action=edit") Edit #{family.name}
 						else
-							a Edit #{docName}
-					if remoteDoc
+							a Edit Family
+					if family
 						li
-							a(href="/w/#{docsNameURL}/#{doc._id}?action=delete") Delete #{docName}
+							a(href="/w/families/#{family._id}?action=delete") Delete #{family.name}
 					else
 						li.disabled
-							a Delete #{docName}
+							a Delete Family
 
-	h1= docName
+	h1 #{docName} Editor
 	
 	p
-		form(method="post", action="/w/#{docsNameURL}/update")
-			div.input-group
-				input(type="text", class="form-control", placeholder="Sort Order", name="sortOrder", value="#{localDoc.sortOrder}", size="2")
-				input(type="text", class="form-control", placeholder="#{docName} Name", name="name" value="#{localDoc.name}", size="60")
-				div.input-group-btn
-					button(type="submit", class="btn btn-default") submit
+		form(method="post", action="/w/#{docsNameURL}/update", class="form-inline")
 			input(type="hidden", name="docId", value="#{localDoc.id}")
+			input(type="hidden", name="sortOrder", value="#{localDoc.sortOrder}")
+			div.input-group
+				input(type="text", class="form-control", placeholder="#{docName} Name", name="name" value="#{localDoc.name}")
+				div(class="input-group-btn")
+					button(type="submit", class="btn btn-default") submit
 		
 	if localDoc.name && localDoc.name.length > 0
 		h1= childDocsName

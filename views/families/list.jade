@@ -10,19 +10,19 @@ block content
 	nav(class="navbar navbar-default")
 		ul(class="nav navbar-nav")
 			li.dropdown
-				a(href="#", 
+				a(href="#",
 				  class="dropdown-toggle",
 				  data-toggle="dropdown",
 				  role="button",
 				  aria-haspopup="true"
-				  aria-expanded="false")
-					| #{docsName}
+				  aria-expanded="false") Family
 					span.caret
 				ul(class="dropdown-menu")
 					li.disabled
-						a(href="/w/#{docsNameURL}") All #{docsName}
+						a(href="/w/families") All Families
+					li.divider(role="separator")
 					li
-						a(href="/w/#{docsNameURL}/0") New #{docName}
+						a(href="/w/families/0") New Family
 
 	h1 #{docsName}
 	
@@ -30,4 +30,4 @@ block content
 		if remoteDocs
 			each remoteDoc in remoteDocs
 				li
-					a(href='/w/#{docsNameURL}/#{remoteDoc._id}') - #{remoteDoc.sortOrder}.#{remoteDoc.name}
+					a(href='/w/#{docsNameURL}/#{remoteDoc._id}') #{remoteDoc.name}

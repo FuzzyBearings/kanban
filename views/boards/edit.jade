@@ -14,8 +14,6 @@ block content
 					| Boards
 					span(class="caret")
 				ul(class="dropdown-menu")
-					li 
-						a(href="/w/boards") All Boards
 					li
 						a(href="/w/boards/0") New Board
 					if board
@@ -25,16 +23,15 @@ block content
 						li.disabled
 							a View Board
 					li.disabled
-						if board
-							a(href="/w/boards/#{board._id}?action=edit") Edit Board
-						else
-							a Edit Board
+						a Edit Board
 					if board
 						li
 							a(href="/w/boards/#{board._id}?action=delete") Delete Board
 					else
 						li.disabled
 							a Delete Board
+					li 
+						a(href="/w/boards") All Boards
 						
 	-
 		var boardName = "";

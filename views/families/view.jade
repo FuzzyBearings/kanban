@@ -10,6 +10,8 @@ block content
 		var childDocsNameURL = 'groups';
 		var childDocsName = 'Groups';
 		
+		var family = remoteDoc;
+		
 	nav(class="navbar navbar-default")
 		ul(class="nav navbar-nav")
 			li.dropdown
@@ -22,16 +24,17 @@ block content
 					| #{docsName}
 					span.caret
 				ul(class="dropdown-menu")
-					li 
-						a(href="/w/#{docsNameURL}") All #{docsName}
 					li
-						a(href="/w/#{docsNameURL}/0") New #{docName}
+						a(href="/w/families") All Families
+					li.divider(role="separator")
+					li
+						a(href="/w/families/0") New Family
 					li.disabled
-						a(href="/w/#{docsNameURL}/#{remoteDoc._id}") View #{docName}
+						a View #{family.name}
 					li
-						a(href="/w/#{docsNameURL}/#{remoteDoc._id}?action=edit") Edit #{docName}
+						a(href="/w/families/#{family._id}?action=edit") Edit #{family.name}
 					li
-						a(href="/w/#{docsNameURL}/#{remoteDoc._id}?action=delete") Delete #{docName}
+						a(href="/w/families/#{family._id}?action=delete") Delete #{family.name}
 
 	h1 #{docName}
 
@@ -45,8 +48,4 @@ block content
 			each child in children
 				li
 					a(href='/w/#{childDocsNameURL}/#{child._id}') #{child.name}
-	else
-		ul
-			li
-				a(href="/w/#{docsNameURL}/#{remoteDoc._id}?action=edit") Edit #{docsName}
 			
