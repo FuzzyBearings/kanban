@@ -39,6 +39,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var webFamilyRoutes = require('./routes/w/families');
 app.use('/w/families', webFamilyRoutes);
 
+var webGroupRoutes = require('./routes/w/groups');
+app.use('/w/groups', webFamilyRoutes);
+
 var webBoardRoutes = require('./routes/w/boards');
 app.use('/w/boards', webBoardRoutes);
 
