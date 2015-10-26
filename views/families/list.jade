@@ -24,10 +24,14 @@ block content
 					li
 						a(href="/w/families/0") New Family
 
-	h1 #{docsName}
-	
-	ul
-		if remoteDocs
-			each remoteDoc in remoteDocs
-				li
-					a(href='/w/#{docsNameURL}/#{remoteDoc._id}') #{remoteDoc.name}
+	table.top-level
+		tr
+			th
+				h1 #{docName}
+		tr
+			td
+				if remoteDocs
+					ul
+						each remoteDoc in remoteDocs
+							li
+								a(href='/w/#{docsNameURL}/#{remoteDoc._id}') #{remoteDoc.name}

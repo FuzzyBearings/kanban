@@ -36,16 +36,20 @@ block content
 					li
 						a(href="/w/families/#{family._id}?action=delete") Delete #{family.name}
 
-	h1 #{docName}
-
-	ul
-		li #{remoteDoc.name}
-
-	h1 #{childDocsName}
-
-	if children && children.length > 0
-		ul
-			each child in children
-				li
-					a(href='/w/#{childDocsNameURL}/#{child._id}') #{child.name}
+	table.top-level
+		tr
+			th
+				h1 #{docName}
+			th
+				h1 #{childDocsName}
+		tr
+			td
+				ul
+					li #{remoteDoc.name}
+			td
+				if children && children.length > 0
+					ul
+						each child in children
+							li
+								a(href='/w/#{childDocsNameURL}/#{child._id}') #{child.name}
 			

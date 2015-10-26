@@ -9,6 +9,7 @@ block content
 		
 		var childDocsNameURL = 'groups';
 		var childDocsName = 'Groups';
+		var childDocName = 'Group';
 		
 		var localDoc = { name : "", id : "0", sortOrder : "1" };
 		var family = remoteDoc;
@@ -53,34 +54,40 @@ block content
 						li.disabled
 							a Delete Family
 
-	h1 #{docName} Editor
-	
-	p
-		form(method="post", action="/w/#{docsNameURL}/update", class="form-inline")
-			input(type="hidden", name="docId", value="#{localDoc.id}")
-			input(type="hidden", name="sortOrder", value="#{localDoc.sortOrder}")
-			div.input-group
-				input(type="text", class="form-control", placeholder="#{docName} Name", name="name" value="#{localDoc.name}")
-				div(class="input-group-btn")
-					button(type="submit", class="btn btn-default") submit
-		
-	if localDoc.name && localDoc.name.length > 0
-		h1= childDocsName
-		p
-			form(method="post", action="/w/#{childDocsNameURL}/update")
-				input(type="text", name="sortOrder", size="2")
-				input(type='text', name='name', size="60")
-				input(type="hidden", name="docId", value="0")
-				input(type="hidden", name="parentId", value="#{localDoc.id}")
-				button(type="submit") submit
-
-		if children && children.length > 0
-			each child in children
-				p
-					form(method="post", action="/w/#{childDocsNameURL}/update")
-						input(type="text", name="sortOrder", value="#{child.sortOrder}", size="2")
-						input(type="text", name="name", value="#{child.name}", size="60")
-						input(type="hidden", name="parentDocId", value="#{localDoc.id}")
-						input(type="hidden", name="docId", value="#{child._id}")
-						input(type="hidden", name="sourcePage" value="parent/editor")
-						button(type="submit") submit
+	table.top-level
+		tr
+			th
+				h1 #{docName}
+			th
+				h1 #{childDocsName}
+		tr
+			td
+				form(method="post", action="/w/#{docsNameURL}/update", class="form-inline")
+					input(type="hidden", name="docId", value="#{localDoc.id}")
+					input(type="hidden", name="sortOrder", value="#{localDoc.sortOrder}")
+					.input-group
+						input(type="text", class="form-control", placeholder="#{docName} Name", name="name" value="#{localDoc.name}")
+						.input-group-btn
+							button(type="submit", class="btn btn-default") submit
+							
+			td
+				form(method="post", action="/w/#{childDocsNameURL}/update")
+					input(type="hidden", name="docId", value="0")
+					input(type="hidden", name="parentId", value="#{localDoc.id}")
+					input(type="hidden", name="sortOrder", value="#{children ? children.length + 1 : 1}")
+					.input-group
+						input(type='text', name='name', value="" class="form-control" placeholder="#{childDocName} Name")
+						.input-group-btn
+							button(type="submit", class="btn btn-default") submit
+		tr
+			td &nbsp;
+			td
+				if children && children.length > 0
+					each child in children
+						form(method="post", action="/w/#{childDocsNameURL}/update")
+							input(type="text", name="sortOrder", value="#{child.sortOrder}")
+							input(type="text", name="name", value="#{child.name}")
+							input(type="hidden", name="parentDocId", value="#{localDoc.id}")
+							input(type="hidden", name="docId", value="#{child._id}")
+							input(type="hidden", name="sourcePage" value="parent/editor")
+							button(type="submit") submit

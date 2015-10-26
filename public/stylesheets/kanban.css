@@ -1,3 +1,13 @@
 body {
     padding: 50px;
 }
+
+table.top-level {
+	border-collapse: collapse;
+}
+
+table.top-level td,
+table.top-level th {
+	border: 1px dotted #e1e1e1;
+	padding: 1em;
+}
