@@ -10,4 +10,9 @@ table.top-level td,
 table.top-level th {
 	border: 1px dotted #e1e1e1;
 	padding: 1em;
+	vertical-align: top;
+}
+
+form {
+	padding: 4px 0;
 }

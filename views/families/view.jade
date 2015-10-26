@@ -47,9 +47,9 @@ block content
 				ul
 					li #{remoteDoc.name}
 			td
-				if children && children.length > 0
+				if remoteChildren && remoteChildren.length > 0
 					ul
-						each child in children
+						each child in remoteChildren
 							li
 								a(href='/w/#{childDocsNameURL}/#{child._id}') #{child.name}
 			

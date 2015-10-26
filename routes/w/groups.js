@@ -10,6 +10,10 @@ var docsViewPage = 'groups/view';
 var childDocsName = 'boards';
 var childDocsParentIdName = 'groupId';
 
+var docsParentIdName = "familyId";
+var parentEditor = 'parent/editor';
+var parentEditorRedirect = '/w/families/';
+
 router.get('/:docId', function(req, res) {
 	
 	var db = req.db;
@@ -33,7 +37,7 @@ router.get('/:docId', function(req, res) {
 		else {
 			page = docsViewPage;
 		}
-		presentDocPage(db, docId, res, page);
+		renderDocumentPage(db, docId, res, page);
 	}
 
 });
@@ -45,6 +49,7 @@ router.post('/update', function(req, res) {
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
 	var docId = req.body.docId;
+	var parentDocId = req.body.parentDocId;
 	var docsTable = db.get(docsName);
 	
 	var page = docsViewPage;
@@ -53,18 +58,35 @@ router.post('/update', function(req, res) {
 		// UPDATE
 		docsTable.findAndModify({
 			"query" : { "_id" : docId },
-			"update" : { "name" : docName, "sortOrder" : sortOrder },
+			"update" : { "name" : docName, "sortOrder" : sortOrder, "parentId" : parentDocId },
 			"new" : true,		// no workie?
 			"upsert" : false	// no workie?
 		}, function(err, oldDoc) {
-			presentDocPage(db, docId, res, docsViewPage);
+			
+			if (req.body.sourcePage === parentEditor) {
+				var url = parentEditorRedirect + parentDocId + "?action=edit";
+				console.log('URL: ' + url);
+				res.redirect(url);
+			}
+			else {
+				// renderColumn(db, columnId, res, 'columns/view');
+			}
+			
 		});
 	}
 	else {
 		// CREATE
-		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder }, function(err, doc) {
+		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "parentId" : parentDocId }, function(err, doc) {
 			if (doc) {
-				res.render(docsViewPage, { "remoteDoc" : doc });				
+				
+				if (req.body.sourcePage === parentEditor) {
+					var url = parentEditorRedirect + parentDocId + "?action=edit";
+					console.log('URL: ' + url);
+					res.redirect(url);
+				}
+				else {
+					// renderColumn(db, columnId, res, 'columns/view');
+				}
 			}
 			else {
 				res.send("There was a problem adding that document to the database.");
@@ -87,7 +109,7 @@ router.get('/', function(req, res) {
 	});
 });
 
-function presentDocPage(db, docId, res, page) {
+function renderDocumentPage(db, docId, res, page) {
 	if (docId === "0") {
 		res.render(page, { });
 	}

@@ -40,7 +40,7 @@ var webFamilyRoutes = require('./routes/w/families');
 app.use('/w/families', webFamilyRoutes);
 
 var webGroupRoutes = require('./routes/w/groups');
-app.use('/w/groups', webFamilyRoutes);
+app.use('/w/groups', webGroupRoutes);
 
 var webBoardRoutes = require('./routes/w/boards');
 app.use('/w/boards', webBoardRoutes);
