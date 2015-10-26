@@ -72,18 +72,6 @@ block content
 							button(type="submit", class="btn btn-default") submit
 							
 			td
-				form(method="post", action="/w/#{childDocsNameURL}/update")
-					input(type="hidden", name="sourcePage" value="parent/editor")
-					input(type="hidden", name="docId", value="0")
-					input(type="hidden", name="sortOrder", value="#{remoteChildren ? remoteChildren.length + 1 : 1}")
-					input(type="hidden", name="parentDocId", value="#{localDoc.id}")
-					.input-group
-						input(type='text', name='name', value="" class="form-control" placeholder="#{childDocName} Name")
-						.input-group-btn
-							button(type="submit", class="btn btn-default") submit
-		tr
-			td &nbsp;
-			td
 				if remoteChildren && remoteChildren.length > 0
 					each child in remoteChildren
 						form(method="post", action="/w/#{childDocsNameURL}/update", class="editing-form")
@@ -95,3 +83,16 @@ block content
 								input(type="text", name="name", value="#{child.name}", class="form-control", placeholder="#{childDocName} Name")
 								.input-group-btn
 									button(type="submit", class="btn btn-default") submit
+		tr
+			td &nbsp;
+			td
+				form(method="post", action="/w/#{childDocsNameURL}/update")
+					input(type="hidden", name="sourcePage" value="parent/editor")
+					input(type="hidden", name="docId", value="0")
+					input(type="hidden", name="sortOrder", value="#{remoteChildren ? remoteChildren.length + 1 : 1}")
+					input(type="hidden", name="parentDocId", value="#{localDoc.id}")
+					.input-group
+						input(type='text', name='name', value="" class="form-control" placeholder="New #{childDocName} Name")
+						.input-group-btn
+							button(type="submit", class="btn btn-default") submit
+
