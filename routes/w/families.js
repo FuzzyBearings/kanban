@@ -74,17 +74,7 @@ router.post('/update', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-	var db = req.db;
-	var docsTable = db.get(docsName);
-	var page = docsListPage;
-	docsTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, docs) {
-		if (docs) {
-			res.render(page, { "remoteDocs" : docs });
-		}
-		else {
-			console.log("FATAL ERROR: could not fetch " + docsName + ".");
-		}
-	});
+	sharedRoutes.renderDocumentPageFamily(req, res, null);
 });
 
 function renderDocumentPage(db, docId, res, page) {

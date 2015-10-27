@@ -1,1 +1,93 @@
 extends layout
+
+block content
+
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false") Family
+					span.caret
+				ul(class="dropdown-menu")
+					li
+						a(href="/w/families") All Families
+					li.divider(role="separator")
+
+	-
+		var localFamily = { familyId : 0, sortOrder : 1, "name" : "" }
+		if (remoteFamily) {
+			localFamily.familyId = remoteFamily._id;
+			localFamily.name = remoteFamily.name;
+			localFamily.sortOrder = remoteFamily.sortOrder;
+		}
+		if (remoteFamilies) {
+			localFamily.sortOrder = remoteFamilies.length + 1;
+		}
+
+		var localGroup = { groupId : 0, sortOrder : 1, "name" : "" }
+		if (remoteGroup) {
+			localGroup.familyId = remoteGroup._id;
+			localGroup.name = remoteGroup.name;
+			localGroup.sortOrder = remoteGroup.sortOrder;
+		}
+		if (remoteGroups) {
+			localGroup.sortOrder = remoteGroups.length + 1;
+		}
+
+	table.top-level
+		tr
+			th
+				h1 Family
+			if remoteFamily
+				th
+					h1 Group
+		tr
+			td
+				form(method="post", action="/w/families/update", class="form-inline")
+					input(type="hidden", name="familyId", value="#{localFamily.familyId}")
+					input(type="hidden", name="sortOrder", value="#{localFamily.sortOrder}")
+					.input-group
+						input(name="name", value="#{localFamily.name}", placeholder="Family Name", type="text", class="form-control")
+						.input-group-btn
+							button(type="submit", class="btn btn-default") submit
+			
+			if remoteFamily
+				td
+					form(method="post", action="/w/groups/update", class="form-inline")
+						input(type="hidden", name="groupId", value="#{localGroup.groupId}")
+						input(type="hidden", name="sortOrder", value="#{localGroup.sortOrder}")
+						.input-group
+							input(name="name" value="localGroup.name", placeholder="Group Name", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+
+		tr
+			td
+				if remoteFamilies && remoteFamilies.length > 0
+					each family in remoteFamilies
+						form(method="post", action="/w/families/update", class="editing-form")
+							input(type="hidden", name="familyId", value="#{family._id}")
+							input(type="hidden", name="sortOrder", value="#{family.sortOrder}")
+							.input-group
+								input(type="text", name="name", value="#{family.name}", class="form-control", placeholder="Family Name")
+								.input-group-btn
+									button(type="submit", class="btn btn-default") submit
+				else
+					&nbsp;
+
+			if remoteFamily && remoteGroups && remoteGroups.length > 0
+				td
+					each group in remoteGroups
+						form(method="post", action="/w/groups/update")
+							input(type="hidden", name="sortOrder", value="#{group.sortOrder}")
+							input(type="hidden", name="familyId", value="#{group.familyId}")
+							input(type="hidden", name="groupId", value="#{group._id}")
+							.input-group
+								input(type='text', name='name', value="#{group.name}" class="form-control" placeholder="Group Name")
+								.input-group-btn
+									button(type="submit", class="btn btn-default") submit
+

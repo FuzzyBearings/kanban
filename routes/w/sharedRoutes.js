@@ -1,3 +1,21 @@
+var editorPage = 'editor';
+
+function renderDocumentPageFamily(req, res, familyId) {
+	var db = req.db;
+	var familyTable = db.get('family');
+	familyTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, families) {
+		if (families) {
+			res.render(editorPage, { "rFamilies" : families });
+		}
+		else {
+			console.log("FATAL ERROR: could not fetch families.");
+		}
+	});
+}
+
+//
+// OLD
+//
 function renderDocumentPage(db, res, objectGraph) {
 	if (docId === "0") {
 		res.render(page, { });
@@ -25,4 +43,4 @@ function renderDocumentPage(db, res, objectGraph) {
 	}
 }
 
-exports.renderDocumentPage = renderDocumentPage;
+exports.renderDocumentPageFamily = renderDocumentPageFamily;
