@@ -33,7 +33,7 @@ router.post('/update', function(req, res) {
 					res.send("There was a problem removing that document from the database.");					
 				}
 				else {
-					sharedRoutes.renderDocumentPageBoard(req, res, null);					
+					sharedRoutes.renderDocumentPageGroup(req, res, groupId);
 				}
 			});			
 		}

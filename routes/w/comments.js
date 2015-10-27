@@ -13,7 +13,7 @@ router.post('/update', function(req, res) {
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
 	var cardId = req.body.cardId;
-	var docId = req.body.columnId;
+	var docId = req.body.commentId;
 	var docsTable = db.get('comments');
 
 	if (docId.length > 1) {
@@ -33,7 +33,7 @@ router.post('/update', function(req, res) {
 					res.send("There was a problem removing that document from the database.");					
 				}
 				else {
-					sharedRoutes.renderDocumentPageComment(req, res, null);					
+					sharedRoutes.renderDocumentPageCard(req, res, cardId);
 				}
 			});			
 		}

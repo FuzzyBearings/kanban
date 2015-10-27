@@ -8,6 +8,7 @@ function renderDocumentPageComment(req, res, commentId) {
 			renderDocumentPageCard(req, res, comment.cardId, comment);
 		}
 		else {
+			console.log("err: " + err);
 			res.send("FATAL ERROR: could not find that comment(" + commentId + ") in the database");
 		}
 	});
@@ -21,6 +22,7 @@ function renderDocumentPageCard(req, res, cardId, comment) {
 			renderDocumentPageColumn(req, res, card.columnId, card, comment);
 		}
 		else {
+			console.log("err: " + err);
 			res.send("FATAL ERROR: could not find that card(" + cardId + ") in the database");
 		}
 	});
@@ -34,6 +36,7 @@ function renderDocumentPageColumn(req, res, columnId, card, comment) {
 			renderDocumentPageBoard(req, res, column.boardId, column, card, comment);
 		}
 		else {
+			console.log("err: " + err);
 			res.send("FATAL ERROR: could not find that column(" + columnId + ") in the database");
 		}
 	});
@@ -47,6 +50,7 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 			renderDocumentPageGroup(req, res, board.groupId, board, column, card, comment);
 		}
 		else {
+			console.log("err: " + err);
 			res.send("FATAL ERROR: could not find that board(" + boardId + ") in the database");
 		}
 	});
@@ -60,9 +64,10 @@ function renderDocumentPageGroup(req, res, groupId, board, column, card, comment
 			renderDocumentPageFamily(req, res, group.familyId, group, board, column, card, comment);
 		}
 		else {
+			console.log("err: " + err);
 			res.send("FATAL ERROR: could not find that group(" + groupId + ") in the database");
 		}
-	});
+	});		
 }
 
 function renderDocumentPageFamily(req, res, familyId, group, board, column, card, comment) {
@@ -76,6 +81,7 @@ function renderDocumentPageFamily(req, res, familyId, group, board, column, card
 						findGroupsForFamily(db, res, family, group, board, column, card, comment, families);
 					}
 					else {
+						console.log("err: " + err2);
 						res.send("FATAL ERROR: could not find that family(" + familyId + ") in the database.");
 					}
 				});
@@ -85,6 +91,7 @@ function renderDocumentPageFamily(req, res, familyId, group, board, column, card
 			}
 		}
 		else {
+			console.log("err: " + err1);
 			res.send("FATAL ERROR: could not fetch families.");
 		}
 	});
@@ -155,7 +162,7 @@ function findCardsForColumn(db, res, family, group, board, column, card, comment
 		var table = db.get('cards');
 		table.find({ "columnId" : column._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, cards) {
 			if (cards) {
-				findCommentsForCard(db, res, family, group, board, column, card, comment, families, groups, boards, cards);
+				findCommentsForCard(db, res, family, group, board, column, card, comment, families, groups, boards, columns, cards);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
