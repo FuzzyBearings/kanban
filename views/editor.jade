@@ -106,30 +106,32 @@ block content
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
 			
-				td
-					if remoteGroup
-						form(method="post", action="/w/groups/update", class="form-inline")
-							input(type="hidden", name="familyId", value="#{localGroup.familyId}")
-							input(type="hidden", name="groupId", value="#{localGroup.groupId}")
-							input(type="hidden", name="sortOrder", value="#{localGroup.sortOrder}")
-							.input-group
-								input(name="name" value="#{localGroup.name}", placeholder="Group Name", type="text", class="form-control")
-								.input-group-btn
-									button(type="submit", class="btn btn-default") submit
-					else
-						| &nbsp;
-				td
-					if remoteBoard
-						form(method="post", action="/w/boards/update", class="form-inline")
-							input(type="hidden", name="groupId", value="#{localGroup.groupId}")
-							input(type="hidden", name="boardId", value="#{localBoard.boardId}")
-							input(type="hidden", name="sortOrder", value="#{localBoard.sortOrder}")
-							.input-group
-								input(name="name" value="#{localBoard.name}", placeholder="Board Name", type="text", class="form-control")
-								.input-group-btn
-									button(type="submit", class="btn btn-default") submit
-					else
-						| &nbsp;
+				if remoteFamily
+					td
+						if remoteGroup
+							form(method="post", action="/w/groups/update", class="form-inline")
+								input(type="hidden", name="familyId", value="#{localGroup.familyId}")
+								input(type="hidden", name="groupId", value="#{localGroup.groupId}")
+								input(type="hidden", name="sortOrder", value="#{localGroup.sortOrder}")
+								.input-group
+									input(name="name" value="#{localGroup.name}", placeholder="Group Name", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+						else
+							| &nbsp;
+				if remoteGroup
+					td
+						if remoteBoard
+							form(method="post", action="/w/boards/update", class="form-inline")
+								input(type="hidden", name="groupId", value="#{localGroup.groupId}")
+								input(type="hidden", name="boardId", value="#{localBoard.boardId}")
+								input(type="hidden", name="sortOrder", value="#{localBoard.sortOrder}")
+								.input-group
+									input(name="name" value="#{localBoard.name}", placeholder="Board Name", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+						else
+							| &nbsp;
 
 		tr
 			td
