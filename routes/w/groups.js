@@ -38,7 +38,7 @@ router.post('/update', function(req, res) {
 			});			
 		}
 	}
-	else {
+	else if (docName && docName.length > 0) {
 		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "familyId" : familyId }, function(err, doc) {
 			if (doc) {
 				sharedRoutes.renderDocumentPageGroup(req, res, doc._id);
@@ -47,6 +47,9 @@ router.post('/update', function(req, res) {
 				res.send("There was a problem adding that document to the database.");
 			}
 		});
+	}
+	else {
+		sharedRoutes.renderDocumentPageFamily(req, res, null);		
 	}
 });
 
