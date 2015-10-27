@@ -1,4 +1,4 @@
-var editorPage = 'editor';
+var editorPage = 'portrait';
 
 function renderDocumentPageComment(req, res, commentId) {
 	var db = req.db;
