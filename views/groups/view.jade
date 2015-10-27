@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+
+	-
+		var docsNameURL = 'families';
+		var docsName = 'Families';
+		var docName = 'Family';
+		
+		var childDocsNameURL = 'groups';
+		var childDocsName = 'Groups';
+		
+		var family = remoteDoc;
+		
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", 
+				  class="dropdown-toggle",
+				  data-toggle="dropdown",
+				  role="button",
+				  aria-haspopup="true"
+				  aria-expanded="false")
+					| #{docsName}
+					span.caret
+				ul(class="dropdown-menu")
+					li
+						a(href="/w/families") All Families
+					li.divider(role="separator")
+					li
+						a(href="/w/families/0") New Family
+					li.disabled
+						a View #{family.name}
+					li
+						a(href="/w/families/#{family._id}?action=edit") Edit #{family.name}
+					li
+						a(href="/w/families/#{family._id}?action=delete") Delete #{family.name}
+
+	table.top-level
+		tr
+			th
+				h1 #{docName}
+			th
+				h1 #{childDocsName}
+		tr
+			td
+				ul
+					li #{remoteDoc.name}
+			td
+				if remoteChildren && remoteChildren.length > 0
+					ul
+						each child in remoteChildren
+							li
+								a(href='/w/#{childDocsNameURL}/#{child._id}') #{child.name}
+			

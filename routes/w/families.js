@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var sharedRoutes = require('./sharedRoutes');
 
 var docsName = 'families';
 var docsListPageRedirect = '/w/families';
