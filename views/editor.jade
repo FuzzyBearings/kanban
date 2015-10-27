@@ -53,6 +53,42 @@ block content
 			boardSortOrder = remoteBoards.length + 1;
 		}
 
+		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
+		if (remoteColumn) {
+			localColumn.boardId = remoteColumn._id;
+			localColumn.name = remoteColumn.name;
+			localColumn.sortOrder = remoteColumn.sortOrder;
+			localColumn.boardId = remoteColumn.boardId;
+		}
+		var columnSortOrder = 1;
+		if (remoteColumns) {
+			columnSortOrder = remoteColumns.length + 1;
+		}
+		
+		var localCard = { cardId : 0, "name" : "", sortOrder : 1, columnId : "0" }
+		if (remoteCard) {
+			localCard.cardId = remoteCard._id;
+			localCard.name = remoteCard.name;
+			localCard.sortOrder = remoteCard.sortOrder;
+			localCard.columnId = remoteCard.columnId;
+		}
+		var cardSortOrder = 1;
+		if (remoteCards) {
+			cardSortOrder = remoteCards.length + 1;
+		}
+
+		var localComment = { commentId : 0, "name" : "", sortOrder : 1, cardId : "0" }
+		if (remoteComment) {
+			localComment.commentId = remoteComment._id;
+			localComment.name = remoteComment.name;
+			localComment.sortOrder = remoteComment.sortOrder;
+			localComment.cardId = remoteComment.cardId;
+		}
+		var commentSortOrder = 1;
+		if (remoteComments) {
+			commentSortOrder = remoteComments.length + 1;
+		}
+		
 	table.top-level
 		tr
 			th
@@ -63,6 +99,9 @@ block content
 			if remoteGroup
 				th
 					h1 Board
+			if remoteBoard
+				th
+					h1 Column
 
 		tr
 			td
@@ -90,6 +129,16 @@ block content
 						input(type="hidden", name="groupId", value="#{remoteGroup._id}")
 						input(type="hidden", name="boardId", value="0")
 						input(type="hidden", name="sortOrder", value="#{boardSortOrder}")
+						.input-group
+							input(name="name" value="", placeholder="Board Name", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+			if remoteBoard
+				td
+					form(method="post", action="/w/columns/update", class="form-inline")
+						input(type="hidden", name="groupId", value="#{remoteBoard._id}")
+						input(type="hidden", name="boardId", value="0")
+						input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
 						.input-group
 							input(name="name" value="", placeholder="Board Name", type="text", class="form-control")
 							.input-group-btn
