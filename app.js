@@ -48,8 +48,11 @@ app.use('/w/boards', webBoardRoutes);
 var webColumnRoutes = require('./routes/w/columns');
 app.use('/w/columns', webColumnRoutes);
 
-var webStoriesRoutes = require('./routes/w/stories');
-app.use('/w/stories', webStoriesRoutes);
+var webCardRoutes = require('./routes/w/cards');
+app.use('/w/cards', webCardRoutes);
+
+var webCommentRoutes = require('./routes/w/comments');
+app.use('/w/comments', webCommentRoutes);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

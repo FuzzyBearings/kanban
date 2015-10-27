@@ -292,7 +292,7 @@ block content
 			if remoteBoard
 				td
 					if remoteColumns && remoteColumns.length > 0
-						each columns in remoteColumns
+						each column in remoteColumns
 							form(method="post", action="/w/columns/update", class="editing-form")
 								input(type="hidden", name="boardId", value="#{column.boardId}")
 								input(type="hidden", name="columnId", value="#{column._id}")
