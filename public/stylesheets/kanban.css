@@ -16,3 +16,7 @@ table.top-level th {
 form {
 	padding: 4px 0;
 }
+
+tr.selected td {
+	background-color: #f3f7f3;
+}

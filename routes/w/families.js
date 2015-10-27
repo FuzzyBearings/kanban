@@ -40,18 +40,28 @@ router.post('/update', function(req, res) {
 	var docsTable = db.get('family');
 
 	if (docId.length > 1) {
-		// UPDATE
-		docsTable.findAndModify({
-			"query" : { "_id" : docId },
-			"update" : { "name" : docName, "sortOrder" : sortOrder },
-			"new" : true,		// no workie?
-			"upsert" : false	// no workie?
-		}, function(err, oldDoc) {
-			sharedRoutes.renderDocumentPageFamily(req, res, docId);
-		});
+		if (docName && docName.length > 0) {
+			docsTable.findAndModify({
+				"query" : { "_id" : docId },
+				"update" : { "name" : docName, "sortOrder" : sortOrder },
+				"new" : true,		// no workie?
+				"upsert" : false	// no workie?
+			}, function(err, oldDoc) {
+				sharedRoutes.renderDocumentPageFamily(req, res, docId);
+			});			
+		}
+		else {
+			docsTable.remove({ "_id" : docId }, function(err) {
+				if (err) {
+					res.send("There was a problem removing that document from the database.");					
+				}
+				else {
+					sharedRoutes.renderDocumentPageFamily(req, res, null);					
+				}
+			});			
+		}
 	}
 	else {
-		// CREATE
 		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder }, function(err, doc) {
 			if (doc) {
 				sharedRoutes.renderDocumentPageFamily(req, res, doc._id);
