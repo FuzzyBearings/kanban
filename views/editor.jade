@@ -102,6 +102,12 @@ block content
 			if remoteBoard
 				th
 					h1 Column
+			if remoteColumn
+				th
+					h1 Card
+			if remoteCard
+				th
+					h1 Comment
 
 		tr
 			td
@@ -136,11 +142,31 @@ block content
 			if remoteBoard
 				td
 					form(method="post", action="/w/columns/update", class="form-inline")
-						input(type="hidden", name="groupId", value="#{remoteBoard._id}")
-						input(type="hidden", name="boardId", value="0")
+						input(type="hidden", name="boardId", value="#{remoteBoard._id}")
+						input(type="hidden", name="columnId", value="0")
 						input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
 						.input-group
-							input(name="name" value="", placeholder="Board Name", type="text", class="form-control")
+							input(name="name" value="", placeholder="Column Name", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+			if remoteColumn
+				td
+					form(method="post", action="/w/cards/update", class="form-inline")
+						input(type="hidden", name="columnId", value="#{remoteColumn._id}")
+						input(type="hidden", name="cardId", value="0")
+						input(type="hidden", name="sortOrder", value="#{cardSortOrder}")
+						.input-group
+							input(name="name" value="", placeholder="Card Name", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+			if remoteCard
+				td
+					form(method="post", action="/w/comments/update", class="form-inline")
+						input(type="hidden", name="cardId", value="#{remoteCard._id}")
+						input(type="hidden", name="commentId", value="0")
+						input(type="hidden", name="sortOrder", value="#{commentSortOrder}")
+						.input-group
+							input(name="name" value="", placeholder="Comment Name", type="text", class="form-control")
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
 
@@ -154,7 +180,6 @@ block content
 							input(name="name", value="#{localFamily.name}", placeholder="Family Name", type="text", class="form-control")
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
-			
 				if remoteFamily
 					td
 						if remoteGroup
@@ -172,11 +197,50 @@ block content
 					td
 						if remoteBoard
 							form(method="post", action="/w/boards/update", class="form-inline")
-								input(type="hidden", name="groupId", value="#{localGroup.groupId}")
+								input(type="hidden", name="groupId", value="#{localBoard.groupId}")
 								input(type="hidden", name="boardId", value="#{localBoard.boardId}")
 								input(type="hidden", name="sortOrder", value="#{localBoard.sortOrder}")
 								.input-group
 									input(name="name" value="#{localBoard.name}", placeholder="Board Name", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+						else
+							| &nbsp;
+				if remoteBoard
+					td
+						if remoteColumn
+							form(method="post", action="/w/columns/update", class="form-inline")
+								input(type="hidden", name="boardId", value="#{localColumn.boardId}")
+								input(type="hidden", name="columnId", value="#{localColumn.columnId}")
+								input(type="hidden", name="sortOrder", value="#{localColumn.sortOrder}")
+								.input-group
+									input(name="name" value="#{localColumn.name}", placeholder="Column Name", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+						else
+							| &nbsp;
+				if remoteColumn
+					td
+						if remoteCard
+							form(method="post", action="/w/cards/update", class="form-inline")
+								input(type="hidden", name="columnId", value="#{localCard.columnId}")
+								input(type="hidden", name="cardId", value="#{localCard.cardId}")
+								input(type="hidden", name="sortOrder", value="#{localCard.sortOrder}")
+								.input-group
+									input(name="name" value="#{localCard.name}", placeholder="Card Name", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+						else
+							| &nbsp;
+				if remoteCard
+					td
+						if remoteComment
+							form(method="post", action="/w/comments/update", class="form-inline")
+								input(type="hidden", name="cardId", value="#{localComment.cardId}")
+								input(type="hidden", name="commentId", value="#{localComment.commentId}")
+								input(type="hidden", name="sortOrder", value="#{localComment.sortOrder}")
+								.input-group
+									input(name="name" value="#{localComment.name}", placeholder="Comment Name", type="text", class="form-control")
 									.input-group-btn
 										button(type="submit", class="btn btn-default") submit
 						else
