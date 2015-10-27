@@ -49,7 +49,7 @@ router.post('/update', function(req, res) {
 		});
 	}
 	else {
-		sharedRoutes.renderDocumentPageComment(req, res, null);		
+		sharedRoutes.renderDocumentPageCard(req, res, cardId);
 	}
 });
 
