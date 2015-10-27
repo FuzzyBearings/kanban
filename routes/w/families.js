@@ -2,14 +2,6 @@ var express = require('express');
 var router = express.Router();
 var sharedRoutes = require('./sharedRoutes');
 
-var docsName = 'families';
-var docsListPageRedirect = '/w/families';
-var docsListPage = 'families/list';
-var docsEditPage = 'families/edit';
-var docsViewPage = 'families/view';
-
-var childDocsName = 'groups';
-
 router.get('/:docId', function(req, res) {
 	
 	var db = req.db;
@@ -44,11 +36,9 @@ router.post('/update', function(req, res) {
 	
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
-	var docId = req.body.docId;
-	var docsTable = db.get(docsName);
-	
-	var page = docsViewPage;
-	
+	var docId = req.body.familyId;
+	var docsTable = db.get('family');
+
 	if (docId.length > 1) {
 		// UPDATE
 		docsTable.findAndModify({
@@ -57,14 +47,14 @@ router.post('/update', function(req, res) {
 			"new" : true,		// no workie?
 			"upsert" : false	// no workie?
 		}, function(err, oldDoc) {
-			renderDocumentPage(db, docId, res, docsViewPage);
+			sharedRoutes.renderDocumentPageFamily(req, res, docId);
 		});
 	}
 	else {
 		// CREATE
 		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder }, function(err, doc) {
 			if (doc) {
-				res.render(docsViewPage, { "remoteDoc" : doc });				
+				sharedRoutes.renderDocumentPageFamily(req, res, doc._id);
 			}
 			else {
 				res.send("There was a problem adding that document to the database.");
