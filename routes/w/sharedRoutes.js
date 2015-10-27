@@ -1,11 +1,63 @@
 var editorPage = 'editor';
 
-function renderDocumentPageGroup(req, res, groupId) {
+function renderDocumentPageComment(req, res, commentId) {
 	var db = req.db;
-	var groupTable = db.get('groups');
-	groupTable.findById(groupId, {}, function(err, group) {
+	var table = db.get('comments');
+	table.findById(commentId, {}, function(err, comment) {
+		if (comment) {
+			renderDocumentPageCard(req, res, comment.cardId, comment._id);
+		}
+		else {
+			res.send("FATAL ERROR: could not find that comment(" + commentId + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageCard(req, res, cardId, commentId) {
+	var db = req.db;
+	var table = db.get('cards');
+	table.findById(cardId, {}, function(err, card) {
+		if (card) {
+			renderDocumentPageColumn(req, res, card.columnId, card._id, commentId);
+		}
+		else {
+			res.send("FATAL ERROR: could not find that card(" + cardId + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageColumn(req, res, columnId, cardId, commentId) {
+	var db = req.db;
+	var table = db.get('columns');
+	table.findById(columnId, {}, function(err, column) {
+		if (column) {
+			renderDocumentPageBoard(req, res, column.boardId, column._id, cardId, commentId);
+		}
+		else {
+			res.send("FATAL ERROR: could not find that column(" + columnId + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageBoard(req, res, boardId, columnId, cardId, commentId) {
+	var db = req.db;
+	var table = db.get('boards');
+	table.findById(boardId, {}, function(err, board) {
+		if (board) {
+			renderDocumentPageGroup(req, res, board.groupId, board._id, columnId, cardId, commentId);
+		}
+		else {
+			res.send("FATAL ERROR: could not find that board(" + boardId + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageGroup(req, res, groupId, boardId, columnId, cardId, commentId) {
+	var db = req.db;
+	var table = db.get('groups');
+	table.findById(groupId, {}, function(err, group) {
 		if (group) {
-			renderDocumentPage(req, res, group.familyId, group._id);
+			renderDocumentPage(req, res, group.familyId, group._id, boardId, columnId, cardId, commentId);
 		}
 		else {
 			res.send("FATAL ERROR: could not find that group(" + groupId + ") in the database");
@@ -13,8 +65,8 @@ function renderDocumentPageGroup(req, res, groupId) {
 	});
 }
 
-function renderDocumentPageFamily(req, res, familyId) {
-	renderDocumentPage(req, res, familyId);
+function renderDocumentPageFamily(req, res, familyId, groupId, boardId, columnId, cardId, commentId) {
+	renderDocumentPage(req, res, familyId, groupId, boardId, columnId, cardId, commentId);
 }
 
 function renderDocumentPage(req, res, familyId, groupId, boardId, columnId, cardId, commentId) {
@@ -65,5 +117,9 @@ function renderDocumentPage(req, res, familyId, groupId, boardId, columnId, card
 	});
 }
 
+exports.renderDocumentPageComment = renderDocumentPageComment;
+exports.renderDocumentPageCard = renderDocumentPageCard;
+exports.renderDocumentPageColumn = renderDocumentPageColumn;
+exports.renderDocumentPageBoard = renderDocumentPageBoard;
 exports.renderDocumentPageGroup = renderDocumentPageGroup;
 exports.renderDocumentPageFamily = renderDocumentPageFamily;

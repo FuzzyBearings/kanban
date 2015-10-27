@@ -1,86 +1,53 @@
 var express = require('express');
 var router = express.Router();
+var sharedRoutes = require('./sharedRoutes');
 
-router.get('/:boardId', function(req, res, next) {
-	var db = req.db;
-	var boards = db.get('boards');
-	var boardId = req.params.boardId;
-	var action = req.query.action;
-
-	if (boardId === "0") {
-		res.render('boards/edit', {});
-		return;
-	}
-	
-	if (action === "delete") {
-		boards.remove({ "_id" : boardId }, function(err) {
-			res.redirect('/w/boards');
-		});
-		return;
-	}
-
-	var page = 'boards/view';
-	if (action === "edit") {
-		page = 'boards/edit';
-	}
-	
-	boards.findById(boardId, {}, function(e, board) {
-		var columns = db.get('columns');
-		if (board) {
-			columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
-				res.render(page, { "board" : board, "columns" : columns });
-			});
-		}
-	});	
+router.get('/:docId', function(req, res) {	
+	var docId = req.params.docId;
+	sharedRoutes.renderDocumentPageBoard(req, res, docId);
 });
 
 router.post('/update', function(req, res) {
-	var db = req.db;
 	
-	var boardName = req.body.boardName;
-	var boardId = req.body.boardId;
-	var boards = db.get('boards');
-	var sortOrder = boards.length + 1;
-	if (boardId.length > 1 && boardName.length > 0) {
-		boards.findAndModify({
-			"query" : { "_id" : boardId },
-			"update" : { "name" : boardName, "sortOrder" : sortOrder },
-			"new" : true,		// no workie?
-			"upsert" : false	// no workie?
-		}, function(err, oldBoard) {
-			boards.findById(boardId, {}, function(e, board) {
-				if (board) {
-					var columns = db.get('columns');
-					columns.find({ "boardId" : boardId }, { sort : { "sortOrder" : 1 }}, function(e, columns) {
-						res.render('boards/view', { "board" : board, "columns" : columns });
-					});
+	var db = req.db;
+	var docName = req.body.name;
+	var sortOrder = req.body.sortOrder;
+	var groupId = req.body.groupId;
+	var docId = req.body.boardId;
+	var docsTable = db.get('boards');
+
+	if (docId.length > 1) {
+		if (docName && docName.length > 0) {
+			docsTable.findAndModify({
+				"query" : { "_id" : docId },
+				"update" : { "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId },
+				"new" : true,		// no workie?
+				"upsert" : false	// no workie?
+			}, function(err, oldDoc) {
+				sharedRoutes.renderDocumentPageBoard(req, res, docId);
+			});			
+		}
+		else {
+			docsTable.remove({ "_id" : docId }, function(err) {
+				if (err) {
+					res.send("There was a problem removing that document from the database.");					
 				}
 				else {
-					res.redirect('/w/boards');
+					sharedRoutes.renderDocumentPageBoard(req, res, null);					
 				}
-			});
-		});
+			});			
+		}
 	}
 	else {
-		boards.insert({ "name" : boardName }, function(err, board) {
-			if (err) {
-				res.send("There was a problem adding that board to the database.");
+		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId }, function(err, doc) {
+			if (doc) {
+				sharedRoutes.renderDocumentPageBoard(req, res, doc._id);
 			}
 			else {
-				res.render('boards/view', { "board": board });
+				res.send("There was a problem adding that document to the database.");
 			}
 		});
 	}
-});
-
-router.get('/', function(req, res, next) {
-	var db = req.db;
-	var boards = db.get('boards');
-	boards.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(e, docs) {
-		res.render('boards/list', {
-			"boards" : docs
-		});
-	});
 });
 
 module.exports = router;

@@ -41,6 +41,18 @@ block content
 			groupSortOrder = remoteGroups.length + 1;
 		}
 
+		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		if (remoteBoard) {
+			localBoard.boardId = remoteBoard._id;
+			localBoard.name = remoteBoard.name;
+			localBoard.sortOrder = remoteBoard.sortOrder;
+			localBoard.groupId = remoteBoard.groupId;
+		}
+		var boardSortOrder = 1;
+		if (remoteBoards) {
+			boardSortOrder = remoteBoards.length + 1;
+		}
+
 	table.top-level
 		tr
 			th
@@ -48,6 +60,9 @@ block content
 			if remoteFamily
 				th
 					h1 Group
+			if remoteGroup
+				th
+					h1 Board
 
 		tr
 			td
@@ -67,6 +82,16 @@ block content
 						input(type="hidden", name="sortOrder", value="#{groupSortOrder}")
 						.input-group
 							input(name="name" value="", placeholder="Group Name", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+			if remoteGroup
+				td
+					form(method="post", action="/w/boards/update", class="form-inline")
+						input(type="hidden", name="groupId", value="#{remoteGroup._id}")
+						input(type="hidden", name="boardId", value="0")
+						input(type="hidden", name="sortOrder", value="#{boardSortOrder}")
+						.input-group
+							input(name="name" value="", placeholder="Board Name", type="text", class="form-control")
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
 
@@ -89,6 +114,18 @@ block content
 							input(type="hidden", name="sortOrder", value="#{localGroup.sortOrder}")
 							.input-group
 								input(name="name" value="#{localGroup.name}", placeholder="Group Name", type="text", class="form-control")
+								.input-group-btn
+									button(type="submit", class="btn btn-default") submit
+					else
+						| &nbsp;
+				td
+					if remoteBoard
+						form(method="post", action="/w/boards/update", class="form-inline")
+							input(type="hidden", name="groupId", value="#{localGroup.groupId}")
+							input(type="hidden", name="boardId", value="#{localBoard.boardId}")
+							input(type="hidden", name="sortOrder", value="#{localBoard.sortOrder}")
+							.input-group
+								input(name="name" value="#{localBoard.name}", placeholder="Board Name", type="text", class="form-control")
 								.input-group-btn
 									button(type="submit", class="btn btn-default") submit
 					else
@@ -118,6 +155,21 @@ block content
 								input(type="hidden", name="sortOrder", value="#{group.sortOrder}")
 								.input-group
 									input(type='text', name='name', value="#{group.name}" class="form-control" placeholder="Group Name")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+					else
+						| &nbsp;
+
+			if remoteGroup
+				td
+					if remoteBoards && remoteBoards.length > 0
+						each board in remoteBoards
+							form(method="post", action="/w/boards/update", class="editing-form")
+								input(type="hidden", name="groupId", value="#{board.groupId}")
+								input(type="hidden", name="boardId", value="#{board._id}")
+								input(type="hidden", name="sortOrder", value="#{board.sortOrder}")
+								.input-group
+									input(type='text', name='name', value="#{board.name}" class="form-control" placeholder="Board Name")
 									.input-group-btn
 										button(type="submit", class="btn btn-default") submit
 					else
