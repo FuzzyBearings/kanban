@@ -13,7 +13,7 @@ router.post('/update', function(req, res) {
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
 	var docId = req.body.familyId;
-	var docsTable = db.get('family');
+	var docsTable = db.get('families');
 
 	if (docId.length > 1) {
 		if (docName && docName.length > 0) {

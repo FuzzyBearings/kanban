@@ -1,24 +1,54 @@
 var editorPage = 'editor';
 
-function renderDocumentPageFamily(req, res, familyId) {
+function renderDocumentPageGroup(req, res, groupId) {
 	var db = req.db;
-	var familyTable = db.get('family');
-	familyTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, families) {
+	var groupTable = db.get('groups');
+	groupTable.findById(groupId, {}, function(err, group) {
+		if (group) {
+			renderDocumentPage(req, res, group.familyId, group._id);
+		}
+		else {
+			res.send("FATAL ERROR: could not find that group(" + groupId + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageFamily(req, res, familyId) {
+	renderDocumentPage(req, res, familyId);
+}
+
+function renderDocumentPage(req, res, familyId, groupId, boardId, columnId, cardId, commentId) {
+	var db = req.db;
+	var familyTable = db.get('families');
+	familyTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err1, families) {
 		if (families) {
 			if (familyId && familyId.length > 1) {
-				familyTable.findById(familyId, {}, function(err, family) {
+				familyTable.findById(familyId, {}, function(err2, family) {
 					if (family) {
-						res.render(editorPage, { "remoteFamily" : family, "remoteFamilies" : families });
-						// var childrenTable = db.get(childDocsName);
-						// childrenTable.find({ "parentId" : docId }, { sort : { "sortOrder" : 1, "name" : 1 }}, function(err2, children) {
-						// 	console.log("len: " + children.length);
-						// 	if (children) {
-						// 		res.render(page, { "remoteDoc" : doc, "remoteChildren" : children });
-						// 	}
-						// 	else {
-						// 		res.send("There was a problem finding that document's children in the database.");
-						// 	}
-						// });
+						var groupTable = db.get('groups');
+						groupTable.find({ "familyId" : familyId }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err3, groups) {
+							if (groups) {
+								if (groupId) {
+									groupTable.findById(groupId, {}, function(err4, group) {
+										if (group) {
+											res.render(editorPage, { "remoteFamily" : family, 
+																	 "remoteFamilies" : families, 
+																	 "remoteGroup" : group,
+																	 "remoteGroups" : groups });											
+										}
+										else {
+											res.send("FATAL ERROR: could not find that group(" + groupId + ") in the database.");											
+										}
+									});
+								}
+								else {
+									res.render(editorPage, { "remoteFamily" : family, "remoteFamilies" : families, "remoteGroups" : groups });									
+								}
+							}
+							else {
+								res.send("FATAL ERROR : could not fetch groups.");
+							}
+						});
 					}
 					else {
 						res.send("FATAL ERROR: could not find that family(" + familyId + ") in the database.");
@@ -35,34 +65,5 @@ function renderDocumentPageFamily(req, res, familyId) {
 	});
 }
 
-//
-// OLD
-//
-function renderDocumentPage(db, res, objectGraph) {
-	if (docId === "0") {
-		res.render(page, { });
-	}
-	else {
-		var docsTable = db.get(docsName);
-		docsTable.findById(docId, {}, function(err, doc) {
-			console.log("doc: " + doc + ", " + childDocsName);
-			if (doc) {
-				var childrenTable = db.get(childDocsName);
-				childrenTable.find({ "parentId" : docId }, { sort : { "sortOrder" : 1, "name" : 1 }}, function(err2, children) {
-					console.log("len: " + children.length);
-					if (children) {
-						res.render(page, { "remoteDoc" : doc, "remoteChildren" : children });
-					}
-					else {
-						res.send("There was a problem finding that document's children in the database.");							
-					}
-				});
-			}
-			else {
-				res.send("There was a problem finding that document in the database.");
-			}
-		});
-	}
-}
-
+exports.renderDocumentPageGroup = renderDocumentPageGroup;
 exports.renderDocumentPageFamily = renderDocumentPageFamily;
