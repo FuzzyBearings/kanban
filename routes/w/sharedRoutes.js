@@ -1,6 +1,8 @@
 var editorPage = 'portrait';
+var kanbanPage = 'kanban';
 
 function renderDocumentPageComment(req, res, commentId) {
+	res.targetPage = kanbanPage;
 	var db = req.db;
 	var table = db.get('comments');
 	table.findById(commentId, {}, function(err, comment) {
@@ -15,6 +17,7 @@ function renderDocumentPageComment(req, res, commentId) {
 }
 
 function renderDocumentPageCard(req, res, cardId, comment) {
+	res.targetPage = kanbanPage;
 	var db = req.db;
 	var table = db.get('cards');
 	table.findById(cardId, {}, function(err, card) {
@@ -29,6 +32,7 @@ function renderDocumentPageCard(req, res, cardId, comment) {
 }
 
 function renderDocumentPageColumn(req, res, columnId, card, comment) {
+	res.targetPage = kanbanPage;
 	var db = req.db;
 	var table = db.get('columns');
 	table.findById(columnId, {}, function(err, column) {
@@ -43,6 +47,7 @@ function renderDocumentPageColumn(req, res, columnId, card, comment) {
 }
 
 function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
+	res.targetPage = kanbanPage;
 	var db = req.db;
 	var table = db.get('boards');
 	table.findById(boardId, {}, function(err, board) {
@@ -57,6 +62,7 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 }
 
 function renderDocumentPageGroup(req, res, groupId, board, column, card, comment) {
+	res.targetPage = editorPage;
 	var db = req.db;
 	var table = db.get('groups');
 	table.findById(groupId, {}, function(err, group) {
@@ -71,6 +77,7 @@ function renderDocumentPageGroup(req, res, groupId, board, column, card, comment
 }
 
 function renderDocumentPageFamily(req, res, familyId, group, board, column, card, comment) {
+	res.targetPage = editorPage;
 	var db = req.db;
 	var familyTable = db.get('families');
 	familyTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err1, families) {
@@ -114,7 +121,7 @@ function findGroupsForFamily(db, res, family, group, board, column, card, commen
 		});		
 	}
 	else {
-		res.render(editorPage, { "remoteFamilies" : families });
+		res.render(res.targetPage, { "remoteFamilies" : families });
 	}
 }
 
@@ -131,7 +138,7 @@ function findBoardsforGroup(db, res, family, group, board, column, card, comment
 		});		
 	}
 	else {
-		res.render(editorPage, { "remoteFamilies" : families, "remoteFamily" : family, "remoteGroups" : groups });		
+		res.render(res.targetPage, { "remoteFamilies" : families, "remoteFamily" : family, "remoteGroups" : groups });		
 	}
 }
 
@@ -148,11 +155,11 @@ function findColumnsForBoard(db, res, family, group, board, column, card, commen
 		});		
 	}
 	else {
-		res.render(editorPage, { "remoteFamilies" : families, 
-		                         "remoteFamily" : family, 
-								 "remoteGroups" : groups,
-								 "remoteGroup" : group,
-								 "remoteBoards" : boards
+		res.render(res.targetPage, { "remoteFamilies" : families, 
+		                         	"remoteFamily" : family, 
+									 "remoteGroups" : groups,
+									 "remoteGroup" : group,
+									 "remoteBoards" : boards
 		});
 	}
 }
@@ -170,13 +177,13 @@ function findCardsForColumn(db, res, family, group, board, column, card, comment
 		});		
 	}
 	else {
-		res.render(editorPage, { "remoteFamilies" : families, 
-		                         "remoteFamily" : family, 
-								 "remoteGroups" : groups,
-								 "remoteGroup" : group,
-								 "remoteBoards" : boards,
-								 "remoteBoard" : board,
-								 "remoteColumns" : columns
+		res.render(res.targetPage, { "remoteFamilies" : families, 
+		                         	 "remoteFamily" : family, 
+									 "remoteGroups" : groups,
+									 "remoteGroup" : group,
+									 "remoteBoards" : boards,
+									 "remoteBoard" : board,
+									 "remoteColumns" : columns
 		});
 	}
 }
@@ -187,7 +194,7 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 		table.find({ "cardId" : card._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, comments) {
 			if (comments) {
 				if (comment) {
-					res.render(editorPage, { "remoteFamilies" : families, 
+					res.render(res.targetPage, { "remoteFamilies" : families, 
 				                         	 "remoteFamily" : family, 
 										 	 "remoteGroups" : groups,
 										 	 "remoteGroup" : group,
@@ -202,7 +209,7 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 					});
 				}
 				else {
-					res.render(editorPage, { "remoteFamilies" : families, 
+					res.render(res.targetPage, { "remoteFamilies" : families, 
 			        						 "remoteFamily" : family, 
 											 "remoteGroups" : groups,
 											 "remoteGroup" : group,
@@ -222,15 +229,15 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 		});		
 	}
 	else {
-		res.render(editorPage, { "remoteFamilies" : families, 
-		                         "remoteFamily" : family, 
-								 "remoteGroups" : groups,
-								 "remoteGroup" : group,
-								 "remoteBoards" : boards,
-								 "remoteBoard" : board,
-								 "remoteColumns" : columns,
-								 "remoteColumn" : column,
-								 "remoteCards" : cards
+		res.render(res.targetPage, { "remoteFamilies" : families, 
+		                         	"remoteFamily" : family, 
+								 	"remoteGroups" : groups,
+								 	"remoteGroup" : group,
+									"remoteBoards" : boards,
+									"remoteBoard" : board,
+									"remoteColumns" : columns,
+									"remoteColumn" : column,
+									"remoteCards" : cards
 		});
 	}
 }
