@@ -16,7 +16,11 @@ block content
 					li
 						a(href="/w/families") All Families
 					li.divider(role="separator")
-
+					if remoteFamilies && remoteFamilies.length > 0
+						each family in remoteFamilies
+							li
+								a(href='/w/families/#{family._id}') #{family.name}
+					
 	-
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {

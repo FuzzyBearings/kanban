@@ -32,7 +32,9 @@ function renderDocumentPageCard(req, res, cardId, comment) {
 }
 
 function renderDocumentPageColumn(req, res, columnId, card, comment) {
-	res.targetPage = kanbanPage;
+	if (!res.targetPage) {
+		res.targetPage = kanbanPage;
+	}
 	var db = req.db;
 	var table = db.get('columns');
 	table.findById(columnId, {}, function(err, column) {
@@ -47,7 +49,9 @@ function renderDocumentPageColumn(req, res, columnId, card, comment) {
 }
 
 function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
-	res.targetPage = kanbanPage;
+	if (!res.targetPage) {
+		res.targetPage = kanbanPage;
+	}
 	var db = req.db;
 	var table = db.get('boards');
 	table.findById(boardId, {}, function(err, board) {
@@ -62,7 +66,9 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 }
 
 function renderDocumentPageGroup(req, res, groupId, board, column, card, comment) {
-	res.targetPage = editorPage;
+	if (!res.targetPage) {
+		res.targetPage = editorPage;
+	}
 	var db = req.db;
 	var table = db.get('groups');
 	table.findById(groupId, {}, function(err, group) {
@@ -77,7 +83,9 @@ function renderDocumentPageGroup(req, res, groupId, board, column, card, comment
 }
 
 function renderDocumentPageFamily(req, res, familyId, group, board, column, card, comment) {
-	res.targetPage = editorPage;
+	if (!res.targetPage) {
+		res.targetPage = editorPage;		
+	}
 	var db = req.db;
 	var familyTable = db.get('families');
 	familyTable.find({}, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err1, families) {
