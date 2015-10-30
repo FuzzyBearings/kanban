@@ -7,13 +7,13 @@ block content
 			a(href="/w/families") All Families
 		if remoteFamily
 			li
-				a(href='/w/families/#{remoteFamily._id}') #{remoteFamily.name}
+				a(href='/w/families/#{remoteFamily._id}') Family #{remoteFamily.name}
 			if remoteGroup
 				li
-					a(href='/w/groups/#{remoteGroup._id}') #{remoteGroup.name}
+					a(href='/w/groups/#{remoteGroup._id}') Group #{remoteGroup.name}
 				if remoteBoard
 					li
-						a(href='/w/boards/#{remoteBoard._id}') #{remoteBoard.name}
+						a(href='/w/boards/#{remoteBoard._id}') Board #{remoteBoard.name}
 					if remoteColumn
 						li
 							a(href='/w/boards/#{remoteBoard._id}') #{remoteColumn.name}
@@ -25,46 +25,33 @@ block content
 									a(href='/w/boards/#{remoteBoard._id}') #{remoteComment.name}
 
 	nav(class="navbar navbar-default")
-		ul(class="nav navbar-nav")
-			li.dropdown
-				a(href="#", 
-				  class="dropdown-toggle",
-				  data-toggle="dropdown",
-				  role="button",
-				  aria-haspopup="true"
-				  aria-expanded="false") Family
-					span.caret
-				ul(class="dropdown-menu")
-					li
-						a(href="/w/families") All Families
-					li.divider(role="separator")
-					if remoteFamilies && remoteFamilies.length > 0
+		if remoteFamilies && remoteFamilies.length > 0
+			ul(class="nav navbar-nav")
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false") Family
+						span.caret
+					ul(class="dropdown-menu")
 						each family in remoteFamilies
 							li
 								a(href='/w/families/#{family._id}') #{family.name}
-			if remoteGroups && remoteGroups.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false") Group
-						span.caret
-					ul(class="dropdown-menu")
-						each group in remoteGroups
-							li
-								a(href='/w/groups/#{group._id}') #{group.name}					
-			if remoteBoards && remoteBoards.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false") Board
-						span.caret
-					ul(class="dropdown-menu")
-						each board in remoteBoards
-							li
-								a(href='/w/boards/#{board._id}') #{board.name}
+				if remoteGroups && remoteGroups.length > 0
+					li.dropdown
+						a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") Group
+							span.caret
+						ul(class="dropdown-menu")
+							each group in remoteGroups
+								li
+									a(href='/w/groups/#{group._id}') #{group.name}					
+					if remoteBoards && remoteBoards.length > 0
+						li.dropdown 
+							a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") Board
+								span.caret
+							ul(class="dropdown-menu")
+								each board in remoteBoards
+									li
+										a(href='/w/boards/#{board._id}') #{board.name}
