@@ -1,5 +1,9 @@
-var editorPage = 'portrait';
-var kanbanPage = 'kanban';
+// var editorPage = 'editor/portrait1';
+// var kanbanPage = 'editor/portrait2';
+// var editorPage = 'viewer/portrait';
+// var kanbanPage = 'viewer/portrait';
+var editorPage = 'kanban/kanban';
+var kanbanPage = 'kanban/kanban';
 
 function renderDocumentPageComment(req, res, commentId) {
 	res.targetPage = kanbanPage;
