@@ -4,7 +4,7 @@ var sharedRoutes = require('./sharedRoutes');
 
 router.get('/:docId', function(req, res) {	
 	var docId = req.params.docId;
-	sharedRoutes.renderDocumentPageColumn(req, res, docId);
+	sharedRoutes.renderDocumentPageComment(req, res, docId);
 });
 
 router.post('/update', function(req, res) {
