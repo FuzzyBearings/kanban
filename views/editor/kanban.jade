@@ -3,13 +3,13 @@ extends ../layout
 block content
 
 	-
-		var menuNames = { "localFamily" : "Add Family", 
-							"localGroup" : "Add Group",
-							"localProject" : "Add Project",
-							"localBoard" : "Add Board",
-							"localColumn" : "Add Column",
-							"localCard" : "Add Card",
-							"localComment" : "Add Comment" };
+		var menuNames = { "localFamily" : "Family", 
+							"localGroup" : "Group",
+							"localProject" : "Project",
+							"localBoard" : "Board",
+							"localColumn" : "Column",
+							"localCard" : "Card",
+							"localComment" : "Comment" };
 		
 		//
 		// Families
@@ -17,7 +17,7 @@ block content
 		var familySortOrder = 1;
 		if (remoteFamilies && remoteFamilies.length > 0) {
 			familySortOrder = remoteFamilies.length + 1;
-			menuNames['localFamily'] = "Pick Family";
+			// menuNames['localFamily'] = "Pick Family";
 		}
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {
@@ -33,7 +33,7 @@ block content
 		var groupSortOrder = 1;
 		if (remoteGroups && remoteGroups.length > 0) {
 			groupSortOrder = remoteGroups.length + 1;
-			menuNames['localGroup'] = "Pick Group";
+			// menuNames['localGroup'] = "Pick Group";
 		}
 		var localGroup = { groupId : 0, "name" : "", sortOrder : 1, familyId : "0" }
 		if (remoteGroup) {
@@ -50,7 +50,7 @@ block content
 		var projectSortOrder = 1;
 		if (remoteProjects && remoteProjects.length > 0) {
 			projectSortOrder = remoteProjects.length + 1;
-			menuNames['localProject'] = "Pick Project"
+			// menuNames['localProject'] = "Pick Project"
 		}
 		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteProject) {
@@ -67,7 +67,7 @@ block content
 		var boardSortOrder = 1;
 		if (remoteBoards && remoteBoards.length > 0) {
 			boardSortOrder = remoteBoards.length + 1;
-			menuNames['localBoard'] = "Pick Board";
+			// menuNames['localBoard'] = "Pick Board";
 		}
 		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteBoard) {
@@ -84,7 +84,7 @@ block content
 		var columnSortOrder = 1;
 		if (remoteColumns && remoteColumns.length > 0) {
 			columnSortOrder = remoteColumns.length + 1;
-			menuNames['localColumn'] = "Pick Column";
+			// menuNames['localColumn'] = "Pick Column";
 		}
 		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
 		if (remoteColumn) {
@@ -101,7 +101,7 @@ block content
 		var cardSortOrder = 1;
 		if (remoteCards && remoteCards.length > 0) {
 			cardSortOrder = remoteCards.length + 1;
-			menuNames['localCard'] = "Pick Card";
+			// menuNames['localCard'] = "Pick Card";
 		}
 		var localCard = { cardId : 0, "name" : "", sortOrder : 1, columnId : "0" }
 		if (remoteCard) {
@@ -118,7 +118,7 @@ block content
 		var commentSortOrder = 1;
 		if (remoteComments && remoteComments.length > 0) {
 			commentSortOrder = remoteComments.length + 1;
-			menuNames['localComment'] = "Pick Column";
+			// menuNames['localComment'] = "Pick Column";
 		}
 		var localComment = { commentId : 0, "name" : "", sortOrder : 1, cardId : "0" }
 		if (remoteComment) {
@@ -127,88 +127,22 @@ block content
 			localComment.sortOrder = remoteComment.sortOrder;
 			localComment.cardId = remoteComment.cardId;
 		}
-
+	
 	include ./menu.jade
-		
-	table.top-level
+	
+	table.columns
 		tr
-			if remoteBoard
+			each column in remoteColumns
 				th
-					h1= menuNames['localColumn']
-					p Column
-
-			if remoteColumn
-				th
-					h1= menuNames['localCard']
-					p Card
-
-			if remoteCard
-				th
-					h1= menuNames['localComment']
-					p Comment
-
-		tr
-			if remoteBoard
-				td
-					if remoteColumns && remoteColumns.length > 0
-						each column in remoteColumns
-							form(method="post", action="/w/columns/update", class="editing-form")
-								input(type="hidden", name="boardId", value="#{column.boardId}")
-								input(type="hidden", name="columnId", value="#{column._id}")
-								input(type="hidden", name="sortOrder", value="#{column.sortOrder}")
-								.input-group
-									input(type='text', name='name', value="#{column.name}" class="form-control" placeholder="")
-									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
-					form(method="post", action="/w/columns/update", class="form-inline")
-						input(type="hidden", name="boardId", value="#{remoteBoard._id}")
-						input(type="hidden", name="columnId", value="0")
-						input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
-						.input-group
-							input(name="name" value="", placeholder="", type="text", class="form-control")
-							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
-
-			if remoteColumn
-				td
-					if remoteCards && remoteCards.length > 0
-						each card in remoteCards
-							form(method="post", action="/w/cards/update", class="editing-form")
-								input(type="hidden", name="columnId", value="#{card.columnId}")
-								input(type="hidden", name="cardId", value="#{card._id}")
-								input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
-								.input-group
-									input(type='text', name='name', value="#{card.name}" class="form-control" placeholder="")
-									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
-					form(method="post", action="/w/cards/update", class="form-inline")
-						input(type="hidden", name="columnId", value="#{remoteColumn._id}")
-						input(type="hidden", name="cardId", value="0")
-						input(type="hidden", name="sortOrder", value="#{cardSortOrder}")
-						.input-group
-							input(name="name" value="", placeholder="", type="text", class="form-control")
-							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
-					
-			if remoteCard
-				td
-					if remoteComments && remoteComments.length > 0
-						each comment in remoteComments
-							form(method="post", action="/w/comments/update", class="editing-form")
-								input(type="hidden", name="cardId", value="#{comment.cardId}")
-								input(type="hidden", name="commentId", value="#{comment._id}")
-								input(type="hidden", name="sortOrder", value="#{comment.sortOrder}")
-								.input-group
-									input(type='text', name='name', value="#{comment.name}" class="form-control" placeholder="")
-									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
-					form(method="post", action="/w/comments/update", class="form-inline")
-						input(type="hidden", name="cardId", value="#{remoteCard._id}")
-						input(type="hidden", name="commentId", value="0")
-						input(type="hidden", name="sortOrder", value="#{commentSortOrder}")
-						.input-group
-							input(name="name" value="", placeholder="", type="text", class="form-control")
-							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+					h1= column.name
+			th
+				form(method="post", action="/w/columns/update", class="form-inline")
+					input(type="hidden", name="boardId", value="#{remoteBoard._id}")
+					input(type="hidden", name="columnId", value="0")
+					input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
+					.input-group
+						input(name="name" value="", placeholder="", type="text", class="form-control")
+						.input-group-btn
+							button(type="submit", class="btn btn-default") submit
 
 	include ./crumbs.jade

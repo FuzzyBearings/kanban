@@ -3,13 +3,13 @@ extends ../layout
 block content
 
 	-
-		var menuNames = { "localFamily" : "Add Family", 
-							"localGroup" : "Add Group",
-							"localProject" : "Add Project",
-							"localBoard" : "Add Board",
-							"localColumn" : "Add Column",
-							"localCard" : "Add Card",
-							"localComment" : "Add Comment" };
+		var menuNames = { "localFamily" : "Family", 
+							"localGroup" : "Group",
+							"localProject" : "Project",
+							"localBoard" : "Board",
+							"localColumn" : "Column",
+							"localCard" : "Card",
+							"localComment" : "Comment" };
 		
 		//
 		// Families
@@ -17,7 +17,7 @@ block content
 		var familySortOrder = 1;
 		if (remoteFamilies && remoteFamilies.length > 0) {
 			familySortOrder = remoteFamilies.length + 1;
-			menuNames['localFamily'] = "Pick Family";
+			// menuNames['localFamily'] = "Pick Family";
 		}
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {
@@ -33,7 +33,7 @@ block content
 		var groupSortOrder = 1;
 		if (remoteGroups && remoteGroups.length > 0) {
 			groupSortOrder = remoteGroups.length + 1;
-			menuNames['localGroup'] = "Pick Group";
+			// menuNames['localGroup'] = "Pick Group";
 		}
 		var localGroup = { groupId : 0, "name" : "", sortOrder : 1, familyId : "0" }
 		if (remoteGroup) {
@@ -50,7 +50,7 @@ block content
 		var projectSortOrder = 1;
 		if (remoteProjects && remoteProjects.length > 0) {
 			projectSortOrder = remoteProjects.length + 1;
-			menuNames['localProject'] = "Pick Project"
+			// menuNames['localProject'] = "Pick Project"
 		}
 		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteProject) {
@@ -67,7 +67,7 @@ block content
 		var boardSortOrder = 1;
 		if (remoteBoards && remoteBoards.length > 0) {
 			boardSortOrder = remoteBoards.length + 1;
-			menuNames['localBoard'] = "Pick Board";
+			// menuNames['localBoard'] = "Pick Board";
 		}
 		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteBoard) {
@@ -84,7 +84,7 @@ block content
 		var columnSortOrder = 1;
 		if (remoteColumns && remoteColumns.length > 0) {
 			columnSortOrder = remoteColumns.length + 1;
-			menuNames['localColumn'] = "Pick Column";
+			// menuNames['localColumn'] = "Pick Column";
 		}
 		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
 		if (remoteColumn) {
@@ -101,7 +101,7 @@ block content
 		var cardSortOrder = 1;
 		if (remoteCards && remoteCards.length > 0) {
 			cardSortOrder = remoteCards.length + 1;
-			menuNames['localCard'] = "Pick Card";
+			// menuNames['localCard'] = "Pick Card";
 		}
 		var localCard = { cardId : 0, "name" : "", sortOrder : 1, columnId : "0" }
 		if (remoteCard) {
@@ -118,7 +118,7 @@ block content
 		var commentSortOrder = 1;
 		if (remoteComments && remoteComments.length > 0) {
 			commentSortOrder = remoteComments.length + 1;
-			menuNames['localComment'] = "Pick Column";
+			// menuNames['localComment'] = "Pick Column";
 		}
 		var localComment = { commentId : 0, "name" : "", sortOrder : 1, cardId : "0" }
 		if (remoteComment) {

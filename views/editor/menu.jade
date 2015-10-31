@@ -25,6 +25,9 @@ div.menu
 					  aria-expanded="false")= menuNames['localGroup']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/families/#{remoteFamily._id}") All Groups
+						li.divider(role="separator")
 						each group in remoteGroups
 							li
 								a(href='/w/groups/#{group._id}') #{group.name}					
@@ -34,6 +37,9 @@ div.menu
 					a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localProject']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/groups/#{remoteGroup._id}") All Projects
+						li.divider(role="separator")
 						each project in remoteProjects
 							li
 								a(href='/w/projects/#{project._id}') #{project.name}					
@@ -48,9 +54,13 @@ div.menu
 					  aria-expanded="false")= menuNames['localBoard']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/projects/#{remoteProject._id}") All Boards
+						li.divider(role="separator")
 						each board in remoteBoards
 							li
 								a(href='/w/boards/#{board._id}') #{board.name}
+								
 			if remoteColumns && remoteColumns.length > 0
 				li.dropdown
 					a(href="#", 
@@ -61,9 +71,13 @@ div.menu
 					  aria-expanded="false")= menuNames['localColumn']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/boards/#{remoteBoard._id}") All Columns
+						li.divider(role="separator")
 						each column in remoteColumns
 							li
 								a(href='/w/columns/#{column._id}') #{column.name}
+								
 			if remoteCards && remoteCards.length > 0
 				li.dropdown
 					a(href="#", 
@@ -74,17 +88,25 @@ div.menu
 					  aria-expanded="false")= menuNames['localCard']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/columns/#{remoteColumn._id}") All Cards
+						li.divider(role="separator")
 						each card in remoteCards
 							li
 								a(href='/w/cards/#{card._id}') #{card.name}
+								
 			if remoteComments && remoteComments.length > 0
 				li.dropdown
 					a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localComment']
 						span.caret
 					ul(class="dropdown-menu")
+						li
+							a(href="/w/cards/#{remoteCard._id}") All Comments
+						li.divider(role="separator")
 						each comment in remoteComments
 							li
 								a(href='/w/comments/#{comment._id}') #{comment.name}
+								
 		ul(class="nav navbar-nav navbar-right" style="margin-right: 0em")
 			li.dropdown
 				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") View

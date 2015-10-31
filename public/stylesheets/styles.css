@@ -1,14 +1,30 @@
 body {
-    padding: 50px;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
 }
 
 table.top-level {
+	vertical-align: top;	
+}
+
+table.top-level,
+table.columns {
 	border-collapse: collapse;
+}
+
+table.top-level th,
+table.columns th {
+	border: 1px dotted #e1e1e1;
+	padding: 1em;
 }
 
 table.top-level td,
 table.top-level th {
-	order: 1px dotted #e1e1e1;
+	border: 1px dotted #e1e1e1;
 	padding: 1em;
 	vertical-align: top;
 }
