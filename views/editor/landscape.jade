@@ -3,14 +3,22 @@ extends ../layout
 block content
 
 	-
-		var menuNames = { "localFamily" : "Pick Family", 
-							"localGroup" : "Pick Group",
-							"localProject" : "Pick Project",
-							"localBoard" : "Pick Board",
-							"localColumn" : "Pick Column",
-							"localCard" : "Pick Card",
-							"localComment" : "Pick Comment" };
-							
+		var menuNames = { "localFamily" : "Add Family", 
+							"localGroup" : "Add Group",
+							"localProject" : "Add Project",
+							"localBoard" : "Add Board",
+							"localColumn" : "Add Column",
+							"localCard" : "Add Card",
+							"localComment" : "Add Comment" };
+		
+		//
+		// Families
+		//					
+		var familySortOrder = 1;
+		if (remoteFamilies && remoteFamilies.length > 0) {
+			familySortOrder = remoteFamilies.length + 1;
+			menuNames['localFamily'] = "Pick Family";
+		}
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {
 			localFamily.familyId = remoteFamily._id;
@@ -18,11 +26,15 @@ block content
 			localFamily.sortOrder = remoteFamily.sortOrder;
 			menuNames['localFamily'] = remoteFamily.name;
 		}
-		var familySortOrder = 1;
-		if (remoteFamilies) {
-			familySortOrder = remoteFamilies.length + 1;
-		}
 
+		//
+		// Groups
+		//
+		var groupSortOrder = 1;
+		if (remoteGroups && remoteGroups.length > 0) {
+			groupSortOrder = remoteGroups.length + 1;
+			menuNames['localGroup'] = "Pick Group";
+		}
 		var localGroup = { groupId : 0, "name" : "", sortOrder : 1, familyId : "0" }
 		if (remoteGroup) {
 			localGroup.groupId = remoteGroup._id;
@@ -31,11 +43,15 @@ block content
 			localGroup.familyId = remoteGroup.familyId;
 			menuNames['localGroup'] = remoteGroup.name;
 		}
-		var groupSortOrder = 1;
-		if (remoteGroups) {
-			groupSortOrder = remoteGroups.length + 1;
-		}
 
+		//
+		// Projects
+		//
+		var projectSortOrder = 1;
+		if (remoteProjects && remoteProjects.length > 0) {
+			projectSortOrder = remoteProjects.length + 1;
+			menuNames['localProject'] = "Pick Project"
+		}
 		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteProject) {
 			localProject.groupId = remoteProject._id;
@@ -44,11 +60,15 @@ block content
 			localProject.familyId = remoteProject.familyId;
 			menuNames['localProject'] = remoteProject.name;
 		}
-		var projectSortOrder = 1;
-		if (remoteProjects) {
-			projectSortOrder = remoteProjects.length + 1;
-		}
 
+		//
+		// Boards
+		//
+		var boardSortOrder = 1;
+		if (remoteBoards && remoteBoards.length > 0) {
+			boardSortOrder = remoteBoards.length + 1;
+			menuNames['localBoard'] = "Pick Board";
+		}
 		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
 		if (remoteBoard) {
 			localBoard.boardId = remoteBoard._id;
@@ -57,11 +77,15 @@ block content
 			localBoard.groupId = remoteBoard.groupId;
 			menuNames['localBoard'] = remoteBoard.name;
 		}
-		var boardSortOrder = 1;
-		if (remoteBoards) {
-			boardSortOrder = remoteBoards.length + 1;
-		}
 
+		//
+		// Columns
+		//
+		var columnSortOrder = 1;
+		if (remoteColumns && remoteColumns.length > 0) {
+			columnSortOrder = remoteColumns.length + 1;
+			menuNames['localColumn'] = "Pick Column";
+		}
 		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
 		if (remoteColumn) {
 			localColumn.boardId = remoteColumn._id;
@@ -70,11 +94,15 @@ block content
 			localColumn.boardId = remoteColumn.boardId;
 			menuNames['localColumn'] = remoteColumn.name;
 		}
-		var columnSortOrder = 1;
-		if (remoteColumns) {
-			columnSortOrder = remoteColumns.length + 1;
-		}
 		
+		//
+		// Cards
+		//
+		var cardSortOrder = 1;
+		if (remoteCards && remoteCards.length > 0) {
+			cardSortOrder = remoteCards.length + 1;
+			menuNames['localCard'] = "Pick Card";
+		}
 		var localCard = { cardId : 0, "name" : "", sortOrder : 1, columnId : "0" }
 		if (remoteCard) {
 			localCard.cardId = remoteCard._id;
@@ -83,22 +111,21 @@ block content
 			localCard.columnId = remoteCard.columnId;
 			menuNames['localCard'] = remoteCard.name;
 		}
-		var cardSortOrder = 1;
-		if (remoteCards) {
-			cardSortOrder = remoteCards.length + 1;
-		}
 
+		//
+		// Columns
+		//
+		var commentSortOrder = 1;
+		if (remoteComments && remoteComments.length > 0) {
+			commentSortOrder = remoteComments.length + 1;
+			menuNames['localComment'] = "Pick Column";
+		}
 		var localComment = { commentId : 0, "name" : "", sortOrder : 1, cardId : "0" }
 		if (remoteComment) {
 			localComment.commentId = remoteComment._id;
 			localComment.name = remoteComment.name;
 			localComment.sortOrder = remoteComment.sortOrder;
 			localComment.cardId = remoteComment.cardId;
-			menuNames['localComment'] = remoteComment.name;
-		}
-		var commentSortOrder = 1;
-		if (remoteComments) {
-			commentSortOrder = remoteComments.length + 1;
 		}
 
 	include ./menu.jade
