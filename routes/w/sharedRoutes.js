@@ -1,4 +1,4 @@
-var editorPage = 'editor/landscape';
+var editorPage = 'editor/editor';
 var kanbanPage = editorPage;
 // var editorPage = 'editor/portrait1';
 // var kanbanPage = 'editor/portrait2';
