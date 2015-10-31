@@ -62,7 +62,7 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 	var table = db.get('boards');
 	table.findById(boardId, {}, function(err, board) {
 		if (board) {
-			renderDocumentPageGroup(req, res, board.groupId, board, column, card, comment);
+			renderDocumentPageProject(req, res, board.projectId, board, column, card, comment);
 		}
 		else {
 			console.log("err: " + err);
@@ -71,7 +71,24 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 	});
 }
 
-function renderDocumentPageGroup(req, res, groupId, board, column, card, comment) {
+function renderDocumentPageProject(req, res, projectId, board, column, card, comment) {
+	if (!res.targetPage) {
+		res.targetPage = kanbanPage;
+	}
+	var db = req.db;
+	var table = db.get('projects');
+	table.findById(projectId, {}, function(err, project) {
+		if (project) {
+			renderDocumentPageGroup(req, res, project.groupId, project, board, column, card, comment);
+		}
+		else {
+			console.log("err: " + err);
+			res.send("FATAL ERROR: could not find that project(" + project + ") in the database");
+		}
+	});
+}
+
+function renderDocumentPageGroup(req, res, groupId, project, board, column, card, comment) {
 	if (!res.targetPage) {
 		res.targetPage = editorPage;
 	}
@@ -79,7 +96,7 @@ function renderDocumentPageGroup(req, res, groupId, board, column, card, comment
 	var table = db.get('groups');
 	table.findById(groupId, {}, function(err, group) {
 		if (group) {
-			renderDocumentPageFamily(req, res, group.familyId, group, board, column, card, comment);
+			renderDocumentPageFamily(req, res, group.familyId, group, project, board, column, card, comment);
 		}
 		else {
 			console.log("err: " + err);
@@ -88,7 +105,7 @@ function renderDocumentPageGroup(req, res, groupId, board, column, card, comment
 	});		
 }
 
-function renderDocumentPageFamily(req, res, familyId, group, board, column, card, comment) {
+function renderDocumentPageFamily(req, res, familyId, group, project, board, column, card, comment) {
 	if (!res.targetPage) {
 		res.targetPage = editorPage;		
 	}
@@ -99,7 +116,7 @@ function renderDocumentPageFamily(req, res, familyId, group, board, column, card
 			if (familyId && familyId.length > 1) {
 				familyTable.findById(familyId, {}, function(err2, family) {
 					if (family) {
-						findGroupsForFamily(db, res, family, group, board, column, card, comment, families);
+						findGroupsForFamily(db, res, family, group, project, board, column, card, comment, families);
 					}
 					else {
 						console.log("err: " + err2);
@@ -122,12 +139,12 @@ function renderDocumentPageFamily(req, res, familyId, group, board, column, card
 // PRIVATE
 //
 
-function findGroupsForFamily(db, res, family, group, board, column, card, comment, families) {
+function findGroupsForFamily(db, res, family, group, project, board, column, card, comment, families) {
 	if (family) {
 		var table = db.get('groups');
 		table.find({ "familyId" : family._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, groups) {
 			if (groups) {
-				findBoardsforGroup(db, res, family, group, board, column, card, comment, families, groups);
+				findProjectsForGroup(db, res, family, group, project, board, column, card, comment, families, groups);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch groups.");
@@ -139,15 +156,15 @@ function findGroupsForFamily(db, res, family, group, board, column, card, commen
 	}
 }
 
-function findBoardsforGroup(db, res, family, group, board, column, card, comment, families, groups) {
+function findProjectsForGroup(db, res, family, group, project, board, column, card, comment, families, groups) {
 	if (group) {
-		var table = db.get('boards');
-		table.find({ "groupId" : group._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, boards) {
-			if (boards) {
-				findColumnsForBoard(db, res, family, group, board, column, card, comment, families, groups, boards);
+		var table = db.get('projects');
+		table.find({ "groupId" : group._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, projects) {
+			if (projects) {
+				findBoardsForProject(db, res, family, group, project, board, column, card, comment, families, groups, projects);
 			}
 			else {
-				res.send("FATAL ERROR : could not fetch boards.");
+				res.send("FATAL ERROR : could not fetch projects.");
 			}
 		});		
 	}
@@ -156,12 +173,29 @@ function findBoardsforGroup(db, res, family, group, board, column, card, comment
 	}
 }
 
-function findColumnsForBoard(db, res, family, group, board, column, card, comment, families, groups, boards) {
+function findBoardsForProject(db, res, family, group, project, board, column, card, comment, families, groups, projects) {
+	if (project) {
+		var table = db.get('boards');
+		table.find({ "projectId" : project._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, boards) {
+			if (boards) {
+				findColumnsForBoard(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards);
+			}
+			else {
+				res.send("FATAL ERROR : could not fetch boards.");
+			}
+		});		
+	}
+	else {
+		res.render(res.targetPage, { "remoteFamilies" : families, "remoteFamily" : family, "remoteGroups" : groups, "remoteGroup" : group, "remoteProjects" : projects });		
+	}
+}
+
+function findColumnsForBoard(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards) {
 	if (board) {
 		var table = db.get('columns');
 		table.find({ "boardId" : board._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, columns) {
 			if (columns) {
-				findCardsForColumn(db, res, family, group, board, column, card, comment, families, groups, boards, columns);
+				findCardsForColumn(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards, columns);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
@@ -173,17 +207,19 @@ function findColumnsForBoard(db, res, family, group, board, column, card, commen
 		                         	"remoteFamily" : family, 
 									 "remoteGroups" : groups,
 									 "remoteGroup" : group,
+									 "remoteProjects" : projects,
+									 "remoteProject" : project,
 									 "remoteBoards" : boards
 		});
 	}
 }
 
-function findCardsForColumn(db, res, family, group, board, column, card, comment, families, groups, boards, columns) {
+function findCardsForColumn(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards, columns) {
 	if (column) {
 		var table = db.get('cards');
 		table.find({ "columnId" : column._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, cards) {
 			if (cards) {
-				findCommentsForCard(db, res, family, group, board, column, card, comment, families, groups, boards, columns, cards);
+				findCommentsForCard(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards, columns, cards);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
@@ -195,6 +231,8 @@ function findCardsForColumn(db, res, family, group, board, column, card, comment
 		                         	 "remoteFamily" : family, 
 									 "remoteGroups" : groups,
 									 "remoteGroup" : group,
+									 "remoteProjects" : projects,
+									 "remoteProject" : project,
 									 "remoteBoards" : boards,
 									 "remoteBoard" : board,
 									 "remoteColumns" : columns
@@ -202,7 +240,7 @@ function findCardsForColumn(db, res, family, group, board, column, card, comment
 	}
 }
 
-function findCommentsForCard(db, res, family, group, board, column, card, comment, families, groups, boards, columns, cards) {
+function findCommentsForCard(db, res, family, group, project, board, column, card, comment, families, groups, projects, boards, columns, cards) {
 	if (card) {
 		var table = db.get('comments');
 		table.find({ "cardId" : card._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, comments) {
@@ -212,6 +250,8 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 				                         	 "remoteFamily" : family, 
 										 	 "remoteGroups" : groups,
 										 	 "remoteGroup" : group,
+											 "remoteProjects" : projects,
+											 "remoteProject" : project,
 										 	 "remoteBoards" : boards,
 										 	 "remoteBoard" : board,
 										 	 "remoteColumns" : columns,
@@ -227,6 +267,8 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 			        						 "remoteFamily" : family, 
 											 "remoteGroups" : groups,
 											 "remoteGroup" : group,
+											 "remoteProjects" : projects,
+											 "remoteProject" : project,
 											 "remoteBoards" : boards,
 											 "remoteBoard" : board,
 											 "remoteColumns" : columns,
@@ -247,6 +289,8 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 		                         	"remoteFamily" : family, 
 								 	"remoteGroups" : groups,
 								 	"remoteGroup" : group,
+									"remoteProjects" : projects,
+									"remoteProject" : project,
 									"remoteBoards" : boards,
 									"remoteBoard" : board,
 									"remoteColumns" : columns,
@@ -259,6 +303,7 @@ function findCommentsForCard(db, res, family, group, board, column, card, commen
 exports.renderDocumentPageComment = renderDocumentPageComment;
 exports.renderDocumentPageCard = renderDocumentPageCard;
 exports.renderDocumentPageColumn = renderDocumentPageColumn;
+exports.renderDocumentPageProject = renderDocumentPageProject;
 exports.renderDocumentPageBoard = renderDocumentPageBoard;
 exports.renderDocumentPageGroup = renderDocumentPageGroup;
 exports.renderDocumentPageFamily = renderDocumentPageFamily;

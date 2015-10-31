@@ -8,15 +8,18 @@ div.crumbs
 			if remoteGroup
 				li
 					a(href='/w/groups/#{remoteGroup._id}') #{remoteGroup.name}
-				if remoteBoard
+				if remoteProject
 					li
-						a(href='/w/boards/#{remoteBoard._id}') #{remoteBoard.name}
-					if remoteColumn
+						a(href='/w/projects/#{remoteProject._id}') #{remoteProject.name}
+					if remoteBoard
 						li
-							a(href='/w/columns/#{remoteColumn._id}') #{remoteColumn.name}
-						if remoteCard
+							a(href='/w/boards/#{remoteBoard._id}') #{remoteBoard.name}
+						if remoteColumn
 							li
-								a(href='/w/cards/#{remoteCard._id}') #{remoteCard.name}
-							if remoteComment
+								a(href='/w/columns/#{remoteColumn._id}') #{remoteColumn.name}
+							if remoteCard
 								li
-									a(href='/w/comments/#{remoteComment._id}') #{remoteComment.name}
+									a(href='/w/cards/#{remoteCard._id}') #{remoteCard.name}
+								if remoteComment
+									li
+										a(href='/w/comments/#{remoteComment._id}') #{remoteComment.name}

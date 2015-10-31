@@ -36,29 +36,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 ////
 // ROUTES
 ////
-var webFamilyRoutes = require('./routes/w/families');
-app.use('/w/families', webFamilyRoutes);
+var routes = require('./routes/w/families');
+app.use('/w/families', routes);
 
-var webGroupRoutes = require('./routes/w/groups');
-app.use('/w/groups', webGroupRoutes);
+routes = require('./routes/w/groups');
+app.use('/w/groups', routes);
 
-var webBoardRoutes = require('./routes/w/boards');
-app.use('/w/boards', webBoardRoutes);
+routes = require('./routes/w/projects');
+app.use('/w/projects', routes);
 
-var webColumnRoutes = require('./routes/w/columns');
-app.use('/w/columns', webColumnRoutes);
+routes = require('./routes/w/boards');
+app.use('/w/boards', routes);
 
-var webCardRoutes = require('./routes/w/cards');
-app.use('/w/cards', webCardRoutes);
+routes = require('./routes/w/columns');
+app.use('/w/columns', routes);
 
-var webCommentRoutes = require('./routes/w/comments');
-app.use('/w/comments', webCommentRoutes);
+routes = require('./routes/w/cards');
+app.use('/w/cards', routes);
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+routes = require('./routes/w/comments');
+app.use('/w/comments', routes);
 
+routes = require('./routes/index');
 app.use('/', routes);
-app.use('/users', users);
 
 ////
 // ERROR HANDLING

@@ -4,7 +4,7 @@ var sharedRoutes = require('./sharedRoutes');
 
 router.get('/:docId', function(req, res) {	
 	var docId = req.params.docId;
-	sharedRoutes.renderDocumentPageBoard(req, res, docId);
+	sharedRoutes.renderDocumentPageProject(req, res, docId);
 });
 
 router.post('/update', function(req, res) {
@@ -12,19 +12,19 @@ router.post('/update', function(req, res) {
 	var db = req.db;
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
-	var projectId = req.body.projectId;
-	var docId = req.body.boardId;
-	var docsTable = db.get('boards');
+	var docId = req.body.projectId;
+	var groupId = req.body.groupId;
+	var docsTable = db.get('projects');
 
 	if (docId.length > 1) {
 		if (docName && docName.length > 0) {
 			docsTable.findAndModify({
 				"query" : { "_id" : docId },
-				"update" : { "name" : docName, "sortOrder" : sortOrder, "projectId" : projectId },
+				"update" : { "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId },
 				"new" : true,		// no workie?
 				"upsert" : false	// no workie?
 			}, function(err, oldDoc) {
-				sharedRoutes.renderDocumentPageBoard(req, res, docId);
+				sharedRoutes.renderDocumentPageProject(req, res, docId);
 			});			
 		}
 		else {
@@ -33,15 +33,15 @@ router.post('/update', function(req, res) {
 					res.send("There was a problem removing that document from the database.");					
 				}
 				else {
-					sharedRoutes.renderDocumentPageProject(req, res, projectId);
+					sharedRoutes.renderDocumentPageGroup(req, res, groupId);
 				}
 			});			
 		}
 	}
 	else if (docName && docName.length > 0) {
-		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "projectId" : projectId }, function(err, doc) {
+		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId }, function(err, doc) {
 			if (doc) {
-				sharedRoutes.renderDocumentPageBoard(req, res, doc._id);
+				sharedRoutes.renderDocumentPageProject(req, res, doc._id);
 			}
 			else {
 				res.send("There was a problem adding that document to the database.");
@@ -49,7 +49,7 @@ router.post('/update', function(req, res) {
 		});
 	}
 	else {
-		sharedRoutes.renderDocumentPageProject(req, res, projectId);
+		sharedRoutes.renderDocumentPageGroup(req, res, groupId);
 	}
 });
 

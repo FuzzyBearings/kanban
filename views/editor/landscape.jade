@@ -3,7 +3,14 @@ extends ../layout
 block content
 
 	-
-		var menuNames = { "localFamily" : "Pick Family", "localGroup" : "Pick Group", "localBoard" : "Pick Board", "localColumn" : "Pick Column", "localCard" : "Pick Card", "localComment" : "Pick Comment" };
+		var menuNames = { "localFamily" : "Pick Family", 
+							"localGroup" : "Pick Group",
+							"localProject" : "Pick Project",
+							"localBoard" : "Pick Board",
+							"localColumn" : "Pick Column",
+							"localCard" : "Pick Card",
+							"localComment" : "Pick Comment" };
+							
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {
 			localFamily.familyId = remoteFamily._id;
@@ -27,6 +34,19 @@ block content
 		var groupSortOrder = 1;
 		if (remoteGroups) {
 			groupSortOrder = remoteGroups.length + 1;
+		}
+
+		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		if (remoteProject) {
+			localProject.groupId = remoteProject._id;
+			localProject.name = remoteProject.name;
+			localProject.sortOrder = remoteProject.sortOrder;
+			localProject.familyId = remoteProject.familyId;
+			menuNames['localProject'] = remoteProject.name;
+		}
+		var projectSortOrder = 1;
+		if (remoteProjects) {
+			projectSortOrder = remoteProjects.length + 1;
 		}
 
 		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
@@ -88,22 +108,32 @@ block content
 			th
 				h1= menuNames['localFamily']
 				p Family
+
 			if remoteFamily
 				th
 					h1= menuNames['localGroup']
 					p Group
+
 			if remoteGroup
+				th
+					h1= menuNames['localProject']
+					p Project
+
+			if remoteProject
 				th
 					h1= menuNames['localBoard']
 					p Board
+
 			if remoteBoard
 				th
 					h1= menuNames['localColumn']
 					p Column
+
 			if remoteColumn
 				th
 					h1= menuNames['localCard']
 					p Card
+
 			if remoteCard
 				th
 					h1= menuNames['localComment']
@@ -151,10 +181,32 @@ block content
 
 			if remoteGroup
 				td
+					if remoteProjects && remoteProjects.length > 0
+						each project in remoteProjects
+							form(method="post", action="/w/projects/update", class="editing-form")
+								input(type="hidden", name="groupId", value="#{project.groupId}")
+								input(type="hidden", name="projectId", value="#{project._id}")
+								input(type="hidden", name="sortOrder", value="#{project.sortOrder}")
+								.input-group
+									input(type='text', name='name', value="#{project.name}" class="form-control" placeholder="")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+					form(method="post", action="/w/projects/update", class="form-inline", id="boardForm")
+						input(type="hidden", name="groupId", value="#{remoteGroup._id}")
+						input(type="hidden", name="projectId", value="0")
+						input(type="hidden", name="sortOrder", value="#{projectSortOrder}")
+						.input-group
+							input(name="name" value="", placeholder="", type="text", class="form-control")
+							.input-group-btn
+								button(type="submit", class="btn btn-default") submit
+
+
+			if remoteProject
+				td
 					if remoteBoards && remoteBoards.length > 0
 						each board in remoteBoards
 							form(method="post", action="/w/boards/update", class="editing-form")
-								input(type="hidden", name="groupId", value="#{board.groupId}")
+								input(type="hidden", name="projectId", value="#{board.projectId}")
 								input(type="hidden", name="boardId", value="#{board._id}")
 								input(type="hidden", name="sortOrder", value="#{board.sortOrder}")
 								.input-group
@@ -162,7 +214,7 @@ block content
 									.input-group-btn
 										button(type="submit", class="btn btn-default") submit
 					form(method="post", action="/w/boards/update", class="form-inline", id="boardForm")
-						input(type="hidden", name="groupId", value="#{remoteGroup._id}")
+						input(type="hidden", name="projectId", value="#{remoteProject._id}")
 						input(type="hidden", name="boardId", value="0")
 						input(type="hidden", name="sortOrder", value="#{boardSortOrder}")
 						.input-group
