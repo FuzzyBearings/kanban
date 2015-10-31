@@ -4,7 +4,7 @@ block content
 
 	-
 		var menuNames = { "localFamily" : "Family", 
-							"localGroup" : "Group",
+							"localClient" : "Client",
 							"localProject" : "Project",
 							"localBoard" : "Board",
 							"localColumn" : "Column",
@@ -28,20 +28,20 @@ block content
 		}
 
 		//
-		// Groups
+		// Clients
 		//
-		var groupSortOrder = 1;
-		if (remoteGroups && remoteGroups.length > 0) {
-			groupSortOrder = remoteGroups.length + 1;
-			// menuNames['localGroup'] = "Pick Group";
+		var clientSortOrder = 1;
+		if (remoteClients && remoteClients.length > 0) {
+			clientSortOrder = remoteClients.length + 1;
+			// menuNames['localClient'] = "Pick Client";
 		}
-		var localGroup = { groupId : 0, "name" : "", sortOrder : 1, familyId : "0" }
-		if (remoteGroup) {
-			localGroup.groupId = remoteGroup._id;
-			localGroup.name = remoteGroup.name;
-			localGroup.sortOrder = remoteGroup.sortOrder;
-			localGroup.familyId = remoteGroup.familyId;
-			menuNames['localGroup'] = remoteGroup.name;
+		var localClient = { clientId : 0, "name" : "", sortOrder : 1, familyId : "0" }
+		if (remoteClient) {
+			localClient.clientId = remoteClient._id;
+			localClient.name = remoteClient.name;
+			localClient.sortOrder = remoteClient.sortOrder;
+			localClient.familyId = remoteClient.familyId;
+			menuNames['localClient'] = remoteClient.name;
 		}
 
 		//
@@ -52,9 +52,9 @@ block content
 			projectSortOrder = remoteProjects.length + 1;
 			// menuNames['localProject'] = "Pick Project"
 		}
-		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		var localProject = { projectId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteProject) {
-			localProject.groupId = remoteProject._id;
+			localProject.clientId = remoteProject._id;
 			localProject.name = remoteProject.name;
 			localProject.sortOrder = remoteProject.sortOrder;
 			localProject.familyId = remoteProject.familyId;
@@ -69,12 +69,12 @@ block content
 			boardSortOrder = remoteBoards.length + 1;
 			// menuNames['localBoard'] = "Pick Board";
 		}
-		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteBoard) {
 			localBoard.boardId = remoteBoard._id;
 			localBoard.name = remoteBoard.name;
 			localBoard.sortOrder = remoteBoard.sortOrder;
-			localBoard.groupId = remoteBoard.groupId;
+			localBoard.clientId = remoteBoard.clientId;
 			menuNames['localBoard'] = remoteBoard.name;
 		}
 
@@ -138,10 +138,10 @@ block content
 
 			if remoteFamily
 				th
-					h1= menuNames['localGroup']
-					p Group
+					h1= menuNames['localClient']
+					p Client
 
-			if remoteGroup
+			if remoteClient
 				th
 					h1= menuNames['localProject']
 					p Project
@@ -187,31 +187,31 @@ block content
 
 			if remoteFamily
 				td
-					if remoteGroups && remoteGroups.length > 0
-						each group in remoteGroups
-							form(method="post", action="/w/groups/update", class="editing-form")
-								input(type="hidden", name="familyId", value="#{group.familyId}")
-								input(type="hidden", name="groupId", value="#{group._id}")
-								input(type="hidden", name="sortOrder", value="#{group.sortOrder}")
+					if remoteClients && remoteClients.length > 0
+						each client in remoteClients
+							form(method="post", action="/w/clients/update", class="editing-form")
+								input(type="hidden", name="familyId", value="#{client.familyId}")
+								input(type="hidden", name="clientId", value="#{client._id}")
+								input(type="hidden", name="sortOrder", value="#{client.sortOrder}")
 								.input-group
-									input(type='text', name='name', value="#{group.name}" class="form-control" placeholder="")
+									input(type='text', name='name', value="#{client.name}" class="form-control" placeholder="")
 									.input-group-btn
 										button(type="submit", class="btn btn-default") submit
-					form(method="post", action="/w/groups/update", class="form-inline")
+					form(method="post", action="/w/clients/update", class="form-inline")
 						input(type="hidden", name="familyId", value="#{remoteFamily._id}")
-						input(type="hidden", name="groupId", value="0")
-						input(type="hidden", name="sortOrder", value="#{groupSortOrder}")
+						input(type="hidden", name="clientId", value="0")
+						input(type="hidden", name="sortOrder", value="#{clientSortOrder}")
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
 
-			if remoteGroup
+			if remoteClient
 				td
 					if remoteProjects && remoteProjects.length > 0
 						each project in remoteProjects
 							form(method="post", action="/w/projects/update", class="editing-form")
-								input(type="hidden", name="groupId", value="#{project.groupId}")
+								input(type="hidden", name="clientId", value="#{project.clientId}")
 								input(type="hidden", name="projectId", value="#{project._id}")
 								input(type="hidden", name="sortOrder", value="#{project.sortOrder}")
 								.input-group
@@ -219,7 +219,7 @@ block content
 									.input-group-btn
 										button(type="submit", class="btn btn-default") submit
 					form(method="post", action="/w/projects/update", class="form-inline", id="boardForm")
-						input(type="hidden", name="groupId", value="#{remoteGroup._id}")
+						input(type="hidden", name="clientId", value="#{remoteClient._id}")
 						input(type="hidden", name="projectId", value="0")
 						input(type="hidden", name="sortOrder", value="#{projectSortOrder}")
 						.input-group

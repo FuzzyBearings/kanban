@@ -4,7 +4,7 @@ block content
 
 	-
 		var menuNames = { "localFamily" : "Family", 
-							"localGroup" : "Group",
+							"localClient" : "Client",
 							"localProject" : "Project",
 							"localBoard" : "Board",
 							"localColumn" : "Column",
@@ -28,20 +28,20 @@ block content
 		}
 
 		//
-		// Groups
+		// Clients
 		//
-		var groupSortOrder = 1;
-		if (remoteGroups && remoteGroups.length > 0) {
-			groupSortOrder = remoteGroups.length + 1;
-			// menuNames['localGroup'] = "Pick Group";
+		var clientSortOrder = 1;
+		if (remoteClients && remoteClients.length > 0) {
+			clientSortOrder = remoteClients.length + 1;
+			// menuNames['localClient'] = "Pick Client";
 		}
-		var localGroup = { groupId : 0, "name" : "", sortOrder : 1, familyId : "0" }
-		if (remoteGroup) {
-			localGroup.groupId = remoteGroup._id;
-			localGroup.name = remoteGroup.name;
-			localGroup.sortOrder = remoteGroup.sortOrder;
-			localGroup.familyId = remoteGroup.familyId;
-			menuNames['localGroup'] = remoteGroup.name;
+		var localClient = { clientId : 0, "name" : "", sortOrder : 1, familyId : "0" }
+		if (remoteClient) {
+			localClient.clientId = remoteClient._id;
+			localClient.name = remoteClient.name;
+			localClient.sortOrder = remoteClient.sortOrder;
+			localClient.familyId = remoteClient.familyId;
+			menuNames['localClient'] = remoteClient.name;
 		}
 
 		//
@@ -52,9 +52,9 @@ block content
 			projectSortOrder = remoteProjects.length + 1;
 			// menuNames['localProject'] = "Pick Project"
 		}
-		var localProject = { projectId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		var localProject = { projectId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteProject) {
-			localProject.groupId = remoteProject._id;
+			localProject.clientId = remoteProject._id;
 			localProject.name = remoteProject.name;
 			localProject.sortOrder = remoteProject.sortOrder;
 			localProject.familyId = remoteProject.familyId;
@@ -69,12 +69,12 @@ block content
 			boardSortOrder = remoteBoards.length + 1;
 			// menuNames['localBoard'] = "Pick Board";
 		}
-		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, groupId : "0" }
+		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteBoard) {
 			localBoard.boardId = remoteBoard._id;
 			localBoard.name = remoteBoard.name;
 			localBoard.sortOrder = remoteBoard.sortOrder;
-			localBoard.groupId = remoteBoard.groupId;
+			localBoard.clientId = remoteBoard.clientId;
 			menuNames['localBoard'] = remoteBoard.name;
 		}
 

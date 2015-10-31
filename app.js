@@ -39,8 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var routes = require('./routes/w/families');
 app.use('/w/families', routes);
 
-routes = require('./routes/w/groups');
-app.use('/w/groups', routes);
+routes = require('./routes/w/clients');
+app.use('/w/clients', routes);
 
 routes = require('./routes/w/projects');
 app.use('/w/projects', routes);

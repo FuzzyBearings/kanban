@@ -13,14 +13,14 @@ router.post('/update', function(req, res) {
 	var docName = req.body.name;
 	var sortOrder = req.body.sortOrder;
 	var docId = req.body.projectId;
-	var groupId = req.body.groupId;
+	var clientId = req.body.clientId;
 	var docsTable = db.get('projects');
 
 	if (docId.length > 1) {
 		if (docName && docName.length > 0) {
 			docsTable.findAndModify({
 				"query" : { "_id" : docId },
-				"update" : { "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId },
+				"update" : { "name" : docName, "sortOrder" : sortOrder, "clientId" : clientId },
 				"new" : true,		// no workie?
 				"upsert" : false	// no workie?
 			}, function(err, oldDoc) {
@@ -33,13 +33,13 @@ router.post('/update', function(req, res) {
 					res.send("There was a problem removing that document from the database.");					
 				}
 				else {
-					sharedRoutes.renderDocumentPageGroup(req, res, groupId);
+					sharedRoutes.renderDocumentPageClient(req, res, clientId);
 				}
 			});			
 		}
 	}
 	else if (docName && docName.length > 0) {
-		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "groupId" : groupId }, function(err, doc) {
+		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "clientId" : clientId }, function(err, doc) {
 			if (doc) {
 				sharedRoutes.renderDocumentPageProject(req, res, doc._id);
 			}
@@ -49,7 +49,7 @@ router.post('/update', function(req, res) {
 		});
 	}
 	else {
-		sharedRoutes.renderDocumentPageGroup(req, res, groupId);
+		sharedRoutes.renderDocumentPageClient(req, res, clientId);
 	}
 });
 
