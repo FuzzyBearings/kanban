@@ -28,3 +28,11 @@ tr.selected td {
 .showme {
 	visibility: show;
 }
+
+div.menu {
+	
+}
+
+div.crumbs {
+	margin: 1.5em 0;
+}

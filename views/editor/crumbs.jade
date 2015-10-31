@@ -1,0 +1,22 @@
+div.crumbs
+	ol.breadcrumb
+		li
+			a(href="/w/families") All Families
+		if remoteFamily
+			li
+				a(href='/w/families/#{remoteFamily._id}') #{remoteFamily.name}
+			if remoteGroup
+				li
+					a(href='/w/groups/#{remoteGroup._id}') #{remoteGroup.name}
+				if remoteBoard
+					li
+						a(href='/w/boards/#{remoteBoard._id}') #{remoteBoard.name}
+					if remoteColumn
+						li
+							a(href='/w/columns/#{remoteColumn._id}') #{remoteColumn.name}
+						if remoteCard
+							li
+								a(href='/w/cards/#{remoteCard._id}') #{remoteCard.name}
+							if remoteComment
+								li
+									a(href='/w/comments/#{remoteComment._id}') #{remoteComment.name}

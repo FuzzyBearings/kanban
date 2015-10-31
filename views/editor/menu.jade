@@ -1,0 +1,82 @@
+div.menu
+	nav(class="navbar navbar-default")
+		ul(class="nav navbar-nav")
+			li.dropdown
+				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localFamily']
+					span.caret
+				ul(class="dropdown-menu")
+					li
+						a(href="/w/families") All Families
+					li.divider(role="separator")
+					if remoteFamilies && remoteFamilies.length > 0
+						each family in remoteFamilies
+							li
+								a(href='/w/families/#{family._id}') #{family.name}
+			if remoteGroups && remoteGroups.length > 0
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false")= menuNames['localGroup']
+						span.caret
+					ul(class="dropdown-menu")
+						each group in remoteGroups
+							li
+								a(href='/w/groups/#{group._id}') #{group.name}					
+			if remoteBoards && remoteBoards.length > 0
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false")= menuNames['localBoard']
+						span.caret
+					ul(class="dropdown-menu")
+						each board in remoteBoards
+							li
+								a(href='/w/boards/#{board._id}') #{board.name}
+			if remoteColumns && remoteColumns.length > 0
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false")= menuNames['localColumn']
+						span.caret
+					ul(class="dropdown-menu")
+						each column in remoteColumns
+							li
+								a(href='/w/columns/#{column._id}') #{column.name}
+			if remoteCards && remoteCards.length > 0
+				li.dropdown
+					a(href="#", 
+					  class="dropdown-toggle",
+					  data-toggle="dropdown",
+					  role="button",
+					  aria-haspopup="true"
+					  aria-expanded="false")= menuNames['localCard']
+						span.caret
+					ul(class="dropdown-menu")
+						each card in remoteCards
+							li
+								a(href='/w/cards/#{card._id}') #{card.name}
+			if remoteComments && remoteComments.length > 0
+				li.dropdown
+					a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localComment']
+						span.caret
+					ul(class="dropdown-menu")
+						each comment in remoteComments
+							li
+								a(href='/w/comments/#{comment._id}') #{comment.name}
+		ul(class="nav navbar-nav navbar-right" style="margin-right: 0em")
+			li.dropdown
+				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") View
+					span.caret
+				ul.dropdown-menu
+					li
+						a(href='/w/families?action=edit') Editor
+						a(href='/w/families?action=view') Columns
