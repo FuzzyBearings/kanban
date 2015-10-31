@@ -15,22 +15,22 @@ div.menu
 							li
 								a(href='/w/families/#{family._id}') #{family.name}
 
-			if remoteGroups && remoteGroups.length > 0
+			if remoteClients && remoteClients.length > 0
 				li.dropdown
 					a(href="#", 
 					  class="dropdown-toggle",
 					  data-toggle="dropdown",
 					  role="button",
 					  aria-haspopup="true"
-					  aria-expanded="false")= menuNames['localGroup']
+					  aria-expanded="false")= menuNames['localClient']
 						span.caret
 					ul(class="dropdown-menu")
 						li
-							a(href="/w/families/#{remoteFamily._id}") All Groups
+							a(href="/w/families/#{remoteFamily._id}") All Clients
 						li.divider(role="separator")
-						each group in remoteGroups
+						each client in remoteClients
 							li
-								a(href='/w/groups/#{group._id}') #{group.name}					
+								a(href='/w/clients/#{client._id}') #{client.name}					
 
 			if remoteProjects && remoteProjects.length > 0
 				li.dropdown
@@ -38,7 +38,7 @@ div.menu
 						span.caret
 					ul(class="dropdown-menu")
 						li
-							a(href="/w/groups/#{remoteGroup._id}") All Projects
+							a(href="/w/clients/#{remoteClient._id}") All Projects
 						li.divider(role="separator")
 						each project in remoteProjects
 							li

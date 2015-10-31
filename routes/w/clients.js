@@ -4,7 +4,7 @@ var sharedRoutes = require('./sharedRoutes');
 
 router.get('/:docId', function(req, res) {	
 	var docId = req.params.docId;
-	sharedRoutes.renderDocumentPageGroup(req, res, docId);
+	sharedRoutes.renderDocumentPageClient(req, res, docId);
 });
 
 router.post('/update', function(req, res) {
@@ -14,7 +14,7 @@ router.post('/update', function(req, res) {
 	var sortOrder = req.body.sortOrder;
 	var docId = req.body.clientId;
 	var familyId = req.body.familyId;
-	var docsTable = db.get('groups');
+	var docsTable = db.get('clients');
 
 	if (docId.length > 1) {
 		if (docName && docName.length > 0) {
@@ -24,7 +24,7 @@ router.post('/update', function(req, res) {
 				"new" : true,		// no workie?
 				"upsert" : false	// no workie?
 			}, function(err, oldDoc) {
-				sharedRoutes.renderDocumentPageGroup(req, res, docId);
+				sharedRoutes.renderDocumentPageClient(req, res, docId);
 			});			
 		}
 		else {
@@ -41,7 +41,7 @@ router.post('/update', function(req, res) {
 	else if (docName && docName.length > 0) {
 		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder, "familyId" : familyId }, function(err, doc) {
 			if (doc) {
-				sharedRoutes.renderDocumentPageGroup(req, res, doc._id);
+				sharedRoutes.renderDocumentPageClient(req, res, doc._id);
 			}
 			else {
 				res.send("There was a problem adding that document to the database.");
