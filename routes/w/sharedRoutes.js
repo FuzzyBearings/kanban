@@ -1,5 +1,5 @@
 var editorPage = 'editor/editor';
-var kanbanPage = editorPage;
+var kanbanPage = 'editor/kanban';
 // var editorPage = 'editor/portrait1';
 // var kanbanPage = 'editor/portrait2';
 // var editorPage = 'viewer/portrait';
@@ -73,7 +73,7 @@ function renderDocumentPageBoard(req, res, boardId, column, card, comment) {
 
 function renderDocumentPageProject(req, res, projectId, board, column, card, comment) {
 	if (!res.targetPage) {
-		res.targetPage = kanbanPage;
+		res.targetPage = editorPage;
 	}
 	var db = req.db;
 	var table = db.get('projects');
