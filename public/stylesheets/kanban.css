@@ -20,3 +20,11 @@ form {
 tr.selected td {
 	background-color: #f3f7f3;
 }
+
+.hideme {
+	visibility: hidden;
+}
+
+.showme {
+	visibility: show;
+}
