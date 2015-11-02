@@ -5,9 +5,9 @@ div.crumbs
 		if remoteFamily
 			li
 				a(href='/w/families/#{remoteFamily._id}') #{remoteFamily.name}
-			if remoteGroup
+			if remoteClient
 				li
-					a(href='/w/groups/#{remoteGroup._id}') #{remoteGroup.name}
+					a(href='/w/groups/#{remoteClient._id}') #{remoteClient.name}
 				if remoteProject
 					li
 						a(href='/w/projects/#{remoteProject._id}') #{remoteProject.name}
