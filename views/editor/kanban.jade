@@ -82,8 +82,8 @@ block content
 		// Columns
 		//
 		var columnSortOrder = 1;
-		if (remoteColumns && remoteColumns.length > 0) {
-			columnSortOrder = remoteColumns.length + 1;
+		if (remoteColumns && remoteColumns.columns && remoteColumns.columns.length > 0) {
+			columnSortOrder = remoteColumns.columns.length + 1;
 			// menuNames['localColumn'] = "Pick Column";
 		}
 		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
@@ -132,7 +132,7 @@ block content
 	
 	table.columns
 		tr
-			each column in remoteColumns
+			each column in remoteColumns.columns
 				th
 					h1= column.name
 			th

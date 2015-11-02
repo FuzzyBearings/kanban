@@ -189,7 +189,8 @@ function findColumnsForBoard(db, res, family, client, project, board, column, ca
 		var table = db.get('columns');
 		table.find({ "boardId" : board._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, columns) {
 			if (columns) {
-				findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columns);
+				var columnsDictionary = { "columns" : columns };
+				findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
@@ -208,12 +209,12 @@ function findColumnsForBoard(db, res, family, client, project, board, column, ca
 	}
 }
 
-function findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columns) {
+function findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary) {
 	if (column) {
 		var table = db.get('cards');
 		table.find({ "columnId" : column._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, cards) {
 			if (cards) {
-				findCommentsForCard(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columns, cards);
+				findCommentsForCard(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary, cards);
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
@@ -229,12 +230,12 @@ function findCardsForColumn(db, res, family, client, project, board, column, car
 									 "remoteProject" : project,
 									 "remoteBoards" : boards,
 									 "remoteBoard" : board,
-									 "remoteColumns" : columns
+									 "remoteColumns" : columnsDictionary
 		});
 	}
 }
 
-function findCommentsForCard(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columns, cards) {
+function findCommentsForCard(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary, cards) {
 	if (card) {
 		var table = db.get('comments');
 		table.find({ "cardId" : card._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, comments) {
@@ -248,7 +249,7 @@ function findCommentsForCard(db, res, family, client, project, board, column, ca
 											 "remoteProject" : project,
 										 	 "remoteBoards" : boards,
 										 	 "remoteBoard" : board,
-										 	 "remoteColumns" : columns,
+										 	 "remoteColumns" : columnsDictionary,
 										 	 "remoteColumn" : column,
 										 	 "remoteCards" : cards,
 											 "remoteCard" : card,
@@ -265,7 +266,7 @@ function findCommentsForCard(db, res, family, client, project, board, column, ca
 											 "remoteProject" : project,
 											 "remoteBoards" : boards,
 											 "remoteBoard" : board,
-											 "remoteColumns" : columns,
+											 "remoteColumns" : columnsDictionary,
 											 "remoteColumn" : column,
 											 "remoteCards" : cards,
 											 "remoteCard" : card,
@@ -287,7 +288,7 @@ function findCommentsForCard(db, res, family, client, project, board, column, ca
 									"remoteProject" : project,
 									"remoteBoards" : boards,
 									"remoteBoard" : board,
-									"remoteColumns" : columns,
+									"remoteColumns" : columnsDictionary,
 									"remoteColumn" : column,
 									"remoteCards" : cards
 		});
