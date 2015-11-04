@@ -221,12 +221,10 @@ function findCardsForColumns(db, res, family, client, project, board, column, ca
 	columnsDictionary.cards = [];
 	var numberOfColumns = columnsDictionary.columns.length;
 	
-	var index = 0;
 	async.each(columnsDictionary.columns, function(element, callback) {
 		var columnId = element._id.toString();
 		table.find({ "columnId" : columnId }, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, cards) {
-			columnsDictionary.cards[index] = cards;
-			++index;
+			columnsDictionary.cards[columnId] = cards;
 			callback();
 		});
 	}, function(err) {

@@ -133,8 +133,9 @@ block content
 	table.columns
 		tr
 			each column in remoteColumns.columns
-				th
-					h1= column.name
+				h1= column.name
+				var cards = remoteColumns.cards[column._id]
+					div.card= card.name
 			th
 				form(method="post", action="/w/columns/update", class="form-inline")
 					input(type="hidden", name="boardId", value="#{remoteBoard._id}")
@@ -144,11 +145,5 @@ block content
 						input(name="name" value="", placeholder="", type="text", class="form-control")
 						.input-group-btn
 							button(type="submit", class="btn btn-default") submit
-		tr
-			each cards in remoteColumns.cards
-				td
-					each card in cards
-						div.card
-							| #{card.name}
 
 	include ./crumbs.jade
