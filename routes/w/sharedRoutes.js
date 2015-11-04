@@ -1,3 +1,5 @@
+var async = require('async');
+
 var editorPage = 'editor/editor';
 var kanbanPage = 'editor/kanban';
 
@@ -190,7 +192,12 @@ function findColumnsForBoard(db, res, family, client, project, board, column, ca
 		table.find({ "boardId" : board._id.toString() }, { sort: { "sortOrder" : 1,  "name" : 1 }}, function(err1, columns) {
 			if (columns) {
 				var columnsDictionary = { "columns" : columns };
-				findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
+				if (column) {
+					findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
+				}
+				else {
+					findCardsForColumns(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
+				}
 			}
 			else {
 				res.send("FATAL ERROR : could not fetch columns.");
@@ -207,6 +214,33 @@ function findColumnsForBoard(db, res, family, client, project, board, column, ca
 									 "remoteBoards" : boards
 		});
 	}
+}
+
+function findCardsForColumns(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary) {
+	var table = db.get('cards');
+	columnsDictionary.cards = [];
+	var numberOfColumns = columnsDictionary.columns.length;
+	
+	var index = 0;
+	async.each(columnsDictionary.columns, function(element, callback) {
+		var columnId = element._id.toString();
+		table.find({ "columnId" : columnId }, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, cards) {
+			columnsDictionary.cards[index] = cards;
+			++index;
+			callback();
+		});
+	}, function(err) {
+		res.render(res.targetPage, { "remoteFamilies" : families,
+									 "remoteFamily" : family,
+									 "remoteClients" : clients,
+									 "remoteClient" : client,
+									 "remoteProjects" : projects,
+									 "remoteProject" : project,
+									 "remoteBoards" : boards,
+									 "remoteBoard" : board,
+									 "remoteColumns" : columnsDictionary
+		});
+	});
 }
 
 function findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary) {

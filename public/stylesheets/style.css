@@ -44,3 +44,12 @@ div.menu {
 div.crumbs {
 	margin: 1.5em 0;
 }
+
+div.card {
+	background-color: #fff;
+	border: 2px solid #333;
+	border-radius: 5px;
+	color: #232323;
+	margin: 4px 0;
+	padding: 8px;
+}

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var sharedRoutes = require('./sharedRoutes');
 
-router.get('/:docId', function(req, res) {	
+router.get('/:docId', function(req, res, next) {	
 	var docId = req.params.docId;
 	sharedRoutes.renderDocumentPageBoard(req, res, docId);
 });
