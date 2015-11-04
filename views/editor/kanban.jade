@@ -133,10 +133,13 @@ block content
 	table.columns
 		tr
 			each column in remoteColumns.columns
-				h1= column.name
-				var cards = remoteColumns.cards[column._id]
-					div.card= card.name
-			th
+				- var cards = remoteColumns.cards[column._id]
+				td
+					h1= column.name					
+					if cards
+						each card in cards
+							div.card= card.name
+			td
 				form(method="post", action="/w/columns/update", class="form-inline")
 					input(type="hidden", name="boardId", value="#{remoteBoard._id}")
 					input(type="hidden", name="columnId", value="0")
