@@ -133,14 +133,23 @@ block content
 	table.columns
 		tr
 			each column in remoteColumns.columns
-				- var cards = remoteColumns.cards[column._id]
-				td
+
+				-
+					var cards = [];
+					var columnId = column._id;
+					cards = remoteColumns.cards ? remoteColumns.cards[columnId] : [];
+
+				td.column
 					h1= column.name					
 					if cards
 						each card in cards
 							div.card= card.name
 			td
-				form(method="post", action="/w/columns/update", class="form-inline")
+				h1
+					button(type="button", class="btn btn-default", onclick="$('#add-column').toggle()")
+						span(class="glyphicon glyphicon-plus")
+
+				form(id="add-column", method="post", action="/w/columns/update", class="form-inline", style="display: none")
 					input(type="hidden", name="boardId", value="#{remoteBoard._id}")
 					input(type="hidden", name="columnId", value="0")
 					input(type="hidden", name="sortOrder", value="#{columnSortOrder}")

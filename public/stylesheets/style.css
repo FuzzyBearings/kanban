@@ -53,3 +53,12 @@ div.card {
 	margin: 4px 0;
 	padding: 8px;
 }
+
+td.column {
+	width: 400px;
+}
+
+td.column h1 {
+	margin: 1em;
+	width: 200px;
+}
