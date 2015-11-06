@@ -193,7 +193,7 @@ function findColumnsForBoard(db, res, family, client, project, board, column, ca
 			if (columns) {
 				var columnsDictionary = { "columns" : columns };
 				if (column) {
-					findCardsForColumn(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
+					findCardsForColumns(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);
 				}
 				else {
 					findCardsForColumns(db, res, family, client, project, board, column, card, comment, families, clients, projects, boards, columnsDictionary);

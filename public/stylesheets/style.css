@@ -62,3 +62,8 @@ td.column h1 {
 	margin: 1em;
 	width: 200px;
 }
+
+*.scroll {
+	padding-bottom: 1.5em;
+    overflow: auto;
+}
