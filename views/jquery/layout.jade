@@ -1,16 +1,23 @@
 doctype html
 html(lang="en")
 	head
-		meta( charset='utf-8' )
-		meta( http-equiv='X-UA-Compatible', content='IE=edge' )
-		meta( name='viewport', content='width=device-width, initial-scale=1.0' )
-		meta( name='description', content='Kanban Web Core' )
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='Kanban Web Core')
+		
+		// https://developers.google.com/speed/libraries/
 		link(href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css", rel="stylesheet")
 		link(rel='stylesheet', href='/stylesheets/jquery/style.css')
+		
 		title= title
+		
 	body
 		div.container
 			block content
+
+		// http://stackoverflow.com/questions/436411/where-is-the-best-place-to-put-script-tags-in-html-markup
+		// http://stackoverflow.com/questions/7751514/javascript-in-head-or-just-before-body
 		script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
 		script(src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
 		script(src='/javascripts/jquery/kanban.js')
