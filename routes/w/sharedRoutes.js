@@ -1,7 +1,7 @@
 var async = require('async');
 
 var editorPage = 'bootstrap/editor';
-var kanbanPage = 'bootstrap/kanban';
+var kanbanPage = 'jquery/kanban';
 
 function renderDocumentPageComment(req, res, commentId) {
 	res.targetPage = kanbanPage;

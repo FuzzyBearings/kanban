@@ -1,4 +1,4 @@
-extends ../jquery-layout
+extends ./layout
 
 block content
 
@@ -95,7 +95,7 @@ block content
 			menuNames['localColumn'] = remoteColumn.name;
 		}
 	
-	include ./menu.jade
+	// include ./menu.jade
 	
 	div.scroll
 		table.columns
@@ -165,4 +165,4 @@ block content
 								button(type="button", class="btn btn-default", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
 					
 
-	include ./crumbs.jade
+	// include ./crumbs.jade
