@@ -23,7 +23,6 @@ router.post('/update', function(req, res) {
 				"new" : true,		// no workie?
 				"upsert" : false	// no workie?
 			}, function(err, oldDoc) {
-				console.log('updated doc: ' + docId);
 				sharedRoutes.renderDocumentPageFamily(req, res, docId);
 			});			
 		}
@@ -41,7 +40,6 @@ router.post('/update', function(req, res) {
 	else if (docName && docName.length > 0) {
 		docsTable.insert({ "name" : docName, "sortOrder" : sortOrder }, function(err, doc) {
 			if (doc) {
-				console.log('inserted doc: ' + doc._id);
 				sharedRoutes.renderDocumentPageFamily(req, res, doc._id);
 			}
 			else {
