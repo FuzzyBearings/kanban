@@ -94,39 +94,6 @@ block content
 			localColumn.boardId = remoteColumn.boardId;
 			menuNames['localColumn'] = remoteColumn.name;
 		}
-		
-		//
-		// Cards
-		//
-		var cardSortOrder = 1;
-		if (remoteCards && remoteCards.length > 0) {
-			cardSortOrder = remoteCards.length + 1;
-			// menuNames['localCard'] = "Pick Card";
-		}
-		var localCard = { cardId : 0, "name" : "", sortOrder : 1, columnId : "0" }
-		if (remoteCard) {
-			localCard.cardId = remoteCard._id;
-			localCard.name = remoteCard.name;
-			localCard.sortOrder = remoteCard.sortOrder;
-			localCard.columnId = remoteCard.columnId;
-			menuNames['localCard'] = remoteCard.name;
-		}
-
-		//
-		// Comments
-		//
-		var commentSortOrder = 1;
-		if (remoteComments && remoteComments.length > 0) {
-			commentSortOrder = remoteComments.length + 1;
-			// menuNames['localComment'] = "Pick Column";
-		}
-		var localComment = { commentId : 0, "name" : "", sortOrder : 1, cardId : "0" }
-		if (remoteComment) {
-			localComment.commentId = remoteComment._id;
-			localComment.name = remoteComment.name;
-			localComment.sortOrder = remoteComment.sortOrder;
-			localComment.cardId = remoteComment.cardId;
-		}
 	
 	include ./menu.jade
 	
@@ -139,46 +106,63 @@ block content
 						var cards = [];
 						var columnId = column._id;
 						cards = remoteColumns.cards ? remoteColumns.cards[columnId] : [];
-						var addCardId = "add-card-" + columnId;
+						var addCardForm = "add-card-form-" + columnId;
+						var addCardNameField = "add-card-name-field-" + columnId;
+						var updateColumnForm = "update-column-form-" + columnId;
+						var updateColumnNameField = "update-column-name-field-" + columnId;
+						var updateColumnButton = "update-column-button-" + columnId;
 
 					td.column
-						h1= column.name					
-						if cards
-							each card in cards
-								form(method="post", action="/w/cards/update", class="form-inline")
-									input(type="hidden", name="cardId", value="#{card._id}")
-									input(type="hidden", name="columnId", value="#{column._id}")
-									input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
-									.input-group
-										input(name="name" value="#{card.name}", placeholder="", type="text", class="form-control")
-										.input-group-btn
-											button(type="submit", class="btn btn-default") submit
-																	
-						form(id="#{addCardId}" method="post", action="/w/cards/update", class="form-inline", style="display: none")
-							input(type="hidden", name="cardId", value="#{0}")
+						button(id="#{updateColumnButton}" type="button", class="btn btn-default dropdown-toggle title", 
+							   onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();$('##{updateColumnNameField}').select();")= column.name
+						form(id="#{updateColumnForm}" method="post", action="/w/columns/update", class="form-inline title", style="display: none")
+							input(type="hidden", name="boardId", value="#{column.boardId}")
 							input(type="hidden", name="columnId", value="#{column._id}")
-							input(type="hidden", name="sortOrder", value="0")
+							input(type="hidden", name="sortOrder", value="#{column.sortOrder}")
 							.input-group
-								input(name="name" value="", placeholder="", type="text", class="form-control")
+								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", style="width: 200px")
 								.input-group-btn
 									button(type="submit", class="btn btn-default") submit
-									
-						button(type="button", class="btn btn-default", onclick="$('##{addCardId}').toggle()")
+								.input-group-btn
+									button(type="button", class="btn btn-default", onclick="$('##{updateColumnForm}').toggle();$('##{columnNameButton}').toggle()") cancel
+
+						each card in cards
+							form(method="post", action="/w/cards/update", class="form-inline")
+								input(type="hidden", name="cardId", value="#{card._id}")
+								input(type="hidden", name="columnId", value="#{column._id}")
+								input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
+								.input-group
+									input(name="name" value="#{card.name}", placeholder="", type="text", class="form-control")
+									.input-group-btn
+										button(type="submit", class="btn btn-default") submit
+																	
+						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline", style="display: none")
+							input(type="hidden", name="cardId", value="#{0}")
+							input(type="hidden", name="columnId", value="#{column._id}")
+							input(type="hidden", name="sortOrder", value="#{cards.length}")
+							.input-group
+								input(id="#{addCardNameField}", name="name", value="", placeholder="", type="text", class="form-control")
+								.input-group-btn
+									button(type="submit", class="btn btn-default") submit
+
+						button(type="button", class="btn btn-default plus", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();")
 							span(class="glyphicon glyphicon-plus")
 						
-		
-				td
-					h1
-						button(type="button", class="btn btn-default", onclick="$('#add-column').toggle()")
-							span(class="glyphicon glyphicon-plus")
+				td.column
+					button(id="add-column-button", type="button", class="btn btn-default plus",
+						   onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();$('#add-column-name').focus()")
+						span(class="glyphicon glyphicon-plus")
 
-					form(id="add-column", method="post", action="/w/columns/update", class="form-inline", style="display: none")
+					form(id="add-column-form", method="post", action="/w/columns/update", class="form-inline", style="display: none")
 						input(type="hidden", name="boardId", value="#{remoteBoard._id}")
 						input(type="hidden", name="columnId", value="0")
 						input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
 						.input-group
-							input(name="name" value="", placeholder="", type="text", class="form-control")
+							input(id="add-column-name", name="name" value="", placeholder="", type="text", class="form-control", style="width: 200px")
 							.input-group-btn
 								button(type="submit", class="btn btn-default") submit
+							.input-group-btn
+								button(type="button", class="btn btn-default", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
+					
 
 	include ./crumbs.jade

@@ -58,9 +58,24 @@ td.column {
 	width: 400px;
 }
 
-td.column h1 {
-	margin: 1em;
-	width: 200px;
+td.column form.title {
+	margin-top: 0px;
+	margin-bottom: .4em;	
+}
+
+td.column button.title,
+td.column button.plus {
+	margin-top: 4px;
+	margin-bottom: 1em;
+}
+
+td.column button.title {
+	display: block;
+	width: 300px;
+}
+
+td.column input.name {
+	width: 300px;
 }
 
 *.scroll {
