@@ -95,9 +95,9 @@ block content
 			menuNames['localColumn'] = remoteColumn.name;
 		}
 	
-	// include ./menu.jade
+	include ./menu.jade
 	
-	div.scroll
+	div.columns
 		table.columns
 			tr
 				each column in remoteColumns.columns
@@ -124,7 +124,7 @@ block content
 								.input-group-btn
 									button(type="submit", class="btn btn-default") submit
 								.input-group-btn
-									button(type="button", class="btn btn-default", onclick="$('##{updateColumnForm}').toggle();$('##{columnNameButton}').toggle()") cancel
+									button(type="button", class="btn btn-default", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle()") cancel
 
 						each card in cards
 							form(method="post", action="/w/cards/update", class="form-inline")
