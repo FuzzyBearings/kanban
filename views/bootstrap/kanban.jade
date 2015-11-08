@@ -126,7 +126,7 @@ block content
 								input(type="hidden", name="columnId", value="#{column._id}")
 								input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
 								.input-group
-									textarea(name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")= card.name
+									textarea(name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")= card.name
 									div(id="#{cardButtonId}", style="display: none")
 										button(type="submit", class="btn btn-default", class="update-card") save card
 										button(type="button", class="btn btn-default", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
@@ -136,7 +136,7 @@ block content
 							input(type="hidden", name="columnId", value="#{column._id}")
 							input(type="hidden", name="sortOrder", value="#{cards.length}")
 							.input-group
-								textarea(id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")
+								textarea(id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")
 								div
 									button(type="submit", class="btn btn-default", class="update-card") save card
 									button(type="button", class="btn btn-default", class="update-card", onclick="$('##{addCardForm}').hide()") cancel

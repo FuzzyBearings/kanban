@@ -63,5 +63,5 @@ div.scroll {
 
 *.update-column,
 *.update-card {
-	margin-top: 1em;
+	margin: 1em 0;
 }

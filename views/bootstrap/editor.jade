@@ -176,14 +176,14 @@ block content
 							.input-group
 								input(type="text", name="name", value="#{family.name}", class="form-control", placeholder="")
 								.input-group-btn
-									button(type="submit", class="btn btn-default") submit
+									button(type="submit", class="btn btn-default") save
 				form(method="post", action="/w/families/update", class="form-inline")
 					input(type="hidden", name="familyId", value="0")
 					input(type="hidden", name="sortOrder", value="#{familySortOrder}")
 					.input-group
 						input(type="text", name="name", value="", class="form-control", placeholder="")
 						.input-group-btn
-							button(type="submit", class="btn btn-default") submit
+							button(type="submit", class="btn btn-default") save
 
 			if remoteFamily
 				td
@@ -196,7 +196,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{client.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/clients/update", class="form-inline")
 						input(type="hidden", name="familyId", value="#{remoteFamily._id}")
 						input(type="hidden", name="clientId", value="0")
@@ -204,7 +204,7 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 
 			if remoteClient
 				td
@@ -217,7 +217,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{project.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/projects/update", class="form-inline", id="boardForm")
 						input(type="hidden", name="clientId", value="#{remoteClient._id}")
 						input(type="hidden", name="projectId", value="0")
@@ -225,7 +225,7 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 
 
 			if remoteProject
@@ -239,7 +239,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{board.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/boards/update", class="form-inline", id="boardForm")
 						input(type="hidden", name="projectId", value="#{remoteProject._id}")
 						input(type="hidden", name="boardId", value="0")
@@ -247,7 +247,7 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 
 			if remoteBoard
 				td
@@ -260,7 +260,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{column.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/columns/update", class="form-inline")
 						input(type="hidden", name="boardId", value="#{remoteBoard._id}")
 						input(type="hidden", name="columnId", value="0")
@@ -268,7 +268,7 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 
 			if remoteColumn
 				td
@@ -281,7 +281,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{card.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/cards/update", class="form-inline")
 						input(type="hidden", name="columnId", value="#{remoteColumn._id}")
 						input(type="hidden", name="cardId", value="0")
@@ -289,7 +289,7 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 					
 			if remoteCard
 				td
@@ -302,7 +302,7 @@ block content
 								.input-group
 									input(type='text', name='name', value="#{comment.name}" class="form-control" placeholder="")
 									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+										button(type="submit", class="btn btn-default") save
 					form(method="post", action="/w/comments/update", class="form-inline")
 						input(type="hidden", name="cardId", value="#{remoteCard._id}")
 						input(type="hidden", name="commentId", value="0")
@@ -310,6 +310,6 @@ block content
 						.input-group
 							input(name="name" value="", placeholder="", type="text", class="form-control")
 							.input-group-btn
-								button(type="submit", class="btn btn-default") submit
+								button(type="submit", class="btn btn-default") save
 
 	include ./crumbs.jade
