@@ -106,13 +106,3 @@ div.menu
 						each comment in remoteComments
 							li
 								a(href='/w/comments/#{comment._id}') #{comment.name}
-								
-		ul(class="nav navbar-nav navbar-right" style="margin-right: 0em")
-			li.dropdown
-				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") View
-					span.caret
-				ul.dropdown-menu
-					li
-						a(href='/w/families?action=edit') Editor
-					li
-						a(href='/w/families?action=view') Columns

@@ -130,7 +130,7 @@ block content
 
 	include ./menu.jade
 		
-	table.top-level
+	table.columns
 		tr
 			th
 				h1= menuNames['localFamily']
@@ -170,7 +170,7 @@ block content
 			td
 				if remoteFamilies && remoteFamilies.length > 0
 					each family in remoteFamilies
-						form(method="post", action="/w/families/update", class="editing-form")
+						form(method="post", action="/w/families/update", class="form-inline")
 							input(type="hidden", name="familyId", value="#{family._id}")
 							input(type="hidden", name="sortOrder", value="#{family.sortOrder}")
 							.input-group
@@ -181,7 +181,7 @@ block content
 					input(type="hidden", name="familyId", value="0")
 					input(type="hidden", name="sortOrder", value="#{familySortOrder}")
 					.input-group
-						input(name="name", value="", placeholder="", type="text", class="form-control")
+						input(type="text", name="name", value="", class="form-control", placeholder="")
 						.input-group-btn
 							button(type="submit", class="btn btn-default") submit
 

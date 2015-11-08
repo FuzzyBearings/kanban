@@ -1,6 +1,8 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: #f3f7f3;
+	margin: 0;
+	padding: 16px 0;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -10,39 +12,39 @@ a {
 table.top-level,
 table.columns {
 	border-collapse: collapse;
+	border-right: 2px solid #aaa;
 }
 
-table.top-level th,
-table.top-level td,
 table.columns th,
 table.columns td {
-	border: 1px dotted #e1e1e1;
+	/* border: 1px dotted #e1e1e1; */
+	border-left: 2px solid #aaa;
 	padding: 1em;
 	vertical-align: top;
 }
 
+table.columns td form.title {
+	margin-top: 0px;
+	margin-bottom: .4em;	
+}
+
+table.columns td button.title,
+table.columns td button.plus {
+	margin-top: 4px;
+	margin-bottom: 1em;
+}
+
+table.columns td button.title {
+	display: block;
+	min-width: 200px;
+}
+
+table.columns td input.name {
+	idth: 300px;
+}
+
 form {
 	padding: 4px 0;
-}
-
-tr.selected td {
-	background-color: #f3f7f3;
-}
-
-.hideme {
-	visibility: hidden;
-}
-
-.showme {
-	visibility: show;
-}
-
-div.menu {
-	
-}
-
-div.crumbs {
-	margin: 1.5em 0;
 }
 
 div.card {
@@ -54,31 +56,11 @@ div.card {
 	padding: 8px;
 }
 
-td.column {
-	width: 400px;
+div.crumbs {
+	margin: 1.5em 0;
 }
 
-td.column form.title {
-	margin-top: 0px;
-	margin-bottom: .4em;	
-}
-
-td.column button.title,
-td.column button.plus {
-	margin-top: 4px;
-	margin-bottom: 1em;
-}
-
-td.column button.title {
-	display: block;
-	width: 300px;
-}
-
-td.column input.name {
-	width: 300px;
-}
-
-*.scroll {
+div.scroll {
 	padding-bottom: 1.5em;
     overflow: auto;
 }
