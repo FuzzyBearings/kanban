@@ -114,9 +114,10 @@ block content
 							input(type="hidden", name="columnId", value="#{column._id}")
 							input(type="hidden", name="sortOrder", value="#{column.sortOrder}")
 							.input-group
-								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", style="width: 200px", class="form-control")
-								.input-group-btn
-									button(type="submit", class="btn btn-default") save
+								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", class="form-control")
+								div
+									button(type="submit", class="btn btn-default update-column") save column
+									button(type="button", class="btn btn-default update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
 
 						each card in cards
 							- var cardButtonId = "card-" + card._id;
@@ -153,8 +154,9 @@ block content
 						input(type="hidden", name="columnId", value="0")
 						input(type="hidden", name="sortOrder", value="#{columnSortOrder}")
 						.input-group
-							input(id="add-column-name", name="name" value="", placeholder="Column Name", type="text", class="form-control", onblur="$('#add-column-form').toggle();$('#add-column-button').toggle();", style="width: 200px")
-							.input-group-btn
-								button(type="submit", class="btn btn-default") save
+							input(id="add-column-name", name="name" value="", placeholder="Column Name", type="text", class="form-control")
+							div
+								button(type="submit", class="btn btn-default update-column") save column
+								button(type="button", class="btn btn-default  update-column", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
 
 	include ./crumbs.jade

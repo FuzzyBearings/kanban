@@ -61,6 +61,7 @@ div.scroll {
     overflow: auto;
 }
 
+*.update-column,
 *.update-card {
 	margin-top: 1em;
 }
