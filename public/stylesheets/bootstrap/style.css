@@ -36,11 +36,7 @@ table.columns td button.plus {
 
 table.columns td button.title {
 	display: block;
-	min-width: 200px;
-}
-
-table.columns td input.name {
-	idth: 300px;
+	min-width: 262px;
 }
 
 form {
@@ -63,4 +59,8 @@ div.crumbs {
 div.scroll {
 	padding-bottom: 1.5em;
     overflow: auto;
+}
+
+*.update-card {
+	margin-top: 1em;
 }

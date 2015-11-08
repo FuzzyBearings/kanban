@@ -17,7 +17,6 @@ block content
 		var familySortOrder = 1;
 		if (remoteFamilies && remoteFamilies.length > 0) {
 			familySortOrder = remoteFamilies.length + 1;
-			// menuNames['localFamily'] = "Pick Family";
 		}
 		var localFamily = { familyId : 0, "name" : "", sortOrder : 1 }
 		if (remoteFamily) {
@@ -33,7 +32,6 @@ block content
 		var clientSortOrder = 1;
 		if (remoteClients && remoteClients.length > 0) {
 			clientSortOrder = remoteClients.length + 1;
-			// menuNames['localClient'] = "Pick Client";
 		}
 		var localClient = { clientId : 0, "name" : "", sortOrder : 1, familyId : "0" }
 		if (remoteClient) {
@@ -50,7 +48,6 @@ block content
 		var projectSortOrder = 1;
 		if (remoteProjects && remoteProjects.length > 0) {
 			projectSortOrder = remoteProjects.length + 1;
-			// menuNames['localProject'] = "Pick Project"
 		}
 		var localProject = { projectId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteProject) {
@@ -67,7 +64,6 @@ block content
 		var boardSortOrder = 1;
 		if (remoteBoards && remoteBoards.length > 0) {
 			boardSortOrder = remoteBoards.length + 1;
-			// menuNames['localBoard'] = "Pick Board";
 		}
 		var localBoard = { boardId : 0, "name" : "", sortOrder : 1, clientId : "0" }
 		if (remoteBoard) {
@@ -84,7 +80,6 @@ block content
 		var columnSortOrder = 1;
 		if (remoteColumns && remoteColumns.columns && remoteColumns.columns.length > 0) {
 			columnSortOrder = remoteColumns.columns.length + 1;
-			// menuNames['localColumn'] = "Pick Column";
 		}
 		var localColumn = { columnId : 0, "name" : "", sortOrder : 1, boardId : "0" }
 		if (remoteColumn) {
@@ -93,7 +88,7 @@ block content
 			localColumn.sortOrder = remoteColumn.sortOrder;
 			localColumn.boardId = remoteColumn.boardId;
 			menuNames['localColumn'] = remoteColumn.name;
-		}
+		}		
 	
 	include ./menu.jade
 	
@@ -119,32 +114,35 @@ block content
 							input(type="hidden", name="columnId", value="#{column._id}")
 							input(type="hidden", name="sortOrder", value="#{column.sortOrder}")
 							.input-group
-								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", onblur="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle()", style="width: 200px")
+								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", style="width: 200px", class="form-control")
 								.input-group-btn
 									button(type="submit", class="btn btn-default") save
 
 						each card in cards
+							- var cardButtonId = "card-" + card._id;
 							form(method="post", action="/w/cards/update", class="form-inline")
 								input(type="hidden", name="cardId", value="#{card._id}")
 								input(type="hidden", name="columnId", value="#{column._id}")
 								input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
 								.input-group
-									input(name="name" value="#{card.name}", placeholder="", type="text", class="form-control")
-									.input-group-btn
-										button(type="submit", class="btn btn-default") submit
+									textarea(name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")= card.name
+									div(id="#{cardButtonId}", style="display: none")
+										button(type="submit", class="btn btn-default", class="update-card") save card
+										button(type="button", class="btn btn-default", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
 																	
 						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline", style="display: none")
 							input(type="hidden", name="cardId", value="#{0}")
 							input(type="hidden", name="columnId", value="#{column._id}")
 							input(type="hidden", name="sortOrder", value="#{cards.length}")
 							.input-group
-								input(id="#{addCardNameField}", name="name", value="", placeholder="Card Name", type="text", class="form-control", onblur="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();", style="width: 300px")
-								.input-group-btn
-									button(type="submit", class="btn btn-default") save
-						button(type="button", class="btn btn-default plus", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();")
-							span(class="glyphicon glyphicon-plus")
-							Card
-						
+								textarea(id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")
+								div
+									button(type="submit", class="btn btn-default", class="update-card") save card
+									button(type="button", class="btn btn-default", class="update-card", onclick="$('##{addCardForm}').hide()") cancel
+	
+						div(class="update-card")
+							a(href="#", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();") Add Card
+													
 				td
 					button(id="add-column-button", type="button", class="btn btn-default plus",
 						   onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();$('#add-column-name').focus()")
