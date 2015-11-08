@@ -11,7 +11,7 @@ nav.navbar {
 	width: 100%
 }
 
-nav.navbar ul.nav > li {
+nav.navbar ul {
 	float: left;
 }
 

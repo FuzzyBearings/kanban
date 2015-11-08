@@ -1,132 +1,61 @@
 div.menu
 
 	nav(class="navbar navbar-default")
-		select#families-menu
+		select#families-dropdown
 			option(value="") All Families
 			if remoteFamilies && remoteFamilies.length > 0
 				each family in remoteFamilies
 					option(value='/w/families/#{family._id}')= family.name
-		
 		if remoteClients && remoteClients.length > 0
-			select
+			select#clients-dropdown
 				option(value='/w/families/#{remoteFamily._id}') All Clients
 				each client in remoteClients
 					option(value='/w/clients/#{client._id}')= client.name
+		if remoteProjects && remoteProjects.length > 0
+			select#projects-dropdown
+				option(value='/w/clients/#{remoteClient._id}') All Projects
+				each project in remoteProjects
+					option(value='/w/projects/#{project._id}')= project.name
+		if remoteBoards && remoteBoards.length > 0
+			select#boards-dropdown
+				option(value='/w/projects/#{remoteProject._id}') All Boards
+				each board in remoteBoards
+					option(value='/w/boards/#{board._id}')= board.name
 
-		ul(class="nav navbar-nav")
-			li.dropdown
-			
-
-			li.dropdown
-				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localFamily']
-					span.caret
-				ul(class="dropdown-menu")
+	nav(class="navbar navbar-default")
+		ul#families-menu
+			li Families
+				ul
 					li
-						a(href="/w/families") All Families
-					li.divider(role="separator")
+						a(href='/w/families') All Families
 					if remoteFamilies && remoteFamilies.length > 0
 						each family in remoteFamilies
 							li
-								a(href='/w/families/#{family._id}') #{family.name}
-
-			if remoteClients && remoteClients.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false")= menuNames['localClient']
-						span.caret
-					ul(class="dropdown-menu")
+								a(href='/w/families/#{family._id}')= family.name
+		if remoteClients && remoteClients.length > 0
+			ul#clients-menu
+				li Clients
+					ul
 						li
-							a(href="/w/families/#{remoteFamily._id}") All Clients
-						li.divider(role="separator")
+							a(href='/w/families/#{remoteFamily._id}') All Clients
 						each client in remoteClients
 							li
-								a(href='/w/clients/#{client._id}') #{client.name}					
-
-			if remoteProjects && remoteProjects.length > 0
-				li.dropdown
-					a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localProject']
-						span.caret
-					ul(class="dropdown-menu")
+								a(href='/w/clients/#{client._id}')= client.name
+		if remoteProjects && remoteProjects.length > 0
+			ul#projects-menu
+				li Projects
+					ul
 						li
-							a(href="/w/clients/#{remoteClient._id}") All Projects
-						li.divider(role="separator")
+							a(href='/w/clients/#{remoteClient._id}') All Projects
 						each project in remoteProjects
 							li
-								a(href='/w/projects/#{project._id}') #{project.name}					
-
-			if remoteBoards && remoteBoards.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false")= menuNames['localBoard']
-						span.caret
-					ul(class="dropdown-menu")
+								a(href='/w/projects/#{project._id}')= project.name
+		if remoteBoards && remoteBoards.length > 0
+			ul#boards-menu
+				li Boards
+					ul
 						li
-							a(href="/w/projects/#{remoteProject._id}") All Boards
-						li.divider(role="separator")
+							a(href='/w/projects/#{remoteProject._id}') All Boards
 						each board in remoteBoards
 							li
-								a(href='/w/boards/#{board._id}') #{board.name}
-								
-			if remoteColumns && remoteColumns.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false")= menuNames['localColumn']
-						span.caret
-					ul(class="dropdown-menu")
-						li
-							a(href="/w/boards/#{remoteBoard._id}") All Columns
-						li.divider(role="separator")
-						each column in remoteColumns
-							li
-								a(href='/w/columns/#{column._id}') #{column.name}
-								
-			if remoteCards && remoteCards.length > 0
-				li.dropdown
-					a(href="#", 
-					  class="dropdown-toggle",
-					  data-toggle="dropdown",
-					  role="button",
-					  aria-haspopup="true"
-					  aria-expanded="false")= menuNames['localCard']
-						span.caret
-					ul(class="dropdown-menu")
-						li
-							a(href="/w/columns/#{remoteColumn._id}") All Cards
-						li.divider(role="separator")
-						each card in remoteCards
-							li
-								a(href='/w/cards/#{card._id}') #{card.name}
-								
-			if remoteComments && remoteComments.length > 0
-				li.dropdown
-					a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false")= menuNames['localComment']
-						span.caret
-					ul(class="dropdown-menu")
-						li
-							a(href="/w/cards/#{remoteCard._id}") All Comments
-						li.divider(role="separator")
-						each comment in remoteComments
-							li
-								a(href='/w/comments/#{comment._id}') #{comment.name}
-								
-		ul(class="nav navbar-nav navbar-right" style="margin-right: 0em")
-			li.dropdown
-				a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-haspopup="true" aria-expanded="false") View
-					span.caret
-				ul.dropdown-menu
-					li
-						a(href='/w/families?action=edit') Editor
-					li
-						a(href='/w/families?action=view') Columns
+								a(href='/w/boards/#{board._id}')= board.name
