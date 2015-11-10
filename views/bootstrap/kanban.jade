@@ -106,8 +106,10 @@ block content
 						var updateColumnForm = "update-column-form-" + columnId;
 						var updateColumnNameField = "update-column-name-field-" + columnId;
 						var updateColumnButton = "update-column-button-" + columnId;
+						var columnElementId = "column-" + column._id;
 
-					td
+					td.column
+							
 						button(id="#{updateColumnButton}" type="button", class="btn btn-default dropdown-toggle title", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();$('##{updateColumnNameField}').select();")= column.name
 						form(id="#{updateColumnForm}" method="post", action="/w/columns/update", class="form-inline title", style="display: none")
 							input(type="hidden", name="boardId", value="#{column.boardId}")
@@ -115,21 +117,28 @@ block content
 							input(type="hidden", name="sortOrder", value="#{column.sortOrder}")
 							.input-group
 								input(id="#{updateColumnNameField}", name="name", value="#{column.name}", placeholder="", type="text", class="form-control", class="form-control")
-								div
-									button(type="submit", class="btn btn-default update-column") save column
-									button(type="button", class="btn btn-default update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
-
-						each card in cards
-							- var cardButtonId = "card-" + card._id;
-							form(method="post", action="/w/cards/update", class="form-inline")
-								input(type="hidden", name="cardId", value="#{card._id}")
-								input(type="hidden", name="columnId", value="#{column._id}")
-								input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
-								.input-group
-									textarea(name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")= card.name
-									div(id="#{cardButtonId}", style="display: none")
-										button(type="submit", class="btn btn-default", class="update-card") save card
-										button(type="button", class="btn btn-default", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
+								table.buttons
+									tr
+										td
+											button(type="submit", class="btn btn-default update-column") save column
+										td
+											button(type="button", class="btn btn-default update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
+						
+						ul(class="sortable")
+							li 
+							each card in cards
+								- var cardButtonId = "card-" + card._id;
+								li
+									form(method="post", action="/w/cards/update", class="form-inline card")
+										div(class="form-container")
+											div.handle
+												input(type="hidden", name="cardId", value="#{card._id}")
+												input(type="hidden", name="columnId", value="#{column._id}")
+												input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
+												textarea(rows="3" name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")= card.name
+												div(id="#{cardButtonId}", class="update-card", style="display: none")
+													button(type="submit", class="btn btn-default", class="update-card") save card
+													button(type="button", class="btn btn-default", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
 																	
 						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline", style="display: none")
 							input(type="hidden", name="cardId", value="#{0}")
@@ -144,7 +153,7 @@ block content
 						div(class="update-card")
 							a(href="#", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();") Add Card
 													
-				td
+				td.column
 					button(id="add-column-button", type="button", class="btn btn-default plus",
 						   onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();$('#add-column-name').focus()")
 						span(class="glyphicon glyphicon-plus")

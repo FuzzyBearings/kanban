@@ -15,41 +15,36 @@ table.columns {
 	border-right: 2px solid #aaa;
 }
 
-table.columns th,
-table.columns td {
+table.columns th.column,
+table.columns td.column {
 	/* border: 1px dotted #e1e1e1; */
 	border-left: 2px solid #aaa;
 	padding: 1em;
 	vertical-align: top;
 }
 
-table.columns td form.title {
+table.columns td.column form.title {
 	margin-top: 0px;
 	margin-bottom: .4em;	
 }
 
-table.columns td button.title,
-table.columns td button.plus {
+table.columns td.column button.title,
+table.columns td.column button.plus {
 	margin-top: 4px;
 	margin-bottom: 1em;
 }
 
-table.columns td button.title {
+table.columns td.column button.title {
 	display: block;
-	min-width: 262px;
+	width: 100%;
+}
+
+table.columns td.column {
+	width: 262px;
 }
 
 form {
 	padding: 4px 0;
-}
-
-div.card {
-	background-color: #fff;
-	border: 2px solid #333;
-	border-radius: 5px;
-	color: #232323;
-	margin: 4px 0;
-	padding: 8px;
 }
 
 div.crumbs {
@@ -61,7 +56,61 @@ div.scroll {
     overflow: auto;
 }
 
-*.update-column,
-*.update-card {
+*.update-column {
 	margin: 1em 0;
+}
+
+/* sortable */
+
+ul.sortable {
+	padding: 0;
+	margin: 0;
+	min-height: 1em;
+}
+
+ul.sortable li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin: 1em 0;
+}
+
+.card-placeholder {
+	border-radius: 0 0.5em 0.5em 0;
+	height: 90px;
+	background-color: #d5dee7;
+	/* 44=(.5*211)=149.5=0x95 62=(.5*193)=158.5=0x9e 80=(.5*175)=167.5=oxa7 */
+}
+
+form.card {
+	background-color: #fff;
+	border-radius: 0 0.5em 0.5em 0;
+	border: 1px solid #2C3E50;
+	padding: 0;
+	margin: 0;
+}
+
+form.card div.form-container {
+	border-radius: 0 0.5em 0.5em 0;
+	padding: 0px;
+}
+
+form.card div.form-container div.handle {
+	border-left: 10px solid #2C3E50;
+	padding: 8px;
+}
+
+form.card div.form-container textarea {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+div.update-card {
+	margin-top: 8px;
+}
+
+table.buttons td {
+	padding-right: 4px;
 }

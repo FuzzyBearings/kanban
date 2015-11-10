@@ -1,13 +1,15 @@
-$('.toggle').click(function (event) {
-	alert('go');
-	event.preventDefault();
-	var target = $(this).attr('href');
-	$(target).toggleClass('hidden show');
-});
-
-$('.toggle').click(function (event) {
-	alert('no');
-	event.preventDefault();
-	var target = $(this).attr('href');
-	$(target).toggleClass('hidden show');
+$(function() {
+	// $('ul.sortable').each(function(index) {
+	// 	$(this).sortable({
+	// 		revert: true,
+	// 		// placeholder: "ui-state-highlight",
+	// 		placeholder: "card-sorting-highlight",
+	// 		forcePlaceholderSize: true
+	// 	});
+	// 	$(this).disableSelection();
+	// });
+	$('ul.sortable').sortable({
+		connectWith: '.sortable',
+		placeholder: "card-placeholder"
+	});
 });
