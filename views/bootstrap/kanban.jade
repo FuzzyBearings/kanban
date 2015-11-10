@@ -120,9 +120,9 @@ block content
 								table.buttons
 									tr
 										td
-											button(type="button", class="btn btn-default update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
+											button(type="button", class="btn btn-warning update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
 										td
-											button(type="submit", class="btn btn-default update-column") save column
+											button(type="submit", class="btn btn-primary update-column") save column
 						
 						ul(class="sortable")
 							li 
@@ -139,22 +139,26 @@ block content
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
 														td
-															button(type="button", class="btn btn-default", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
+															button(type="button", class="btn btn-info", data-toggle="modal") edit
 														td
-															button(type="submit", class="btn btn-default", class="update-card") save card
+															button(type="submit", class="btn btn-primary", class="update-card") save card
+													tr
+														td(colspan="2")
+															button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
 																	
-						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline", style="display: none")
-							input(type="hidden", name="cardId", value="#{0}")
-							input(type="hidden", name="columnId", value="#{column._id}")
-							input(type="hidden", name="sortOrder", value="#{cards.length}")
-							.input-group
-								textarea(id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")
-								table.buttons
-									tr
-										td
-											button(type="button", class="btn btn-default", class="update-card", onclick="$('##{addCardForm}').hide()") cancel
-										td
-											button(type="submit", class="btn btn-default", class="update-card") save card
+						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline card", style="display: none")
+							div(class="form-container")
+								div.handle
+									input(type="hidden", name="cardId", value="#{0}")
+									input(type="hidden", name="columnId", value="#{column._id}")
+									input(type="hidden", name="sortOrder", value="#{cards.length}")
+									textarea(rows="3", id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")
+									table.buttons
+										tr
+											td
+												button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{addCardForm}').hide()") cancel
+											td
+												button(type="submit", class="btn btn-primary", class="update-card") save card
 	
 						div(class="update-card")
 							a(href="#", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();") Add Card
@@ -173,27 +177,25 @@ block content
 							table.buttons
 								tr
 									td
-										button(type="button", class="btn btn-default  update-column", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
+										button(type="button", class="btn btn-warning update-column", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
 									td
-										button(type="submit", class="btn btn-default update-column") save column
+										button(type="submit", class="btn btn-primary update-column") save column
 
 	- var commentSortOrder = 3;
-	
-	button(type="button", class="btn btn-primary", data-toggle="modal", data-target="#cardModal") edit
 	
 	div(class="modal fade", id="cardModal", tabindex="-1", role="dialog")
 		div(class="modal-dialog", role="document")
 			div(class="modal-content")
 				div(class="modal-body")
-					input(type="hidden", name="cardId", value="")
-					input(type="hidden", name="sortOrder", value="#{commentSortOrder}")
+					input(type="hidden", name="cardId", value="0", id="cardId")
+					input(type="hidden", name="sortOrder", value="0", id="cardSortOrder")
 					form
 						div(class="form-group")
 							label(for="recipient-name", class="control-label") Title:
 							input(type="text", class="form-control", name="name", id="cardName")
 						div(class="form-group")
 							label(for="message-text", class="control-label") Comment:
-							textarea(class="form-control", id="message-text", id="cardComment")
+							textarea(class="form-control", id="cardComment")
 				div(class="modal-footer")
 					button(type="button", class="btn btn-default", data-dismiss="modal") cancel
 					button(type="button", class="btn btn-primary") save
