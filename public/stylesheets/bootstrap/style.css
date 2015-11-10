@@ -111,6 +111,10 @@ div.update-card {
 	margin-top: 8px;
 }
 
+table.buttons {
+	margin-top: 6px;	
+}
+
 table.buttons td {
 	padding-right: 4px;
 }
