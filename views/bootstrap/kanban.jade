@@ -122,7 +122,7 @@ block content
 										td
 											button(type="button", class="btn btn-warning update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
 										td
-											button(type="submit", class="btn btn-primary update-column") save column
+											button(type="submit", class="btn btn-primary update-column") save
 						
 						ul(class="sortable")
 							li 
@@ -139,9 +139,9 @@ block content
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
 														td
-															button(type="button", class="btn btn-info", data-toggle="modal") edit
+															button(type="button", class="btn btn-info", data-toggle="modal", data-cardid="#{card._id}", data-cardsortorder="#{card.sortOrder}", data-cardname="#{card.name}", data-columnId="#{column._id}", onclick="$('#cardModal').modal({})") edit
 														td
-															button(type="submit", class="btn btn-primary", class="update-card") save card
+															button(type="submit", class="btn btn-primary", class="update-card") save
 													tr
 														td(colspan="2")
 															button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
@@ -158,7 +158,7 @@ block content
 											td
 												button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{addCardForm}').hide()") cancel
 											td
-												button(type="submit", class="btn btn-primary", class="update-card") save card
+												button(type="submit", class="btn btn-primary", class="update-card") save
 	
 						div(class="update-card")
 							a(href="#", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();") Add Card
@@ -179,7 +179,7 @@ block content
 									td
 										button(type="button", class="btn btn-warning update-column", onclick="$('#add-column-form').toggle();$('#add-column-button').toggle();") cancel
 									td
-										button(type="submit", class="btn btn-primary update-column") save column
+										button(type="submit", class="btn btn-primary update-column") save
 
 	- var commentSortOrder = 3;
 	
@@ -197,7 +197,7 @@ block content
 							label(for="message-text", class="control-label") Comment:
 							textarea(class="form-control", id="cardComment")
 				div(class="modal-footer")
-					button(type="button", class="btn btn-default", data-dismiss="modal") cancel
+					button(type="button", class="btn btn-warning", data-dismiss="modal") cancel
 					button(type="button", class="btn btn-primary") save
 
 	include ./crumbs.jade
