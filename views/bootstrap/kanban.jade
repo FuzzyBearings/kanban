@@ -124,8 +124,7 @@ block content
 										td
 											button(type="submit", class="btn btn-primary update-column") save
 						
-						ul(class="sortable")
-							li 
+						ul.sortable(id="#{column._id}")
 							each card in cards
 								- var cardButtonId = "card-" + card._id;
 								li
