@@ -127,7 +127,7 @@ block content
 						ul.sortable(id="#{column._id}")
 							each card in cards
 								- var cardButtonId = "card-" + card._id;
-								li
+								li(id="#{card._id}")
 									form(method="post", action="/w/cards/update", class="form-inline card")
 										div(class="form-container")
 											div.handle

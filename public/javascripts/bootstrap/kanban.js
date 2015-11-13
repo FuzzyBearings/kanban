@@ -26,10 +26,10 @@ $(function() {
 		},
 		stop: function(event, ui) {
 			if (dict.source && dict.destination) {
-				console.log('source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
+				console.log(ui.item.get(0).id + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
 			}
 			else {
-				console.log('(' + dict.start + ') ' + '(' + dict.stop + ')');
+				console.log(ui.item.get(0).id + ', (' + dict.start + ') ' + '(' + dict.stop + ')');
 			}
 			// console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
