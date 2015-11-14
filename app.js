@@ -54,6 +54,9 @@ app.use('/w/columns', routes);
 routes = require('./routes/w/cards');
 app.use('/w/cards', routes);
 
+routes = require('./routes/cards');
+app.use('/cards', routes);
+
 routes = require('./routes/w/comments');
 app.use('/w/comments', routes);
 

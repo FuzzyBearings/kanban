@@ -26,10 +26,35 @@ $(function() {
 		},
 		stop: function(event, ui) {
 			if (dict.source && dict.destination) {
-				console.log(ui.item.get(0).id + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
+				var cardId = ui.item.get(0).id;
+				console.log('card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
+				var json = { cardId: cardId, sortOrder: dict.stop, columnId: dict.destination.id };
+				var url = "/cards/" + cardId;
+				// var jqxhr = $.post(url, function(data) {
+				// 	console.log("function 1");
+				// })
+				var jqxhr = $.post(url, json).done(function() {
+					console.log("done");
+				}).fail(function() {
+					console.log("fail");
+				}).always(function() {
+					console.log("always");
+				});
+				// $.ajax({
+				// 	type: "POST",
+				// 	url: url,
+				// 	data: json,
+				// 	success: function(data, textStatus, jqXHR) {
+				// 		console.log("Success! ");
+				// 	},
+				// 	error: function(jqXHR, textStatus, errorThrown) {
+				// 		console.log("Error! " + errorThrown);
+				// 	},
+				// 	dataType: "json"
+				// });
 			}
 			else {
-				console.log(ui.item.get(0).id + ', (' + dict.start + ') ' + '(' + dict.stop + ')');
+				console.log('card.id: ' + ui.item.get(0).id + ', (' + dict.start + ') ' + '(' + dict.stop + ')');
 			}
 			// console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
