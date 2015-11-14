@@ -30,28 +30,42 @@ $(function() {
 				console.log('card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
 				var json = { cardId: cardId, sortOrder: dict.stop, columnId: dict.destination.id };
 				var url = "/cards/" + cardId;
-				// var jqxhr = $.post(url, function(data) {
-				// 	console.log("function 1");
-				// })
-				var jqxhr = $.post(url, json).done(function() {
-					console.log("done");
-				}).fail(function() {
-					console.log("fail");
-				}).always(function() {
-					console.log("always");
-				});
+
+				// var jqxhr = $.post(url, json).done(function() {
+				// 	console.log("done");
+				// }).fail(function() {
+				// 	console.log("fail");
+				// }).always(function() {
+				// 	console.log("always");
+				// });
+
 				// $.ajax({
 				// 	type: "POST",
 				// 	url: url,
 				// 	data: json,
 				// 	success: function(data, textStatus, jqXHR) {
-				// 		console.log("Success! ");
+				// 		console.log("Success!");
 				// 	},
-				// 	error: function(jqXHR, textStatus, errorThrown) {
-				// 		console.log("Error! " + errorThrown);
-				// 	},
-				// 	dataType: "json"
+				// 	error: function(data, textStatus, jqXHR) {
+				// 		console.log("Error!");
+				// 	}
 				// });
+
+				var jqXHR = $.ajax({
+					type: "PUT",
+					url: url,
+					data: json
+				})
+				.done(function(data, textStatus, jqXHR) {
+					console.log("done (" + textStatus + ") data (" + JSON.stringify(data) + ")");
+				})
+				.fail(function(jqXHR, textStatus, errorThrown) {
+					console.log("fail: " + errorThrown);
+				})
+				.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
+					console.log("always");
+				});
+				
 			}
 			else {
 				console.log('card.id: ' + ui.item.get(0).id + ', (' + dict.start + ') ' + '(' + dict.stop + ')');
@@ -62,7 +76,7 @@ $(function() {
 			dict.stop = ui.item.index();
 			// var sender = ui.sender;
 			// sender = sender ? sender.get(0) : null;
-			// console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+			console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		}
 	});
 	$('#cardModal').on('show.bs.modal', function (event) {
