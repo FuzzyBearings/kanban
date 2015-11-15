@@ -132,8 +132,6 @@ block content
 										div(class="form-container")
 											div.handle
 												input(type="hidden", name="cardId", value="#{card._id}")
-												input(type="hidden", name="columnId", value="#{column._id}")
-												input(type="hidden", name="sortOrder", value="#{card.sortOrder}")
 												textarea(rows="3" name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")= card.name
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
@@ -150,7 +148,6 @@ block content
 								div.handle
 									input(type="hidden", name="cardId", value="#{0}")
 									input(type="hidden", name="columnId", value="#{column._id}")
-									input(type="hidden", name="sortOrder", value="#{cards.length}")
 									textarea(rows="3", id="#{addCardNameField}" name="name" placeholder="Card Name", class="form-control update-card", onfocus="$('##{cardButtonId}').show()")
 									table.buttons
 										tr
