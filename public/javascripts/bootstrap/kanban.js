@@ -18,65 +18,41 @@ $(function() {
 			// console.log("RECEIVED! into list " + event.target);
 		},
 		start: function(event, ui) {
+			dict.source = event.target;
+			dict.destination = event.target;
+			// console.log('STARTED! for list ' + event.target);
 			dict.start = ui.item.index();
 			dict.stop = null;
-			dict.source = null;
-			dict.destination = null;
 			// console.log('STARTED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
 		stop: function(event, ui) {
-			if (dict.source && dict.destination) {
-				var cardId = ui.item.get(0).id;
-				console.log('card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + dict.destination.id + ', sortOrder: ' + dict.stop + '}');
-				var json = { cardId: cardId, sortOrder: dict.stop, columnId: dict.destination.id };
-				var url = "/cards/" + cardId;
+			var columnId = dict.destination.id;
+			var cardId = ui.item.get(0).id;
+			var json = { cardId: cardId, screenIndex: dict.stop, columnId: columnId };
+			var url = "/cards/" + cardId;
+			// console.log('STOPPED! card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + columnId + ', sortOrder: ' + dict.stop + '}');
 
-				// var jqxhr = $.post(url, json).done(function() {
-				// 	console.log("done");
-				// }).fail(function() {
-				// 	console.log("fail");
-				// }).always(function() {
-				// 	console.log("always");
-				// });
-
-				// $.ajax({
-				// 	type: "POST",
-				// 	url: url,
-				// 	data: json,
-				// 	success: function(data, textStatus, jqXHR) {
-				// 		console.log("Success!");
-				// 	},
-				// 	error: function(data, textStatus, jqXHR) {
-				// 		console.log("Error!");
-				// 	}
-				// });
-
-				var jqXHR = $.ajax({
-					type: "PUT",
-					url: url,
-					data: json
-				})
-				.done(function(data, textStatus, jqXHR) {
-					console.log("done (" + textStatus + ") data (" + JSON.stringify(data) + ")");
-				})
-				.fail(function(jqXHR, textStatus, errorThrown) {
-					console.log("fail: " + errorThrown);
-				})
-				.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
-					console.log("always");
-				});
-				
-			}
-			else {
-				console.log('card.id: ' + ui.item.get(0).id + ', (' + dict.start + ') ' + '(' + dict.stop + ')');
-			}
+			var jqXHR = $.ajax({
+				type: "PUT",
+				url: url,
+				data: json
+			})
+			.done(function(data, textStatus, jqXHR) {
+				// console.log("done (" + textStatus + ") data (" + JSON.stringify(data) + ")");
+			})
+			.fail(function(jqXHR, textStatus, errorThrown) {
+				// console.log("fail: " + errorThrown);
+			})
+			.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
+				// console.log("always");
+			});
 			// console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
 		update: function(event, ui) {
 			dict.stop = ui.item.index();
 			// var sender = ui.sender;
 			// sender = sender ? sender.get(0) : null;
-			console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+			// console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		}
 	});
 	$('#cardModal').on('show.bs.modal', function (event) {
