@@ -11,7 +11,7 @@ router.put('/:docId', function(req, res) {
 	if (screenIndex) {
 		screenIndex = parseInt(screenIndex);
 	}
-	// console.log("request body cardId: " + cardId + ", columnId: " + columnId + ", screenIndex: " + screenIndex);
+	console.log("request body cardId: " + cardId + ", columnId: " + columnId + ", screenIndex: " + screenIndex);
 	
 	var db = req.db;
 	var docsTable = db.get('cards');
@@ -39,6 +39,10 @@ router.put('/:docId', function(req, res) {
 						tweenSortOrder = currentSortOrder - 1.0;
 						done = true;
 						// console.log('i == 0');
+					}
+					else if (i == cards.length - 1) {
+						tweenSortOrder = currentSortOrder + 1.0;
+						done = true;						
 					}
 					else {
 						tweenSortOrder = (lastSortOrder + currentSortOrder) / 2.0;

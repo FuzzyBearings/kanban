@@ -46,13 +46,13 @@ $(function() {
 			.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
 				// console.log("always");
 			});
-			// console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+			console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
 		update: function(event, ui) {
 			dict.stop = ui.item.index();
 			// var sender = ui.sender;
 			// sender = sender ? sender.get(0) : null;
-			// console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+			 console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		}
 	});
 	$('#cardModal').on('show.bs.modal', function (event) {
