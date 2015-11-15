@@ -120,9 +120,9 @@ block content
 								table.buttons
 									tr
 										td
-											button(type="button", class="btn btn-warning update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") cancel
+											button(type="submit", class="btn btn-primary update-column") s
 										td
-											button(type="submit", class="btn btn-primary update-column") save
+											button(type="button", class="btn btn-warning update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") c
 						
 						ul.sortable(id="#{column._id}")
 							each card in cards
@@ -136,12 +136,11 @@ block content
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
 														td
-															button(type="button", class="btn btn-info", data-toggle="modal", data-cardid="#{card._id}", data-cardsortorder="#{card.sortOrder}", data-cardname="#{card.name}", data-columnId="#{column._id}", onclick="$('#cardModal').modal({})") edit
+															button(type="submit", class="btn btn-primary", class="update-card") s
 														td
-															button(type="submit", class="btn btn-primary", class="update-card") save
-													tr
-														td(colspan="2")
-															button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{cardButtonId}').hide()") cancel
+															button(type="button", class="btn btn-info", data-toggle="modal", data-cardid="#{card._id}", data-cardsortorder="#{card.sortOrder}", data-cardname="#{card.name}", data-columnId="#{column._id}", onclick="$('#cardModal').modal({})") e
+														td
+															button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{cardButtonId}').hide()") c
 																	
 						form(id="#{addCardForm}" method="post", action="/w/cards/update", class="form-inline card", style="display: none")
 							div(class="form-container")

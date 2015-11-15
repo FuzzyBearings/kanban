@@ -15,8 +15,8 @@ table.columns {
 	border-right: 2px solid #aaa;
 }
 
-table.columns th,
-table.columns td {
+table.columns th.column,
+table.columns td.column {
 	/* border: 1px dotted #e1e1e1; */
 	border-left: 2px solid #aaa;
 	padding: 1em;
