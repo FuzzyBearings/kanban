@@ -15,7 +15,7 @@ router.put('/:docId', function(req, res) {
 		var stopIndex = parseInt(req.body.stopIndex);
 		var columnId = req.body.columnId;
 		
-		console.log('card.columnId(' + card.columnId + ') columnId(' + columnId + ')');
+		// console.log('card.columnId(' + card.columnId + ') columnId(' + columnId + ')');
 		
 		// get the cards.
 		docsTable.find({ "columnId" : columnId }, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, cards) {
@@ -32,20 +32,21 @@ router.put('/:docId', function(req, res) {
 			// > 0 cards
 			else {
 				
+				// custom sorting
+				var movedAcrossColumns = (card.columnId !== columnId);
+				var itemWasInserted = (stopIndex < startIndex) || movedAcrossColumns;
+
 				// extreme LEFT
-				if (stopIndex === 0) {
+				if (stopIndex == 0) {
 					finalSortOrder = Number(cards[0].sortOrder) - 1.0;
 				}
 				
 				// extreme RIGHT
-				else if (stopIndex === lastIndex) {
+				else if ( (movedAcrossColumns && stopIndex > lastIndex) || (!movedAcrossColumns && stopIndex == lastIndex) ) {
 					finalSortOrder = Number(cards[lastIndex].sortOrder) + 1.0;
 				}
-				
-				else {
 
-					// custom sorting
-					var itemWasInserted = (stopIndex < startIndex) || (card.columnId !== columnId);
+				else {
 					
 					if (itemWasInserted) {
 						var cardAbove = cards[stopIndex];
@@ -63,6 +64,7 @@ router.put('/:docId', function(req, res) {
 			}
 			
 			card.sortOrder = finalSortOrder;
+			card.columnId = columnId;
 			docsTable.findAndModify({
 				"query" : { "_id" : card._id },
 				"update" : card,

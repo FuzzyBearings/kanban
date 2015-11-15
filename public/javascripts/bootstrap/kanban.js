@@ -26,33 +26,35 @@ $(function() {
 			// console.log('STARTED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
 		stop: function(event, ui) {
-			var columnId = dict.destination.id;
-			var cardId = ui.item.get(0).id;
-			var json = { cardId: cardId, columnId: columnId, startIndex: parseInt(dict.start), stopIndex: parseInt(dict.stop) };
-			var url = "/cards/" + cardId;
-			// console.log('STOPPED! card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + columnId + ', sortOrder: ' + dict.stop + '}');
+			if (dict.stop) {
+				var columnId = dict.destination.id;
+				var cardId = ui.item.get(0).id;
+				var json = { cardId: cardId, columnId: columnId, startIndex: parseInt(dict.start), stopIndex: parseInt(dict.stop) };
+				var url = "/cards/" + cardId;
+				// console.log('STOPPED! card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + columnId + ', sortOrder: ' + dict.stop + '}');
 
-			var jqXHR = $.ajax({
-				type: "PUT",
-				url: url,
-				data: json
-			})
-			.done(function(data, textStatus, jqXHR) {
-				// console.log("done (" + textStatus + ") data (" + JSON.stringify(data) + ")");
-			})
-			.fail(function(jqXHR, textStatus, errorThrown) {
-				// console.log("fail: " + errorThrown);
-			})
-			.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
-				// console.log("always");
-			});
-			console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+				var jqXHR = $.ajax({
+					type: "PUT",
+					url: url,
+					data: json
+				})
+				.done(function(data, textStatus, jqXHR) {
+					// console.log("done (" + textStatus + ") data (" + JSON.stringify(data) + ")");
+				})
+				.fail(function(jqXHR, textStatus, errorThrown) {
+					// console.log("fail: " + errorThrown);
+				})
+				.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
+					// console.log("always");
+				});
+				// console.log('STOPPED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');				
+			}
 		},
 		update: function(event, ui) {
 			dict.stop = ui.item.index();
 			// var sender = ui.sender;
 			// sender = sender ? sender.get(0) : null;
-			 console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
+			// console.log('UPDATED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		}
 	});
 	$('#cardModal').on('show.bs.modal', function (event) {
