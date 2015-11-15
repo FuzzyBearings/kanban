@@ -28,7 +28,7 @@ $(function() {
 		stop: function(event, ui) {
 			var columnId = dict.destination.id;
 			var cardId = ui.item.get(0).id;
-			var json = { cardId: cardId, screenIndex: dict.stop, columnId: columnId };
+			var json = { cardId: cardId, columnId: columnId, startIndex: parseInt(dict.start), stopIndex: parseInt(dict.stop) };
 			var url = "/cards/" + cardId;
 			// console.log('STOPPED! card.id: ' + cardId + ', source { column: ' + dict.source.id + ', sortOrder: ' + dict.start + ' } destination { column: ' + columnId + ', sortOrder: ' + dict.stop + '}');
 

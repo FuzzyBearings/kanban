@@ -3,6 +3,86 @@ var router = express.Router();
 var async = require('async');
 
 router.put('/:docId', function(req, res) {
+	
+	// get the card
+	var cardId = req.body.cardId;
+	var db = req.db;
+	var docsTable = db.get('cards');
+	
+	docsTable.findById(cardId, function(err, card) {
+		
+		var startIndex = parseInt(req.body.startIndex);
+		var stopIndex = parseInt(req.body.stopIndex);
+		var columnId = req.body.columnId;
+		
+		console.log('card.columnId(' + card.columnId + ') columnId(' + columnId + ')');
+		
+		// get the cards.
+		docsTable.find({ "columnId" : columnId }, { sort: { "sortOrder" : 1, "name" : 1 }}, function(err, cards) {
+
+			// variable
+			var lastIndex = cards.length - 1;
+			var finalSortOrder = 0.0;
+
+			// 0 cards -> sortOrder = 0
+			if (cards.length == 0) {
+				finalSortOrder = 0.0;
+			}
+			
+			// > 0 cards
+			else {
+				
+				// extreme LEFT
+				if (stopIndex === 0) {
+					finalSortOrder = Number(cards[0].sortOrder) - 1.0;
+				}
+				
+				// extreme RIGHT
+				else if (stopIndex === lastIndex) {
+					finalSortOrder = Number(cards[lastIndex].sortOrder) + 1.0;
+				}
+				
+				else {
+
+					// custom sorting
+					var itemWasInserted = (stopIndex < startIndex) || (card.columnId !== columnId);
+					
+					if (itemWasInserted) {
+						var cardAbove = cards[stopIndex];
+						var cardBelow = cards[stopIndex - 1];
+						finalSortOrder = (cardAbove.sortOrder + cardBelow.sortOrder) / 2.0;
+					}
+					else {
+						var cardBelow = cards[stopIndex];
+						var cardAbove = cards[stopIndex + 1];
+						finalSortOrder = (cardAbove.sortOrder + cardBelow.sortOrder) / 2.0;
+					}
+					
+				}
+
+			}
+			
+			card.sortOrder = finalSortOrder;
+			docsTable.findAndModify({
+				"query" : { "_id" : card._id },
+				"update" : card,
+				"new" : true,		// no workie?
+				"upsert" : false	// no workie?
+			}, function(err, oldDoc) {
+				if (err) {
+					res.send({ retval: -1, message: err });
+				}
+				else {
+					res.send({ retval: 0, message: "Success!" });
+				}
+			});			
+		});
+		
+	});
+	
+});
+
+router.post('/:docId', function(req, res) {
 	// var docId = req.params.docId;
 	var cardId = req.body.cardId;
 	var cardName = req.body.name;
