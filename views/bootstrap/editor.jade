@@ -132,42 +132,42 @@ block content
 		
 	table.columns
 		tr
-			th
+			th.column
 				h1= menuNames['localFamily']
 				p Family
 
 			if remoteFamily
-				th
+				th.column
 					h1= menuNames['localClient']
 					p Client
 
 			if remoteClient
-				th
+				th.column
 					h1= menuNames['localProject']
 					p Project
 
 			if remoteProject
-				th
+				th.column
 					h1= menuNames['localBoard']
 					p Board
 
 			if remoteBoard
-				th
+				th.column
 					h1= menuNames['localColumn']
 					p Column
 
 			if remoteColumn
-				th
+				th.column
 					h1= menuNames['localCard']
 					p Card
 
 			if remoteCard
-				th
+				th.column
 					h1= menuNames['localComment']
 					p Comment
 
 		tr
-			td
+			td.column
 				if remoteFamilies && remoteFamilies.length > 0
 					each family in remoteFamilies
 						form(method="post", action="/w/families/update", class="form-inline")
@@ -186,7 +186,7 @@ block content
 							button(type="submit", class="btn btn-default") save
 
 			if remoteFamily
-				td
+				td.column
 					if remoteClients && remoteClients.length > 0
 						each client in remoteClients
 							form(method="post", action="/w/clients/update", class="editing-form")
@@ -207,7 +207,7 @@ block content
 								button(type="submit", class="btn btn-default") save
 
 			if remoteClient
-				td
+				td.column
 					if remoteProjects && remoteProjects.length > 0
 						each project in remoteProjects
 							form(method="post", action="/w/projects/update", class="editing-form")
@@ -229,7 +229,7 @@ block content
 
 
 			if remoteProject
-				td
+				td.column
 					if remoteBoards && remoteBoards.length > 0
 						each board in remoteBoards
 							form(method="post", action="/w/boards/update", class="editing-form")
@@ -250,7 +250,7 @@ block content
 								button(type="submit", class="btn btn-default") save
 
 			if remoteBoard
-				td
+				td.column
 					if remoteColumns && remoteColumns.length > 0
 						each column in remoteColumns
 							form(method="post", action="/w/columns/update", class="editing-form")
@@ -271,7 +271,7 @@ block content
 								button(type="submit", class="btn btn-default") save
 
 			if remoteColumn
-				td
+				td.column
 					if remoteCards && remoteCards.length > 0
 						each card in remoteCards
 							form(method="post", action="/w/cards/update", class="editing-form")
@@ -292,7 +292,7 @@ block content
 								button(type="submit", class="btn btn-default") save
 					
 			if remoteCard
-				td
+				td.column
 					if remoteComments && remoteComments.length > 0
 						each comment in remoteComments
 							form(method="post", action="/w/comments/update", class="editing-form")
