@@ -22,11 +22,12 @@ $(function() {
 			dict.destination = event.target;
 			// console.log('STARTED! for list ' + event.target);
 			dict.start = ui.item.index();
-			dict.stop = null;
+			dict.stop = 0;
+			dict.update = false;
 			// console.log('STARTED: index(' + ui.item.index() + ') sender(' + ui.sender + ')');
 		},
 		stop: function(event, ui) {
-			if (dict.stop) {
+			if (dict.update) {
 				var columnId = dict.destination.id;
 				var cardId = ui.item.get(0).id;
 				var json = { cardId: cardId, columnId: columnId, startIndex: parseInt(dict.start), stopIndex: parseInt(dict.stop) };
@@ -51,6 +52,7 @@ $(function() {
 			}
 		},
 		update: function(event, ui) {
+			dict.update = true;
 			dict.stop = ui.item.index();
 			// var sender = ui.sender;
 			// sender = sender ? sender.get(0) : null;
