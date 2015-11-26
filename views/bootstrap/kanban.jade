@@ -126,13 +126,16 @@ block content
 						
 						ul.sortable(id="#{column._id}")
 							each card in cards
-								- var cardButtonId = "card-" + card._id;
+								-
+									var cardButtonId = "card-" + card._id;
+									var textAreaId = "textarea-" + card._id;
+
 								li(id="#{card._id}")
 									form(method="post", action="/w/cards/update", class="form-inline card")
 										div(class="form-container")
 											div.handle
 												input(type="hidden", name="cardId", value="#{card._id}")
-												textarea(rows="3" name="name" placeholder="Card Name", class="form-control", onfocus="$('##{cardButtonId}').show()")= card.name
+												textarea(id="#{textAreaId}" rows="3" name="name" placeholder="Card Name", class="form-control", ondblclick="$('##{cardButtonId}').show()")= card.name
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
 														td
@@ -151,9 +154,9 @@ block content
 									table.buttons
 										tr
 											td
-												button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{addCardForm}').hide()") cancel
+												button(type="submit", class="btn btn-primary", class="update-card") s
 											td
-												button(type="submit", class="btn btn-primary", class="update-card") save
+												button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{addCardForm}').hide()") c
 	
 						div(class="update-card")
 							a(href="#", onclick="$('##{addCardForm}').toggle();$('##{addCardNameField}').select();") Add Card
