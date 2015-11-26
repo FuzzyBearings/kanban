@@ -101,7 +101,8 @@ form.card div.form-container {
 }
 
 form.card div.form-container div.handle {
-	border-left: 10px solid #2C3E50;
+	border-left: 8px solid #2C3E50;
+	cursor: move;
 	padding: 8px;
 }
 

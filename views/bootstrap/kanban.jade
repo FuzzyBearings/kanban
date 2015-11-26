@@ -135,7 +135,7 @@ block content
 										div(class="form-container")
 											div.handle
 												input(type="hidden", name="cardId", value="#{card._id}")
-												textarea(id="#{textAreaId}" rows="3" name="name" placeholder="Card Name", class="form-control", ondblclick="$('##{cardButtonId}').show()")= card.name
+												textarea(id="#{textAreaId}" rows="3" name="name" placeholder="Card Name", class="form-control", onclick="$('##{cardButtonId}').show()")= card.name
 												table.buttons(id="#{cardButtonId}", style="display: none")
 													tr
 														td
