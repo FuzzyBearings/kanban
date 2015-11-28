@@ -124,7 +124,7 @@ block content
 										td
 											button(type="button", class="btn btn-warning update-column", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();") c
 						
-						ul.sortable(id="#{column._id}")
+						ul.sortableCards(id="#{column._id}")
 							each card in cards
 								-
 									var cardButtonId = "card-" + card._id;

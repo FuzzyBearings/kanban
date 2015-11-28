@@ -2,10 +2,12 @@
 // http://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
 // http://stackoverflow.com/questions/16082519/updating-sort-order-during-sort-change-event-jquery-ui
 
+var columndDict = { };
+
 var cardDict = { };
 $(function() {
-	$('ul.sortable').sortable({
-		connectWith: '.sortable',
+	$('ul.sortableCards').sortable({
+		connectWith: '.sortableCards',
 		placeholder: "card-placeholder",
 		revert: true,
 		forcePlaceholderSize: true,
