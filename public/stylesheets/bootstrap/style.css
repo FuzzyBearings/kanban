@@ -44,7 +44,7 @@ table.columns td.column button.title {
 
 table.columns td.column {
 	min-width: 262px;
-	min-width: 200px;
+	min-width: 262px;
 }
 
 form {

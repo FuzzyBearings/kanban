@@ -60,8 +60,8 @@ div.menu
 						each board in remoteBoards
 							li
 								a(href='/w/boards/#{board._id}') #{board.name}
-								
-			if remoteColumns && remoteColumns.length > 0
+			
+			if remoteColumns && remoteColumns.columns && remoteColumns.columns.length > 0
 				li.dropdown
 					a(href="#", 
 					  class="dropdown-toggle",
@@ -74,7 +74,7 @@ div.menu
 						li
 							a(href="/w/boards/#{remoteBoard._id}") All Columns
 						li.divider(role="separator")
-						each column in remoteColumns
+						each column in remoteColumns.columns
 							li
 								a(href='/w/columns/#{column._id}') #{column.name}
 								
