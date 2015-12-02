@@ -3,12 +3,19 @@
 // http://stackoverflow.com/questions/16082519/updating-sort-order-during-sort-change-event-jquery-ui
 
 var columndDict = { };
+$(function() {
+	$('ul.sortableColumns').sortable({
+		connectWith: '.sortableColumns',
+		placeholder: 'columnPlaceholder',
+		forcePlaceholderSize: true
+	});
+});
 
 var cardDict = { };
 $(function() {
 	$('ul.sortableCards').sortable({
 		connectWith: '.sortableCards',
-		placeholder: "card-placeholder",
+		placeholder: "cardPlaceholder",
 		revert: true,
 		forcePlaceholderSize: true,
 		remove: function(event, ui) {
