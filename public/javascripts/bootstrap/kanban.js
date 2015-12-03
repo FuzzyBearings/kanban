@@ -7,7 +7,8 @@ $(function() {
 	$('ul.sortableColumns').sortable({
 		connectWith: '.sortableColumns',
 		placeholder: 'columnPlaceholder',
-		forcePlaceholderSize: true
+		forcePlaceholderSize: true,
+		items: "li:not(.dontMove)"
 	});
 });
 

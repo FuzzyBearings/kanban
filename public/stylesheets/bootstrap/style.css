@@ -67,22 +67,13 @@ div.scroll {
 /* sortableColumns */
 
 ul.sortableColumns {
-	margin: 0;
-	padding: 0;
 }
 
 ul.sortableColumns li.sortableColumn {
-	cursor: move;
-	list-style: none;
-	margin: 0;
-	padding: 0;
 }
 
 .columnPlaceholder {
 	background-color: #d5dee7;
-	float: left;
-	eight: 1em;
-	list-style: none;
 	/* 44=(.5*211)=149.5=0x95 62=(.5*193)=158.5=0x9e 80=(.5*175)=167.5=oxa7 */
 }
 

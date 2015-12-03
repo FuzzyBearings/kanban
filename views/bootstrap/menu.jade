@@ -71,12 +71,12 @@ div.menu
 					  aria-expanded="false")= menuNames['localColumn']
 						span.caret
 					ul(class="dropdown-menu sortableColumns")
-						li
+						li(class="dontMove")
 							a(href="/w/projects/#{remoteProject._id}") All Columns
-						li.divider(role="separator")
+						li(class="dontMove divider", role="separator")
 						each column in remoteColumns.columns
 							li.sortableColumn
 								a(href='/w/boards/#{column._id}') #{column.name}
-						li.divider(role="separator")
-						li
+						li(class="dontMove divider", role="separator")
+						li(class="dontMove")
 							a(href="/w/projects/#{remoteProject._id}") Save
