@@ -94,7 +94,7 @@ block content
 
 	div.scroll
 		table.columns
-			tr#columns-container
+			tr.columns-container(boardId="#{localBoard.boardId}")
 				each column in remoteColumns.columns
 
 					-

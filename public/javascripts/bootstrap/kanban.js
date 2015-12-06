@@ -6,7 +6,7 @@
 //
 // dragula
 //
-var drake = dragula([document.querySelector('#columns-container')], {
+var drake = dragula([document.querySelector('.columns-container')], {
 	moves: function(el, source, handle, sibling) {
 		return handle.className.contains('drag-handle');
 	},
@@ -17,10 +17,14 @@ var drake = dragula([document.querySelector('#columns-container')], {
 });
 
 drake.on('drop', function(element, target, source, sibling) {
+	var boardId = target.getAttribute('boardId');
 	var columnId = element.getAttribute('columnId');
 	var siblingId = (sibling ? sibling.getAttribute('columnId') : "0");
 	var url = "/columns/" + columnId;
-	var json = { columnId: columnId, siblingId: siblingId };
+	var json = { "boardId": boardId, "columnId": columnId, "siblingId": siblingId };
+	
+	console.log('boardId: ' + boardId + ', columnId: ' + columnId + ', siblingId: ' + siblingId);
+	
 	var jqXHR = $.ajax({
 		type: "PUT",
 		url: url,
