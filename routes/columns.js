@@ -21,7 +21,7 @@ router.put('/:docId', function(req, res) {
 		} else {
 
 			var count = columns.length;
-			console.log('count: ' + count);
+			// console.log('count: ' + count);
 
 			if (!siblingId) {
 				var column = columns[count-1];
@@ -43,7 +43,7 @@ router.put('/:docId', function(req, res) {
 				}
 			}
 
-			console.log('done! ' + done + ', finalSortOrder: ' + finalSortOrder);
+			// console.log('done! ' + done + ', finalSortOrder: ' + finalSortOrder);
 			
 			if (done) {
 				docsTable.findById(columnId, function(err, column) {
