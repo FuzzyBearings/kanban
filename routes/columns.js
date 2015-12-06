@@ -24,13 +24,26 @@ router.put('/:docId', function(req, res) {
 			console.log('count: ' + count);
 
 			if (!siblingId) {
-				var lastColumn = columns[count-1];
-				finalSortOrder = Number(lastColumn.sortOrder) + 1;
+				var column = columns[count-1];
+				finalSortOrder = Number(column.sortOrder) + 1;
 				done = true;
 			} else {
+				for (var i = 0; !done && i < count; ++i) {
+					var column = columns[i];
+					if (column._id.toString() == siblingId) {
+						if (i == 0) {
+							finalSortOrder = Number(column.sortOrder) - 1;
+						} else {
+							var previousColumn = columns[i - 1];
+							var temp = Number(previousColumn.sortOrder) + Number(column.sortOrder);
+							finalSortOrder = temp / 2.0;
+						}
+						done = true;
+					}
+				}
 			}
 
-			console.log('done! ' + done);
+			console.log('done! ' + done + ', finalSortOrder: ' + finalSortOrder);
 			
 			if (done) {
 				docsTable.findById(columnId, function(err, column) {
