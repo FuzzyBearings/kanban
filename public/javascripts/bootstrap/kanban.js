@@ -17,8 +17,26 @@ var drake = dragula([document.querySelector('#columns-container')], {
 });
 
 drake.on('drop', function(element, target, source, sibling) {
-	console.log('drop element: ' + element.getAttribute('columnId'));
-	console.log('drop sibling: ' + sibling.getAttribute('columnId'));
+	var columnId = element.getAttribute('columnId');
+	var siblingId = (sibling ? sibling.getAttribute('columnId') : "0");
+	var url = "/columns/" + columnId;
+	var json = { columnId: columnId, siblingId: siblingId };
+	var jqXHR = $.ajax({
+		type: "PUT",
+		url: url,
+		json: json
+	})
+	.done(function(data, textStatus, jqXHR) {
+		console.log('done! ' + textStatus);
+	})
+	.fail(function(jqXHR, textStatus, errorThrown) {
+		console.log('fail! ' + textStatus + ', ' + errorThrown);
+	})
+	.always(function(data_or_jqXHR, textStatus, jqXHR_or_errorThrown) {
+		console.log('always! ' + textStatus + ', ' + jqXHR_or_errorThrown);
+	});
+	// console.log('drop element: ' + element.getAttribute('columnId'));
+	// console.log('drop sibling: ' + sibling.getAttribute('columnId'));
 });
 
 //

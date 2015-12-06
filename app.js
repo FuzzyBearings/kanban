@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 ////
-// ROUTES
+// WEB ROUTES
 ////
 var routes = require('./routes/w/families');
 app.use('/w/families', routes);
@@ -54,12 +54,21 @@ app.use('/w/columns', routes);
 routes = require('./routes/w/cards');
 app.use('/w/cards', routes);
 
-routes = require('./routes/cards');
-app.use('/cards', routes);
-
 routes = require('./routes/w/comments');
 app.use('/w/comments', routes);
 
+////
+// REST ROUTES
+////
+routes = require('./routes/columns');
+app.use('/columns', routes);
+
+routes = require('./routes/cards');
+app.use('/cards', routes);
+
+////
+// CATCHALL ROUTES
+////
 routes = require('./routes/index');
 app.use('/', routes);
 
