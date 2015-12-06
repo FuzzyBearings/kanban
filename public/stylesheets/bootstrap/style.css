@@ -22,7 +22,7 @@ table.columns {
 table.columns th.column,
 table.columns td.column {
 	border-left: 2px solid #aaa;
-	padding: 1em;
+	padding: 0 1em 1em 1em;
 	vertical-align: top;
 }
 
@@ -44,7 +44,7 @@ table.columns td.column button.title {
 
 table.columns td.column {
 	min-width: 262px;
-	min-width: 262px;
+	max-width: 262px;
 }
 
 form {
@@ -62,19 +62,6 @@ div.scroll {
 
 *.update-column {
 	margin: 1em 0;
-}
-
-/* sortableColumns */
-
-ul.sortableColumns {
-}
-
-ul.sortableColumns li.sortableColumn {
-}
-
-.columnPlaceholder {
-	background-color: #d5dee7;
-	/* 44=(.5*211)=149.5=0x95 62=(.5*193)=158.5=0x9e 80=(.5*175)=167.5=oxa7 */
 }
 
 /* sortableCards */

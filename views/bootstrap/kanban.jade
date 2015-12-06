@@ -94,7 +94,7 @@ block content
 
 	div.scroll
 		table.columns
-			tr
+			tr#columns-container
 				each column in remoteColumns.columns
 
 					-
@@ -109,8 +109,9 @@ block content
 						var columnElementId = "column-" + column._id;
 
 					td.column
-							
-						button(id="#{updateColumnButton}" type="button", class="btn btn-default dropdown-toggle title", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();$('##{updateColumnNameField}').select();")= column.name
+						
+						button(draggable="true", id="#{updateColumnButton}" type="button", class="btn btn-default dropdown-toggle title drag-handle", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();$('##{updateColumnNameField}').select();")= column.name
+						
 						form(id="#{updateColumnForm}" method="post", action="/w/columns/update", class="form-inline title", style="display: none")
 							input(type="hidden", name="boardId", value="#{column.boardId}")
 							input(type="hidden", name="columnId", value="#{column._id}")
