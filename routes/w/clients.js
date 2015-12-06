@@ -11,7 +11,7 @@ router.post('/update', function(req, res) {
 	
 	var db = req.db;
 	var docName = req.body.name;
-	var sortOrder = req.body.sortOrder;
+	var sortOrder = Number(req.body.sortOrder);
 	var docId = req.body.clientId;
 	var familyId = req.body.familyId;
 	var docsTable = db.get('clients');

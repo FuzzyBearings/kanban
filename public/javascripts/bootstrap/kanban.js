@@ -21,14 +21,14 @@ drake.on('drop', function(element, target, source, sibling) {
 	var columnId = element.getAttribute('columnId');
 	var siblingId = (sibling ? sibling.getAttribute('columnId') : "0");
 	var url = "/columns/" + columnId;
-	var json = { "boardId": boardId, "columnId": columnId, "siblingId": siblingId };
+	var json = { boardId: boardId, columnId: columnId, siblingId: siblingId };
 	
 	console.log('boardId: ' + boardId + ', columnId: ' + columnId + ', siblingId: ' + siblingId);
 	
 	var jqXHR = $.ajax({
 		type: "PUT",
 		url: url,
-		json: json
+		data: json
 	})
 	.done(function(data, textStatus, jqXHR) {
 		console.log('done! ' + textStatus);
