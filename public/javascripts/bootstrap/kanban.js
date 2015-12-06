@@ -1,52 +1,29 @@
+// http://www.w3schools.com/html/html5_draganddrop.asp
+// http://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
+// http://stackoverflow.com/questions/16082519/updating-sort-order-during-sort-change-event-jquery-ui
 // https://github.com/bevacqua/dragula
+
+//
+// dragula
+//
 var drake = dragula([document.querySelector('#columns-container')], {
 	moves: function(el, source, handle, sibling) {
-		var isValid = handle.className.contains('drag-handle');
-		console.log('isValid: ' + isValid);
-		return isValid;
+		return handle.className.contains('drag-handle');
 	},
+	accepts: function (el, target, source, sibling) {
+		return (sibling != null);
+	  },
 	direction: 'horizontal'
 });
 
-drake.on('drop', function(el, target, source, sibling) {
-	alert('drop');	
+drake.on('drop', function(element, target, source, sibling) {
+	console.log('drop element: ' + element.getAttribute('columnId'));
+	console.log('drop sibling: ' + sibling.getAttribute('columnId'));
 });
 
-
-// http://www.w3schools.com/html/html5_draganddrop.asp
-// var columnIdKey = "columnId";
 //
-// function allowDrop(ev) {
-//     ev.preventDefault();
-// 	console.log('allowDrop(ev) ' + ev);
-// }
+// jquery ui
 //
-// function drag(ev) {
-// 	var columnIdValue = ev.target.getAttribute(columnIdKey);
-//     ev.dataTransfer.setData(columnIdKey, columnIdValue);
-// 	console.log('drag(ev) ' + ev + ', columnIdValue ' + columnIdValue);
-// }
-//
-// function drop(ev) {
-//     ev.preventDefault();
-//     var columnId = ev.dataTransfer.getData(columnIdKey);
-// 	console.log('columnId: ' + columnId);
-//     // ev.target.appendChild(document.getElementById(data));
-// 	console.log('drop(ev) ' + ev);
-// }
-
-// http://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
-// http://stackoverflow.com/questions/16082519/updating-sort-order-during-sort-change-event-jquery-ui
-// var columndDict = { };
-// $(function() {
-// 	$('ul.sortableColumns').sortable({
-// 		connectWith: '.sortableColumns',
-// 		placeholder: 'columnPlaceholder',
-// 		forcePlaceholderSize: true,
-// 		items: "li:not(.dontMove)"
-// 	});
-// });
-
 var cardDict = { };
 $(function() {
 	$('ul.sortableCards').sortable({

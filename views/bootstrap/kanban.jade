@@ -106,9 +106,8 @@ block content
 						var updateColumnForm = "update-column-form-" + columnId;
 						var updateColumnNameField = "update-column-name-field-" + columnId;
 						var updateColumnButton = "update-column-button-" + columnId;
-						var columnElementId = "column-" + column._id;
 
-					td.column
+					td.column(columnId="#{column._id}")
 						
 						button(draggable="true", id="#{updateColumnButton}" type="button", class="btn btn-default dropdown-toggle title drag-handle", onclick="$('##{updateColumnForm}').toggle();$('##{updateColumnButton}').toggle();$('##{updateColumnNameField}').select();")= column.name
 						
