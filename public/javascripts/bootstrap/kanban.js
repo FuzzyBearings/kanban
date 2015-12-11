@@ -44,6 +44,11 @@ drake.on('drop', function(element, target, source, sibling) {
 	// console.log('drop sibling: ' + sibling.getAttribute('columnId'));
 });
 
+function showModal(cardId, cardName, cardDesc) {
+	console.log('cardId: ' + cardId + ', cardName: ' + cardName + ', cardDesc: ' + cardDesc);
+	$('#cardModal').modal({});
+}
+
 //
 // jquery ui
 //
