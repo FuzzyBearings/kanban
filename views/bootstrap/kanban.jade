@@ -129,6 +129,10 @@ block content
 								-
 									var cardButtonId = "card-" + card._id;
 									var textAreaId = "textarea-" + card._id;
+									var description = ""
+									if (card.desc !== undefined) {
+										description = card.desc;
+									}
 
 								li(id="#{card._id}")
 									form(method="post", action="/w/cards/update", class="form-inline card")
@@ -141,7 +145,7 @@ block content
 														td
 															button(type="submit", class="btn btn-primary", class="update-card") s
 														td
-															button(type="button", class="btn btn-info", data-toggle="modal", data-cardid="#{card._id}", data-cardsortorder="#{card.sortOrder}", data-cardname="#{card.name}", data-columnId="#{column._id}", onclick="showModal('#{card._id}', '#{card.name}', '#{card.desc}')") e
+															button(type="button", class="btn btn-info", data-toggle="modal", data-cardid="#{card._id}", data-cardsortorder="#{card.sortOrder}", data-cardname="#{card.name}", data-columnId="#{column._id}", onclick="showModal('#{card._id}', '#{card.name}', '#{description}')") e
 														td
 															button(type="button", class="btn btn-warning", class="update-card", onclick="$('##{cardButtonId}').hide()") c
 																	

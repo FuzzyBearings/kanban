@@ -46,6 +46,8 @@ drake.on('drop', function(element, target, source, sibling) {
 
 function showModal(cardId, cardName, cardDesc) {
 	console.log('cardId: ' + cardId + ', cardName: ' + cardName + ', cardDesc: ' + cardDesc);
+	$('#modalCardName').val(cardName);
+	$('#modalCardDescription').val(cardDesc);
 	$('#cardModal').modal({});
 }
 
