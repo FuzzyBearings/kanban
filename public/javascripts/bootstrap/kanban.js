@@ -117,6 +117,11 @@ $(function() {
 //
 // boostrap
 //
+$('#cardModal').on('hidden.bs.modal', function (event) {
+	var button = $(event.relatedTarget);
+	console.log('button: ' + button);
+});
+
 $('#cardModal').on('show.bs.modal', function (event) {
 	
 	var button = $(event.relatedTarget);
@@ -126,8 +131,8 @@ $('#cardModal').on('show.bs.modal', function (event) {
 	var columnId = button.data('columnid');
 
 	var msg = cardId + ", " + cardSortOrder + ", " + cardName + ", " + columnId;
-	console.log(msg);
-
+	// console.log(msg);
+	
 	var modal = $(this);
 	
 
