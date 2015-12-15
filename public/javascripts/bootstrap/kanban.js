@@ -44,6 +44,10 @@ drake.on('drop', function(element, target, source, sibling) {
 	// console.log('drop sibling: ' + sibling.getAttribute('columnId'));
 });
 
+function saveCard() {
+	$('#cardModal').modal('hide');	
+}
+
 function showModal(cardId, cardName, cardDesc) {
 	console.log('cardId: ' + cardId + ', cardName: ' + cardName + ', cardDesc: ' + cardDesc);	
 	// var modal = $(this)
@@ -119,20 +123,16 @@ $(function() {
 //
 $('#cardModal').on('hidden.bs.modal', function (event) {
 	var button = $(event.relatedTarget);
-	console.log('button: ' + button);
+	var doSave = button.data('save');
+	console.log('hidden doSave: ' + doSave);
 });
 
-$('#cardModal').on('show.bs.modal', function (event) {
-	
+$('#cardModal').on('show.bs.modal', function (event) {	
 	var button = $(event.relatedTarget);
 	var cardId = button.data('cardid');
-	var cardSortOrder = button.data('cardsortorder');
-	var cardName = button.data('name');
-	var columnId = button.data('columnid');
-
-	var msg = cardId + ", " + cardSortOrder + ", " + cardName + ", " + columnId;
-	// console.log(msg);
-	
+	console.log('cardMap: ' + cardMap);
+	var card = cardMap[cardId];
+	console.log('show card: ' + card);
 	var modal = $(this);
 	
 
